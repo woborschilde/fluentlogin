@@ -23,98 +23,24 @@
 
 <script>
 		{literal}
-      function newApp() {
-        var v = "";
-
-        swal({
-          title: "Neue Anwendung",
-          text: "Geben Sie einen Namen für die neue Anwendung ein.",
-          input: "text",
-          showCancelButton: true,
-          cancelButtonText: "Abbrechen",
-          showLoaderOnConfirm: true,
-          inputValidator: function(value) {
-            return new Promise(function (resolve, reject) {
-              xmlhttp = new XMLHttpRequest();
-              xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  if (this.responseText == "1") {
-                    resolve();
-                  } else {
-                    reject(this.responseText);
-                  }
-                }
-              }
-              v = value;
-              xmlhttp.open("GET","functions/newApp.php?appName="+v,true);
-              xmlhttp.send();
-            });
-          },
-        }).then(function () {
-          swal({
-            type: "success",
-            title: "Anwendung erstellt",
-            text: "Die Anwendung \""+v+"\" wurde erstellt."
-          });
-          setTimeout(function(){
-            location.replace("apps.php");
-          }, 1000);
-        });
-      }
-
-      function renameApp(i) {
-        var v = "";
-        var k = document.getElementById("appID"+i.toString()).innerHTML;
-        var m = document.getElementById("appName"+i.toString()).innerHTML;
-
-        swal({
-          title: "Anwendung umbenennen",
-          text: "Geben Sie einen neuen Namen für die Anwendung \""+m+"\" ein.",
-          input: "text",
-          inputValue: m,
-          showCancelButton: true,
-          cancelButtonText: "Abbrechen",
-          showLoaderOnConfirm: true,
-          inputValidator: function(value) {
-            return new Promise(function (resolve, reject) {
-              xmlhttp = new XMLHttpRequest();
-              xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  if (this.responseText == "1") {
-                    resolve();
-                  } else {
-                    reject(this.responseText);
-                  }
-                }
-              }
-              v = value;
-              xmlhttp.open("GET","functions/renameApp.php?appID="+k+"&appName="+v,true);
-              xmlhttp.send();
-            });
-          },
-        }).then(function () {
-          document.getElementById("appName"+i.toString()).innerHTML = v;
-        });
-      }
-
-      function delApp(i) {
-        var r = "appRow"+i.toString();
-        var k = document.getElementById("appID"+i.toString()).innerHTML;
-        var m = document.getElementById("appName"+i.toString()).innerHTML;
+      function delUser(a, i) {
+        var r = "userRow"+i.toString();
+        var k = document.getElementById("userID"+i.toString()).innerHTML;
+        var m = document.getElementById("userName"+i.toString()).innerHTML;
         
         i++;
         
         swal({
-          title: "Möchten Sie die Anwendung \""+m+"\" wirklich löschen?",
-          text: "Alle Benutzer, Benutzergruppen, Felder und Berechtigungen dieser Anwendung gehen verloren! Dieser Vorgang kann nicht rückgängig gemacht werden.",
+          title: "Möchten Sie den Benutzer \""+m+"\" wirklich löschen?",
+          text: "Sämtliche Verknüpfungen werden gelöscht.",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: '#d33',
-          confirmButtonText: 'Ja, Anwendung löschen',
+          confirmButtonText: 'Ja, Benutzer löschen',
           cancelButtonText: 'Abbrechen',
         }).then(function () {
           xmlhttp = new XMLHttpRequest();
-          xmlhttp.open("GET","functions/delApp.php?appID="+k,true);
+          xmlhttp.open("GET","functions/delUser.php?appID="+a+"&userID="+k,true);
           xmlhttp.send();
           document.getElementById(r).remove();
         });
@@ -170,8 +96,8 @@
             <div class="widget-header"> <i class="icon-list-alt"></i>
               {nocache}
                 <h3>{$appName} > Benutzer</h3>
+                <span style="text-align: right;"><a href="userEdit.php?appID={$appID}" class="btn btn-info"><b>+</b>&nbsp;&nbsp;Neuer Benutzer</a></span>
               {/nocache}
-              <span style="text-align: right;"><a class="btn btn-info" onclick="newApp();"><b>+</b>&nbsp;&nbsp;Neuer Benutzer</a></span>
             </div>
             <!-- /widget-header -->
             <div class="widget-content">
@@ -180,7 +106,7 @@
                   <tr>
                     <th> ID </th>
                     <th> Name </th>
-                    <th class="td-actions" style="width: 11%;"> Aktion </th>
+                    <th class="td-actions" style="width: 7%;"> Aktion </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -191,10 +117,8 @@
                         <td id="userName{$i}" ondblclick="renameApp({$i});">{$userNames[$i]}</td>
                         <td class="td-actions btn-group">
                           {if $userNames[$i] != "Noch keine Benutzer erstellt."}
-                            <a href="javascript:;" class="btn btn-small btn-info" style="margin-right: 0px;"><i class="btn-icon-only icon-user"> </i></a>
-                            <a href="javascript:;" class="btn btn-small btn-warning" style="margin-right: 0px;"><i class="btn-icon-only icon-asterisk"> </i></a>
-                            <a href="javascript:;" class="btn btn-small btn-success" style="margin-right: 0px;" onclick="renameApp({$i});"><i class="btn-icon-only icon-pencil"> </i></a>
-                            <a href="javascript:;" class="btn btn-small btn-danger" onclick="delApp({$i});"><i class="btn-icon-only icon-remove"> </i></a>
+                            <a href="userEdit.php?appID={$appID}&userID={$userIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;"><i class="btn-icon-only icon-pencil"> </i></a>
+                            <a href="javascript:;" class="btn btn-small btn-danger" onclick="delUser({$appID}, {$i});"><i class="btn-icon-only icon-remove"> </i></a>
                           {/if}
                         </td>
                       </tr>

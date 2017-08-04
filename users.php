@@ -24,7 +24,7 @@
 
 	$key = 0;
 	
-	// Get accounts of user
+	// Get users of app
 	$query = $conn->query("SELECT * FROM fl_apps_users WHERE appID='$appID' ORDER BY appID ASC");
 	while ($row = $query->fetch_assoc()) {
 		$userID = $row["userID"];
@@ -43,6 +43,7 @@
 
 	// Assign variables to smarty
 	$smarty->assign("keys", $keys);
+	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
 	$smarty->assign("userIDs", $userIDs);
 	$smarty->assign("userNames", $userNames);

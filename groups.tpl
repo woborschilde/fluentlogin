@@ -23,7 +23,7 @@
 
 <script>
 		{literal}
-      function delgroup(a, i) {
+      function delGroup(a, i) {
         var r = "groupRow"+i.toString();
         var k = document.getElementById("groupID"+i.toString()).innerHTML;
         var m = document.getElementById("groupName"+i.toString()).innerHTML;
@@ -31,12 +31,12 @@
         i++;
         
         swal({
-          title: "Möchten Sie das Feld \""+m+"\" wirklich löschen?",
-          text: "Die Zuordnung zur Feld-ID \""+k+"\" bleibt weiterhin bestehen.",
+          title: "Möchten Sie die Gruppe \""+m+"\" wirklich löschen?",
+          text: "Sämtliche Verknüpfungen werden gelöscht.",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: '#d33',
-          confirmButtonText: 'Ja, Feld löschen',
+          confirmButtonText: 'Ja, Gruppe löschen',
           cancelButtonText: 'Abbrechen',
         }).then(function () {
           xmlhttp = new XMLHttpRequest();
@@ -118,7 +118,7 @@
                         <td class="td-actions btn-group">
                           {if $groupNames[$i] != "Noch keine Benutzergruppen erstellt."}
                             <a href="groupEdit.php?appID={$appID}&groupID={$groupIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;"><i class="btn-icon-only icon-pencil"> </i></a>
-                            <a href="javascript:;" class="btn btn-small btn-danger" onclick="delgroup({$appID}, {$i});"><i class="btn-icon-only icon-remove"> </i></a>
+                            <a href="javascript:;" class="btn btn-small btn-danger" onclick="delGroup({$appID}, {$i});"><i class="btn-icon-only icon-remove"> </i></a>
                           {/if}
                         </td>
                       </tr>

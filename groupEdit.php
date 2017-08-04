@@ -50,7 +50,7 @@
 		$permNames[] = $permName;
 
 		// Get permission values of group
-		$query1 = $conn->query("SELECT value FROM fl_apps_perms_values WHERE permID='$permID' && groupID='$groupID' ORDER BY valueID ASC");
+		$query1 = $conn->query("SELECT value FROM fl_apps_perms_values WHERE permID='$permID' && groupID='$groupID' && appID='$appID' ORDER BY valueID ASC");
 		while ($row1 = $query1->fetch_assoc()) {
 			$permValue = $row1["value"];
 

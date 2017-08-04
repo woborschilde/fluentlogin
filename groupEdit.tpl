@@ -122,7 +122,7 @@
               <div class="widget-content">
                 <br />
                   <form id="groupEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editgroup({$appID}, {$groupID}); return false;">
-                    <groupset>
+                    <fieldset>
                       <div class="control-group">
                         <label class="control-label" for="groupName">Name der Benutzergruppe:</label>
                         <div class="controls">
@@ -154,7 +154,7 @@
                         <button type="submit" class="btn btn-primary">Speichern</button> 
                         <a class="btn" onclick="window.history.back();">Abbrechen</a>
                       </div> <!-- /form-actions -->
-                    </groupset>
+                    </fieldset>
                   </form>
               </div>
             {/nocache}
