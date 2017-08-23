@@ -31,7 +31,7 @@
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	if ($permissionID > 0) {
-		db_sel("permName, permDescription", "fl_apps_permissions", "appID='$appID'", __FILE__, __LINE__);
+		db_sel("permName, permDescription", "fl_apps_permissions", "appID='$appID' && permID='$permissionID'", __FILE__, __LINE__);
 	} else {
 		$permName = "";
 		$permDescription = "";

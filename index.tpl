@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Dashboard - fluentlogin-Administration</title>
+<title>Dashboard - {$appName}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -20,40 +20,28 @@
 <body>
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
+    {nocache}
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin-Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">{$appName}</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Ich<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$userName}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">Meine Einstellungen</a></li>
-              <li><a href="javascript:;">Abmelden</a></li>
+              <li><a href="javascript:;">Einstellungen</a></li>
+              <li><a href="functions/doLogout.php?appID={$appID}&userID={$userID}">Abmelden</a></li>
             </ul>
           </li>
         </ul>
       </div>
       <!--/.nav-collapse --> 
     </div>
+    {/nocache}
     <!-- /container --> 
   </div>
   <!-- /navbar-inner --> 
 </div>
 <!-- /navbar -->
-<div class="subnavbar">
-  <div class="subnavbar-inner">
-    <div class="container">
-      <ul class="mainnav">
-        <li class="active"><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-        <li><a href="apps.php"><i class="icon-list-alt"></i><span>Anwendungen</span> </a> </li>
-        <li><a href="admins.php"><i class="icon-legal"></i><span>Administratoren</span> </a></li>
-        <li><a href="docs.php"><i class="icon-book"></i><span>Dokumentation</span> </a> </li>
-      </ul>
-    </div>
-    <!-- /container --> 
-  </div>
-  <!-- /subnavbar-inner --> 
-</div>
-<!-- /subnavbar -->
+<br />
 <div class="main">
   <div class="main-inner">
     <div class="container">
@@ -66,62 +54,17 @@
             </div>
             <!-- /widget-header -->
             <div class="widget-content">
+              {nocache}
+                <h1>Hallo, {$userName}!</h1>
+              {/nocache}
               <div class="shortcuts">
-                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-list-alt"></i><span class="shortcut-label">Anwendungen</span></a>
-                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-legal"></i><span class="shortcut-label">Administratoren</span></a>
-                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-book"></i><span class="shortcut-label">Dokumentation</span></a>
+                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-cog"></i><span class="shortcut-label">Einstellungen</span></a>
               </div>
               <!-- /shortcuts --> 
             </div>
             <!-- /widget-content --> 
           </div>
           <!-- /widget -->
-          <div class="widget widget-table action-table">
-            <div class="widget-header"> <i class="icon-th-list"></i>
-              <h3>A Table Example</h3>
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-              <table class="table table-striped table-bordered">
-                <thead>
-                  <tr>
-                    <th> Free Resource </th>
-                    <th> Download</th>
-                    <th class="td-actions"> </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                
-                </tbody>
-              </table>
-            </div>
-            <!-- /widget-content --> 
-          </div>
         </div>
         <!-- /span6 --> 
       </div>

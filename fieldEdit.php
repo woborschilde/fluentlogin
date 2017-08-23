@@ -31,10 +31,17 @@
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	if ($fieldID > 0) {
-		db_sel("fieldName, fieldDescription", "fl_apps_fields", "appID='$appID'", __FILE__, __LINE__);
+		db_sel("fieldName, fieldDescription, showOnLogin", "fl_apps_fields", "appID='$appID' && fieldID='$fieldID'", __FILE__, __LINE__);
 	} else {
 		$fieldName = "";
 		$fieldDescription = "";
+		$showOnLogin = "";
+	}
+
+	if ($showOnLogin == "1") {
+		$showOnLogin = "checked";
+	} else {
+		$showOnLogin = "";
 	}
 
 	// Assign variables to smarty
@@ -44,6 +51,7 @@
 	$smarty->assign("actionName", $actionName);
 	$smarty->assign("fieldName", $fieldName);
 	$smarty->assign("fieldDescription", $fieldDescription);
+	$smarty->assign("showOnLogin", $showOnLogin);
 	
 	$smarty->display("fieldEdit.tpl");
 ?>

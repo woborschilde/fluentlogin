@@ -2,62 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-{nocache}
-  <title>Feld {$actionName} - fluentlogin-Administration</title>
-{/nocache}
+<title>Dashboard - fluentlogin-Administration</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
+        rel="stylesheet">
 <link href="css/font-awesome.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/pages/dashboard.css" rel="stylesheet">
-
-<!-- Sweetalert Css -->
-<link href="css/sweetalert2.css" rel="stylesheet" />
-
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    
-<script>
-  {literal}
-    function editField(ai, fi) {
-      var fn = document.getElementById("fieldName".toString()).value;
-      var fd = document.getElementById("fieldDescription".toString()).value;
-      var sol = document.getElementById("showOnLogin".toString()).checked;
-      
-      if (sol == true) { sol = "1"; } else { sol = "0"; }
-
-      xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          if (this.responseText == "1") {
-            swal({
-              type: "success",
-              title: "Felder aktualisiert",
-              text: "Die Felder wurden aktualisiert."
-            });
-            setTimeout(function(){
-              location.replace("fields.php?appID="+ai);
-            }, 1000);
-          } else {
-            swal({
-              type: "error",
-              title: "Fehler beim Aktualisieren der Felder",
-              text: this.responseText
-            });
-          }
-        }
-      }
-      xmlhttp.open("GET","functions/editField.php?appID="+ai+"&fieldID="+fi+"&fieldName="+fn+"&fieldDescription="+fd+"&showOnLogin="+sol,true);
-      xmlhttp.send();
-    }
-  {/literal}
-</script>
-
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
@@ -85,8 +43,8 @@
   <div class="subnavbar-inner">
     <div class="container">
       <ul class="mainnav">
-        <li><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-        <li class="active"><a href="apps.php"><i class="icon-list-alt"></i><span>Anwendungen</span> </a> </li>
+        <li class="active"><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+        <li><a href="apps.php"><i class="icon-list-alt"></i><span>Anwendungen</span> </a> </li>
         <li><a href="admins.php"><i class="icon-legal"></i><span>Administratoren</span> </a></li>
         <li><a href="docs.php"><i class="icon-book"></i><span>Dokumentation</span> </a> </li>
       </ul>
@@ -102,46 +60,66 @@
       <div class="row">
         <!-- /span6 -->
         <div class="span6" style="width: 100%;">
-          <div class="widget widget-table action-table">
-            <div class="widget-header"> <i class="icon-list-alt"></i>
-              {nocache}
-                <h3>{$appName} > Feld {$actionName}</h3>
-              {/nocache}
+          <div class="widget">
+            <div class="widget-header"> <i class="icon-bookmark"></i>
+              <h3>Funktionen</h3>
             </div>
             <!-- /widget-header -->
-            {nocache}
-              <div class="widget-content">
-                <br />
-                  <form id="fieldEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editField({$appID}, {$fieldID}); return false;">
-                    <fieldset>
-                      <div class="control-group">
-                        <label class="control-label" for="fieldName">Feldname:</label>
-                        <div class="controls">
-                          <input type="text" class="span6" id="fieldName" value="{$fieldName}">
-                        </div> <!-- /controls -->				
-                      </div> <!-- /control-group -->
-
-                      <div class="control-group">
-                        <label class="control-label" for="fieldDescription">Feldbeschreibung:</label>
-                        <div class="controls">
-                          <input type="text" class="span6" id="fieldDescription" value="{$fieldDescription}">
-                        </div> <!-- /controls -->				
-                      </div> <!-- /control-group -->
-
-                      <div class="control-group">
-                        <div class="controls">
-                          <label style="width: 40%;"><input type="checkbox" id="showOnLogin" class="field login-checkbox" {$showOnLogin}><span style="vertical-align: middle;"> Bei der Anmeldung anzeigen</span></label>
-                        </div> <!-- /controls -->				
-                      </div> <!-- /control-group -->
-
-                      <div class="form-actions" style="margin-bottom: 0px;">
-                        <button type="submit" class="btn btn-primary">Speichern</button> 
-                        <a class="btn" onclick="window.history.back();">Abbrechen</a>
-                      </div> <!-- /form-actions -->
-                    </fieldset>
-                  </form>
+            <div class="widget-content">
+              <div class="shortcuts">
+                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-list-alt"></i><span class="shortcut-label">Anwendungen</span></a>
+                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-legal"></i><span class="shortcut-label">Administratoren</span></a>
+                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-book"></i><span class="shortcut-label">Dokumentation</span></a>
               </div>
-            {/nocache}
+              <!-- /shortcuts --> 
+            </div>
+            <!-- /widget-content --> 
+          </div>
+          <!-- /widget -->
+          <div class="widget widget-table action-table">
+            <div class="widget-header"> <i class="icon-th-list"></i>
+              <h3>A Table Example</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+              <table class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th> Free Resource </th>
+                    <th> Download</th>
+                    <th class="td-actions"> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> Fresh Web Development Resources </td>
+                    <td> http://www.egrappler.com/ </td>
+                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
+                  </tr>
+                  <tr>
+                    <td> Fresh Web Development Resources </td>
+                    <td> http://www.egrappler.com/ </td>
+                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
+                  </tr>
+                  <tr>
+                    <td> Fresh Web Development Resources </td>
+                    <td> http://www.egrappler.com/ </td>
+                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
+                  </tr>
+                  <tr>
+                    <td> Fresh Web Development Resources </td>
+                    <td> http://www.egrappler.com/ </td>
+                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
+                  </tr>
+                  <tr>
+                    <td> Fresh Web Development Resources </td>
+                    <td> http://www.egrappler.com/ </td>
+                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
             <!-- /widget-content --> 
           </div>
         </div>
@@ -176,10 +154,7 @@
 <script src="js/chart.min.js" type="text/javascript"></script> 
 <script src="js/bootstrap.js"></script>
 <script language="javascript" type="text/javascript" src="js/full-calendar/fullcalendar.min.js"></script>
-
-<!-- SweetAlert Plugin Js -->
-<script src="js/sweetalert2.min.js"></script>
-
+ 
 <script src="js/base.js"></script> 
 <script>     
 
