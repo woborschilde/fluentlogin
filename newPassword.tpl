@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     {nocache}
-			<title>Anmelden - {$appName}</title>
+			<title>Neues Passwort setzen - {$appName}</title>
 		{/nocache}
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -24,16 +24,19 @@
 
 <script>
   {literal}
-    var queryString = "";
-
-    function login(ai) {
-      var un = document.getElementById("username".toString()).value;
+    function setNewPassword(ai) {
+			var ui = document.getElementById("userID".toString()).value;
       var up = document.getElementById("password".toString()).value;
-      
-      var userFields = document.getElementsByName("field");
-      userFields.forEach(setField);
-      
-			var re = document.getElementById("remember".toString()).checked;
+	  	var uc = document.getElementById("confirm_password".toString()).value;
+
+			if (up != uc) {
+				swal({
+					type: "error",
+					title: "Can't save that",
+					text: "The entered passwords do not match."
+				});
+				return;
+			}
 
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
@@ -41,8 +44,8 @@
           if (this.responseText == "1") {
             swal({
               type: "success",
-              title: "Angemeldet",
-              text: "Sie wurden erfolgreich angemeldet."
+              title: "Password changed",
+              text: "Your password has been changed successfully."
             });
             setTimeout(function(){
               {/literal}
@@ -52,18 +55,14 @@
           } else {
             swal({
               type: "error",
-              title: "Anmeldung fehlgeschlagen",
+              title: "Couldn't change password",
               text: this.responseText
             });
           }
         }
       }
-      xmlhttp.open("GET","functions/doLogin.php?appID="+ai+"&userName="+un+"&userPassword="+up+queryString+"&remember="+re,true);
+      xmlhttp.open("GET","functions/setNewPassword.php?appID="+ai+"&userID="+ui+"&userPassword="+up,true);
       xmlhttp.send();
-    }
-
-    function setField(item, index) {
-      queryString += "&"+item.id+"="+item.value;
     }
   {/literal}
 </script>
@@ -112,63 +111,42 @@
 	
 	<div class="content clearfix">
 		
-		<form onsubmit="login({$appID}); return false;">
+		<form onsubmit="setNewPassword({$appID}); return false;">
 		
-			<h1>Anmelden bei {nocache}{$appName}{/nocache}</h1>		
+			<h1>Set new password</h1>		
 			
 			<div class="login-fields">
 				
-				<p>Bitte melden Sie sich an.</p>
+				<p>Your current password has expired. In order to continue, you have to set a new one.</p>
 				
+				{nocache}
+					<input type="hidden" id="userID" name="userID" value="{$userID}" />
+				{/nocache}
+
 				<div class="field">
-					<label for="username">Benutzername</label>
-					<input type="text" id="username" name="username" value="" placeholder="Benutzername" class="login username-field" />
+					<label for="password">New Password:</label>
+					<input type="password" id="password" name="password" value="" placeholder="New Password" class="login password-field" required />
 				</div> <!-- /field -->
 				
 				<div class="field">
-					<label for="password">Passwort</label>
-					<input type="password" id="password" name="password" value="" placeholder="Passwort" class="login password-field"/>
-				</div> <!-- /password -->
-				
-				{nocache}
-				  {foreach from=$keys item=k}
-					  {if $fieldIDs[$k] != ""}
-						<div class="field">
-							<label for="field{$fieldIDs[$k]}">{$fieldNames[$k]}</label>
-							<input type="text" id="field{$fieldIDs[$k]}" name="field" value="" placeholder="{$fieldNames[$k]}" class="login username-field" />
-						</div> <!-- /field -->
-					  {/if}
-				  {/foreach}
-				{/nocache}
+					<label for="confirm_password">Confirm New Password:</label>
+					<input type="password" id="confirm_password" name="confirm_password" value="" placeholder="Confirm New Password" class="login password-field" required />
+				</div> <!-- /field -->
 
 			</div> <!-- /login-fields -->
-			
-			<div class="alert alert-info">
-				By logging in, you accept cookies to be saved on your computer.
-			</div>
 
 			<div class="login-actions">
 				
-				<span class="login-checkbox">
-					<input id="remember" name="remember" type="checkbox" class="field login-checkbox" value="First Choice" tabindex="4" />
-					<label class="choice" for="remember">Angemeldet bleiben</label>
-				</span>
-									
-				<button type="submit" class="button btn btn-success btn-large">Anmelden</button>
+				<button type="submit" class="button btn btn-primary btn-large">Save</button>
+				<a href="" class="button btn btn-default btn-large" style="margin-right: 10px;" onclick="window.history.back();">Logout</a>
 				
 			</div> <!-- .actions -->
-			
-			
 			
 		</form>
 		
 	</div> <!-- /content -->
 	
 </div> <!-- /account-container -->
-
-<div class="login-extra" style="text-align: center;">
-	<a href="passwordLost.php?appID={$appID}">Passwort vergessen?</a> | <a href="license.php?appID={$appID}">Registrieren</a>
-</div> <!-- /login-extra -->
 
 <hr />
 <div style="color: gray; text-align: center;">

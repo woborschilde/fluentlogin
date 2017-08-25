@@ -37,7 +37,12 @@
             goto not_logged_in;
 	    }
 
-        db_sel("userName", "fl_apps_users", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
+        db_sel("userName, loginToken", "fl_apps_users", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
+
+        if (strpos($loginToken, "r") !== false) {
+            header("Location: https://intra.woborschil.net/fluentlogin/newPassword.php?appID=$appID&userID=$userID&redirect=$redirect");
+            die();
+        }
     } else {
         not_logged_in:
         header("Location: https://intra.woborschil.net/fluentlogin/login.php?appID=$appID&redirect=$redirect");

@@ -2,22 +2,49 @@
     require("/var/www/unscramblephp/Unscramble.php");
 
 	$appID = $_GET["appID"];
-    $userName = $_GET["userName"];
-    $userPassword = $_GET["userPassword"];
+
+    if (!(isset($_GET["loginToken"]))) {
+        $userName = $_GET["userName"];
+        $userPassword = $_GET["userPassword"];
+    } else {
+        $userID = $_GET["userID"];
+        $loginToken = $_GET["loginToken"];
+    }
 
     if (isset($_GET["remember"])) {
 		$remember = $_GET["remember"];
 	} else {
 		$remember = "false";
 	}
-    
+
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 
-    db_sel("userID", "fl_apps_users", "appID='$appID' && userName COLLATE latin1_general_cs ='$userName' && userPassword COLLATE latin1_general_cs ='$userPassword'", __FILE__, __LINE__);
+    if (!(isset($_GET["loginToken"]))) {
+        db_sel("userID", "fl_apps_users", "appID='$appID' && userName COLLATE latin1_general_cs ='$userName' && userPassword COLLATE latin1_general_cs ='$userPassword'", __FILE__, __LINE__);
 
-    if ($num_rows == 0) {
-        die("Benutzername oder Kennwort sind falsch.");
+        if ($num_rows == 0) {
+            die("Username or password are wrong.");
+        }
+
+        db_sel("NULL", "fl_apps_users", "appID='$appID' && userName='$userName' && confirmationCode>'0'", __FILE__, __LINE__);
+
+        if ($num_rows > 0) {
+            die("This account has not been activated yet.");
+        }
+    } else {
+        db_sel("NULL", "fl_apps_users", "appID='$appID' && userID='$userID' && loginToken='$loginToken'", __FILE__, __LINE__);
+
+        if ($num_rows == 0) {
+            die("This token is invalid.");
+        }
+
+        if (strpos($loginToken, "r") !== false) {
+            db_upd("fl_apps_users", "forceNewPassword='1'", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
+
+            header("Location: https://intra.woborschil.net/fluentlogin/newPassword.php?appID=$appID&userID=$userID&redirect=index.php");
+            die();
+        }
     }
 
     // set field values
