@@ -1,6 +1,12 @@
 <?php
     require("/var/www/unscramblephp/Unscramble.php");
 
+    foreach ($_GET as $key => $value) {
+        if ((strpos($value, "'") !== false) || (strpos($value, '"') !== false)) {
+            die("You are not allowed to use apostrophes or quotation marks in your credentials.");
+        }
+    }
+
 	$appID = $_GET["appID"];
     $userName = $_GET["userName"];
     $userEmail = $_GET["userEmail"];
@@ -9,6 +15,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 
+	db_san($_GET);
+	
     db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
     if ($num_rows == 0) {

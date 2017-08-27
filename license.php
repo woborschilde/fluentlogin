@@ -20,6 +20,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
+	db_san($_GET);
+	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	if ($num_rows == 0) {
@@ -40,5 +42,5 @@
 
     $smarty->assign("license", $license);
 	
-	$smarty->display("license.tpl");
+	$smarty->display("templates/license.tpl");
 ?>

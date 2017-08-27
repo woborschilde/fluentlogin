@@ -11,10 +11,10 @@
 
 	if (isset($_GET["userID"])) {
 		$userID = $_GET["userID"];
-		$actionName = "$userID bearbeiten";
+		$actionName = "($userID) Edit";
 	} else {
 		$userID = 0;
-		$actionName = "hinzufügen";
+		$actionName = "Add";
 	}
 
 	// Check user login status
@@ -27,6 +27,8 @@
 	require("/var/www/unscramblephp/Unscramble.php");
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
+	
+	db_san($_GET);
 	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
@@ -66,7 +68,7 @@
 	if ($num_rows0 == 0) {
 		$keys0[] = $key0;
 		$fieldIDs[] = "-";
-		$fieldNames[] = "Noch keine Felder erstellt.";
+		$fieldNames[] = "No fields created yet.";
 		$fieldValues[] = "";
 	}
 
@@ -97,7 +99,7 @@
 	if ($num_rows0 == 0) {
 		$keys[] = $key;
 		$groupIDs[] = "-";
-		$groupNames[] = "Noch keine Benutzergruppen erstellt.";
+		$groupNames[] = "No user groups created yet.";
 		$groupValues[] = "";
 	}
 
@@ -119,5 +121,5 @@
 	$smarty->assign("groupNames", $groupNames);
 	$smarty->assign("groupValues", $groupValues);
 	
-	$smarty->display("userEdit.tpl");
+	$smarty->display("templates/userEdit.tpl");
 ?>

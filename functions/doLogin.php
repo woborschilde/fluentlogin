@@ -20,6 +20,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 
+    db_san($_GET);
+
     if (!(isset($_GET["loginToken"]))) {
         db_sel("userID", "fl_apps_users", "appID='$appID' && userName COLLATE latin1_general_cs ='$userName' && userPassword COLLATE latin1_general_cs ='$userPassword'", __FILE__, __LINE__);
 

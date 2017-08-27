@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 {nocache}
-  <title>Benutzer {$actionName} - fluentlogin-Administration</title>
+  <title>Benutzer {$actionName} - fluentlogin Administration</title>
 {/nocache}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
-<link href="css/font-awesome.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/pages/dashboard.css" rel="stylesheet">
+<link href="../css/font-awesome.css" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet">
+<link href="../css/pages/dashboard.css" rel="stylesheet">
 
 <!-- Sweetalert Css -->
-<link href="css/sweetalert2.css" rel="stylesheet" />
+<link href="../css/sweetalert2.css" rel="stylesheet" />
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -57,7 +57,7 @@
           }
         }
       }
-      xmlhttp.open("GET","functions/editUser.php?appID="+ai+"&userID="+ui+"&userName="+un+"&userPassword="+up+queryString,true);
+      xmlhttp.open("GET","../functions/editUser.php?appID="+ai+"&userID="+ui+"&userName="+un+"&userPassword="+up+queryString,true);
       xmlhttp.send();
     }
 
@@ -78,13 +78,13 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin-Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin Administration</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Ich<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My account<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">Meine Einstellungen</a></li>
-              <li><a href="javascript:;">Abmelden</a></li>
+              <li><a href="javascript:;">My settings</a></li>
+              <li><a href="javascript:;">Log out</a></li>
             </ul>
           </li>
         </ul>
@@ -101,9 +101,9 @@
     <div class="container">
       <ul class="mainnav">
         <li><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-        <li class="active"><a href="apps.php"><i class="icon-list-alt"></i><span>Anwendungen</span> </a> </li>
-        <li><a href="admins.php"><i class="icon-legal"></i><span>Administratoren</span> </a></li>
-        <li><a href="docs.php"><i class="icon-book"></i><span>Dokumentation</span> </a> </li>
+        <li class="active"><a href="apps.php"><i class="icon-list-alt"></i><span>Applications</span> </a> </li>
+        <li><a href="admins.php"><i class="icon-legal"></i><span>Administrators</span> </a></li>
+        <li><a href="docs.php"><i class="icon-book"></i><span>Documentation</span> </a> </li>
       </ul>
     </div>
     <!-- /container --> 
@@ -120,7 +120,7 @@
           <div class="widget widget-table action-table">
             <div class="widget-header"> <i class="icon-list-alt"></i>
               {nocache}
-                <h3>{$appName} > Benutzer {$actionName}</h3>
+                <h3>{$appName} > {$actionName} user</h3>
               {/nocache}
             </div>
             <!-- /widget-header -->
@@ -130,14 +130,14 @@
                   <form id="userEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editUser({$appID}, {$userID}); return false;">
                     <fieldset>
                       <div class="control-group">
-                        <label class="control-label" for="userName">Benutzername:</label>
+                        <label class="control-label" for="userName">Username:</label>
                         <div class="controls">
                           <input type="text" class="span6" id="userName" value="{$userName}">
                         </div> <!-- /controls -->				
                       </div> <!-- /control-group -->
 
                       <div class="control-group">
-                        <label class="control-label" for="userPassword">Passwort:</label>
+                        <label class="control-label" for="userPassword">Password:</label>
                         <div class="controls">
                           <input type="password" class="span6" id="userPassword" value="{$userPassword}">
                         </div> <!-- /controls -->				
@@ -156,21 +156,21 @@
                       {/foreach}
 
                       <div class="panel panel-warning" style="margin-left: 2%; width: 60%;">
-                        <div class="panel-heading">Zugehörige Benutzergruppen</div>
+                        <div class="panel-heading">Assigned user groups</div>
                         <div class="panel-body">
                           {foreach from=$keys item=i}
                             {if $groupIDs[$i] != "-"}
                               <label style="width: 40%;"><input type="checkbox" id="group{$groupIDs[$i]}" name="group" class="filled-in chk-col-red" {$groupValues[$i]}><span style="vertical-align: middle;"> {$groupNames[$i]}</span></label>
                             {else}
-                              {$groupNames[$i]} <a href="groupEdit.php?appID={$appID}" target="_blank"><u>Erstellen</u></a>
+                              {$groupNames[$i]} <a href="groupEdit.php?appID={$appID}" target="_blank"><u>Create</u></a>
                             {/if}
                           {/foreach}
                         </div>
                       </div>
 
                       <div class="form-actions" style="margin-bottom: 0px;">
-                        <button type="submit" class="btn btn-primary">Speichern</button> 
-                        <a class="btn" onclick="window.history.back();">Abbrechen</a>
+                        <button type="submit" class="btn btn-primary">Save</button> 
+                        <a class="btn" onclick="window.history.back();">Cancel</a>
                       </div> <!-- /form-actions -->
                     </fieldset>
                   </form>
@@ -192,7 +192,7 @@
   <div class="footer-inner">
     <div class="container">
       <div class="row">
-        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, entwickelt von <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
+        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, developed by <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
         <!-- /span12 --> 
       </div>
       <!-- /row --> 
@@ -205,16 +205,16 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="js/jquery-1.7.2.min.js"></script> 
-<script src="js/excanvas.min.js"></script> 
-<script src="js/chart.min.js" type="text/javascript"></script> 
-<script src="js/bootstrap.js"></script>
-<script language="javascript" type="text/javascript" src="js/full-calendar/fullcalendar.min.js"></script>
+<script src="../js/jquery-1.7.2.min.js"></script> 
+<script src="../js/excanvas.min.js"></script> 
+<script src="../js/chart.min.js" type="text/javascript"></script> 
+<script src="../js/bootstrap.js"></script>
+<script language="javascript" type="text/javascript" src="../js/full-calendar/fullcalendar.min.js"></script>
 
 <!-- SweetAlert Plugin Js -->
-<script src="js/sweetalert2.min.js"></script>
+<script src="../js/sweetalert2.min.js"></script>
 
-<script src="js/base.js"></script> 
+<script src="../js/base.js"></script> 
 <script>     
 
         var lineChartData = {

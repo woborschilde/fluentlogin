@@ -17,5 +17,5 @@
 	// Assign variables to smarty
 	//$smarty->assign('balanceformatted', $balanceformatted);
 	
-	$smarty->display('admin.tpl');
+	$smarty->display("templates/index.tpl");
 ?>

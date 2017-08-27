@@ -20,6 +20,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
+	db_san($_GET);
+	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	$key = 0;
@@ -38,7 +40,7 @@
 	if ($query->num_rows == 0) {
 		$keys[] = $key;
 		$fieldIDs[] = "-";
-		$fieldNames[] = "Noch keine Felder erstellt.";
+		$fieldNames[] = "No fields created yet.";
 	}
 
 	// Assign variables to smarty
@@ -48,5 +50,5 @@
 	$smarty->assign("fieldIDs", $fieldIDs);
 	$smarty->assign("fieldNames", $fieldNames);
 	
-	$smarty->display("fields.tpl");
+	$smarty->display("templates/fields.tpl");
 ?>

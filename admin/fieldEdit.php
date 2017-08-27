@@ -9,12 +9,12 @@
 		die("Argument ''appID'' is required!");
 	}
 
-	if (isset($_GET["permissionID"])) {
-		$permissionID = $_GET["permissionID"];
-		$actionName = "bearbeiten";
+	if (isset($_GET["fieldID"])) {
+		$fieldID = $_GET["fieldID"];
+		$actionName = "($fieldID) Edit";
 	} else {
-		$permissionID = 0;
-		$actionName = "hinzufügen";
+		$fieldID = 0;
+		$actionName = "Add";
 	}
 
 	// Check user login status
@@ -28,22 +28,32 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
+	db_san($_GET);
+	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
-	if ($permissionID > 0) {
-		db_sel("permName, permDescription", "fl_apps_permissions", "appID='$appID' && permID='$permissionID'", __FILE__, __LINE__);
+	if ($fieldID > 0) {
+		db_sel("fieldName, fieldDescription, showOnLogin", "fl_apps_fields", "appID='$appID' && fieldID='$fieldID'", __FILE__, __LINE__);
 	} else {
-		$permName = "";
-		$permDescription = "";
+		$fieldName = "";
+		$fieldDescription = "";
+		$showOnLogin = "";
+	}
+
+	if ($showOnLogin == "1") {
+		$showOnLogin = "checked";
+	} else {
+		$showOnLogin = "";
 	}
 
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
-	$smarty->assign("permissionID", $permissionID);
+	$smarty->assign("fieldID", $fieldID);
 	$smarty->assign("actionName", $actionName);
-	$smarty->assign("permissionName", $permName);
-	$smarty->assign("permissionDescription", $permDescription);
+	$smarty->assign("fieldName", $fieldName);
+	$smarty->assign("fieldDescription", $fieldDescription);
+	$smarty->assign("showOnLogin", $showOnLogin);
 	
-	$smarty->display("permissionEdit.tpl");
+	$smarty->display("templates/fieldEdit.tpl");
 ?>

@@ -2,32 +2,64 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Dashboard - fluentlogin-Administration</title>
+<title>Users - fluentlogin Administration</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
         rel="stylesheet">
-<link href="css/font-awesome.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/pages/dashboard.css" rel="stylesheet">
+<link href="../css/font-awesome.css" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet">
+<link href="../css/pages/dashboard.css" rel="stylesheet">
+
+<!-- Sweetalert Css -->
+<link href="../css/sweetalert2.css" rel="stylesheet" />
+
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+<script>
+		{literal}
+      function delUser(a, i) {
+        var r = "userRow"+i.toString();
+        var k = document.getElementById("userID"+i.toString()).innerHTML;
+        var m = document.getElementById("userName"+i.toString()).innerHTML;
+        
+        i++;
+        
+        swal({
+          title: "Really delete user \""+m+"\"?",
+          text: "All links will be removed.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete user',
+          cancelButtonText: 'Cancel',
+        }).then(function () {
+          xmlhttp = new XMLHttpRequest();
+          xmlhttp.open("GET","../functions/delUser.php?appID="+a+"&userID="+k,true);
+          xmlhttp.send();
+          document.getElementById(r).remove();
+        });
+      }
+    {/literal}
+</script>
+
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin-Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin Administration</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Ich<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My account<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">Meine Einstellungen</a></li>
-              <li><a href="javascript:;">Abmelden</a></li>
+              <li><a href="javascript:;">My settings</a></li>
+              <li><a href="javascript:;">Log out</a></li>
             </ul>
           </li>
         </ul>
@@ -43,10 +75,10 @@
   <div class="subnavbar-inner">
     <div class="container">
       <ul class="mainnav">
-        <li class="active"><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-        <li><a href="apps.php"><i class="icon-list-alt"></i><span>Anwendungen</span> </a> </li>
-        <li><a href="admins.php"><i class="icon-legal"></i><span>Administratoren</span> </a></li>
-        <li><a href="docs.php"><i class="icon-book"></i><span>Dokumentation</span> </a> </li>
+        <li><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+        <li class="active"><a href="apps.php"><i class="icon-list-alt"></i><span>Applications</span> </a> </li>
+        <li><a href="admins.php"><i class="icon-legal"></i><span>Administrators</span> </a></li>
+        <li><a href="docs.php"><i class="icon-book"></i><span>Documentation</span> </a> </li>
       </ul>
     </div>
     <!-- /container --> 
@@ -60,63 +92,38 @@
       <div class="row">
         <!-- /span6 -->
         <div class="span6" style="width: 100%;">
-          <div class="widget">
-            <div class="widget-header"> <i class="icon-bookmark"></i>
-              <h3>Funktionen</h3>
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-              <div class="shortcuts">
-                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-list-alt"></i><span class="shortcut-label">Anwendungen</span></a>
-                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-legal"></i><span class="shortcut-label">Administratoren</span></a>
-                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-book"></i><span class="shortcut-label">Dokumentation</span></a>
-              </div>
-              <!-- /shortcuts --> 
-            </div>
-            <!-- /widget-content --> 
-          </div>
-          <!-- /widget -->
           <div class="widget widget-table action-table">
-            <div class="widget-header"> <i class="icon-th-list"></i>
-              <h3>A Table Example</h3>
+            <div class="widget-header"> <i class="icon-list-alt"></i>
+              {nocache}
+                <h3>{$appName} > Users</h3>
+                <span style="text-align: right;"><a href="userEdit.php?appID={$appID}" class="btn btn-info"><b>+</b>&nbsp;&nbsp;New user</a></span>
+              {/nocache}
             </div>
             <!-- /widget-header -->
             <div class="widget-content">
               <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
-                    <th> Free Resource </th>
-                    <th> Download</th>
-                    <th class="td-actions"> </th>
+                    <th> ID </th>
+                    <th> Name </th>
+                    <th class="td-actions" style="width: 7%;"> Action </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                
+                  {nocache}
+                    {foreach from=$keys item=i}
+                      <tr id="userRow{$i}">
+                        <td id="userID{$i}">{$userIDs[$i]}</td>
+                        <td id="userName{$i}" ondblclick="renameApp({$i});">{$userNames[$i]}</td>
+                        <td class="td-actions btn-group">
+                          {if $userNames[$i] != "No users created yet."}
+                            <a href="userEdit.php?appID={$appID}&userID={$userIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;"><i class="btn-icon-only icon-pencil"> </i></a>
+                            <a href="javascript:;" class="btn btn-small btn-danger" onclick="delUser({$appID}, {$i});"><i class="btn-icon-only icon-remove"> </i></a>
+                          {/if}
+                        </td>
+                      </tr>
+                    {/foreach}
+                  {/nocache}
                 </tbody>
               </table>
             </div>
@@ -136,7 +143,7 @@
   <div class="footer-inner">
     <div class="container">
       <div class="row">
-        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, entwickelt von <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
+        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, developed by <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
         <!-- /span12 --> 
       </div>
       <!-- /row --> 
@@ -149,13 +156,16 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="js/jquery-1.7.2.min.js"></script> 
-<script src="js/excanvas.min.js"></script> 
-<script src="js/chart.min.js" type="text/javascript"></script> 
-<script src="js/bootstrap.js"></script>
-<script language="javascript" type="text/javascript" src="js/full-calendar/fullcalendar.min.js"></script>
- 
-<script src="js/base.js"></script> 
+<script src="../js/jquery-1.7.2.min.js"></script> 
+<script src="../js/excanvas.min.js"></script> 
+<script src="../js/chart.min.js" type="text/javascript"></script> 
+<script src="../js/bootstrap.js"></script>
+<script language="javascript" type="text/javascript" src="../js/full-calendar/fullcalendar.min.js"></script>
+
+<!-- SweetAlert Plugin Js -->
+<script src="../js/sweetalert2.min.js"></script>
+
+<script src="../js/base.js"></script> 
 <script>     
 
         var lineChartData = {

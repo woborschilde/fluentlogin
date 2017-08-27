@@ -14,6 +14,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 
+	db_san($_GET);
+	
     if (isset($fieldID)) {
         db_upd("fl_apps_fields", "fieldName='$fieldName', fieldDescription='$fieldDescription', showOnLogin='$showOnLogin'", "appID='$appID' && fieldID='$fieldID'", __FILE__, __LINE__);
     } else {

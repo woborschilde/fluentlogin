@@ -20,33 +20,35 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
+	db_san($_GET);
+	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	$key = 0;
 	
 	// Get accounts of user
-	$query = $conn->query("SELECT * FROM fl_apps_groups WHERE appID='$appID' ORDER BY appID ASC");
+	$query = $conn->query("SELECT * FROM fl_apps_permissions WHERE appID='$appID' ORDER BY appID ASC");
 	while ($row = $query->fetch_assoc()) {
-		$groupID = $row["groupID"];
-		$groupName = $row["groupName"];
+		$permissionID = $row["permID"];
+		$permissionName = $row["permName"];
 
 		$keys[] = $key; $key++;
-		$groupIDs[] = $groupID;
-		$groupNames[] = $groupName;
+		$permissionIDs[] = $permissionID;
+		$permissionNames[] = $permissionName;
 	}
 
 	if ($query->num_rows == 0) {
 		$keys[] = $key;
-		$groupIDs[] = "-";
-		$groupNames[] = "Noch keine Benutzergruppen erstellt.";
+		$permissionIDs[] = "-";
+		$permissionNames[] = "No permissions created yet.";
 	}
 
 	// Assign variables to smarty
 	$smarty->assign("keys", $keys);
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
-	$smarty->assign("groupIDs", $groupIDs);
-	$smarty->assign("groupNames", $groupNames);
+	$smarty->assign("permissionIDs", $permissionIDs);
+	$smarty->assign("permissionNames", $permissionNames);
 	
-	$smarty->display("groups.tpl");
+	$smarty->display("templates/permissions.tpl");
 ?>

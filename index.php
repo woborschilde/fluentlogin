@@ -17,6 +17,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
+	db_san($_GET);
+	
 	// Check user login status
 	$embed = 1;
 	$redirect = "index.php";
@@ -35,5 +37,5 @@
 	$smarty->assign("userID", $userID);
 	$smarty->assign("userName", $userName);
 	
-	$smarty->display('index.tpl');
+	$smarty->display("templates/index.tpl");
 ?>

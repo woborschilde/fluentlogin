@@ -6,5 +6,7 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 
+	db_san($_GET);
+	
     db_del("fl_apps_fields", "fieldID='$fieldID'", __FILE__, __LINE__);
 ?>

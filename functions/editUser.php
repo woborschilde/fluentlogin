@@ -13,6 +13,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 
+	db_san($_GET);
+	
     if (isset($userID)) {
         db_upd("fl_apps_users", "userName='$userName', userPassword='$userPassword'", "userID='$userID'", __FILE__, __LINE__);
         db_del("fl_apps_user_to_groups", "userID='$userID' && appID='$appID'", __FILE__, __LINE__); // reset user to group assignments (delete)

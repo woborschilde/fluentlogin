@@ -20,33 +20,35 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
+	db_san($_GET);
+	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	$key = 0;
 	
-	// Get users of app
-	$query = $conn->query("SELECT * FROM fl_apps_users WHERE appID='$appID' ORDER BY appID ASC");
+	// Get accounts of user
+	$query = $conn->query("SELECT * FROM fl_apps_groups WHERE appID='$appID' ORDER BY appID ASC");
 	while ($row = $query->fetch_assoc()) {
-		$userID = $row["userID"];
-		$userName = $row["userName"];
+		$groupID = $row["groupID"];
+		$groupName = $row["groupName"];
 
 		$keys[] = $key; $key++;
-		$userIDs[] = $userID;
-		$userNames[] = $userName;
+		$groupIDs[] = $groupID;
+		$groupNames[] = $groupName;
 	}
 
 	if ($query->num_rows == 0) {
 		$keys[] = $key;
-		$userIDs[] = "-";
-		$userNames[] = "Noch keine Benutzer erstellt.";
+		$groupIDs[] = "-";
+		$groupNames[] = "No user groups created yet.";
 	}
 
 	// Assign variables to smarty
 	$smarty->assign("keys", $keys);
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
-	$smarty->assign("userIDs", $userIDs);
-	$smarty->assign("userNames", $userNames);
+	$smarty->assign("groupIDs", $groupIDs);
+	$smarty->assign("groupNames", $groupNames);
 	
-	$smarty->display("users.tpl");
+	$smarty->display("templates/groups.tpl");
 ?>

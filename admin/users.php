@@ -20,33 +20,35 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
+	db_san($_GET);
+	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	$key = 0;
 	
-	// Get accounts of user
-	$query = $conn->query("SELECT * FROM fl_apps_permissions WHERE appID='$appID' ORDER BY appID ASC");
+	// Get users of app
+	$query = $conn->query("SELECT * FROM fl_apps_users WHERE appID='$appID' ORDER BY appID ASC");
 	while ($row = $query->fetch_assoc()) {
-		$permissionID = $row["permID"];
-		$permissionName = $row["permName"];
+		$userID = $row["userID"];
+		$userName = $row["userName"];
 
 		$keys[] = $key; $key++;
-		$permissionIDs[] = $permissionID;
-		$permissionNames[] = $permissionName;
+		$userIDs[] = $userID;
+		$userNames[] = $userName;
 	}
 
 	if ($query->num_rows == 0) {
 		$keys[] = $key;
-		$permissionIDs[] = "-";
-		$permissionNames[] = "Noch keine Berechtigungen erstellt.";
+		$userIDs[] = "-";
+		$userNames[] = "No users created yet.";
 	}
 
 	// Assign variables to smarty
 	$smarty->assign("keys", $keys);
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
-	$smarty->assign("permissionIDs", $permissionIDs);
-	$smarty->assign("permissionNames", $permissionNames);
+	$smarty->assign("userIDs", $userIDs);
+	$smarty->assign("userNames", $userNames);
 	
-	$smarty->display("permissions.tpl");
+	$smarty->display("templates/users.tpl");
 ?>

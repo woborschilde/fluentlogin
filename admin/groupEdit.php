@@ -11,10 +11,10 @@
 
 	if (isset($_GET["groupID"])) {
 		$groupID = $_GET["groupID"];
-		$actionName = "$groupID bearbeiten";
+		$actionName = "($groupID) Edit";
 	} else {
 		$groupID = 0;
-		$actionName = "hinzufügen";
+		$actionName = "Add";
 	}
 
 	// Check user login status
@@ -27,6 +27,8 @@
 	require("/var/www/unscramblephp/Unscramble.php");
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
+	
+	db_san($_GET);
 	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
@@ -72,7 +74,8 @@
 	if ($query->num_rows == 0) {
 		$keys[] = $key;
 		$permIDs[] = "-";
-		$permNames[] = "Noch keine Berechtigungen erstellt.";
+		$permNames[] = "No permissions created yet.";
+		$permValues[] = "";
 	}
 
 	// Assign variables to smarty
@@ -88,5 +91,5 @@
 	$smarty->assign("permNames", $permNames);
 	$smarty->assign("permValues", $permValues);
 	
-	$smarty->display("groupEdit.tpl");
+	$smarty->display("templates/groupEdit.tpl");
 ?>

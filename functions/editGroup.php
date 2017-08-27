@@ -13,6 +13,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 
+	db_san($_GET);
+	
     if (isset($groupID)) {
         db_upd("fl_apps_groups", "groupName='$groupName', groupDescription='$groupDescription'", "groupID='$groupID'", __FILE__, __LINE__);
         db_upd("fl_apps_perms_values", "value='0'", "appID='$appID' && groupID='$groupID'", __FILE__, __LINE__);  // reset permission values (to 0)

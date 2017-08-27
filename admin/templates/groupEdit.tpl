@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 {nocache}
-  <title>Berechtigung {$actionName} - fluentlogin-Administration</title>
+  <title>Benutzergruppe {$actionName} - fluentlogin Administration</title>
 {/nocache}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
-<link href="css/font-awesome.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/pages/dashboard.css" rel="stylesheet">
+<link href="../css/font-awesome.css" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet">
+<link href="../css/pages/dashboard.css" rel="stylesheet">
 
 <!-- Sweetalert Css -->
-<link href="css/sweetalert2.css" rel="stylesheet" />
+<link href="../css/sweetalert2.css" rel="stylesheet" />
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -24,9 +24,15 @@
     
 <script>
   {literal}
-    function editpermission(ai, fi) {
-      var fn = document.getElementById("permissionName".toString()).value;
-      var fd = document.getElementById("permissionDescription".toString()).value;
+    var queryString = "";
+
+    function editgroup(ai, gi) {
+      var gn = document.getElementById("groupName".toString()).value;
+      var gd = document.getElementById("groupDescription".toString()).value;
+      
+      var groupPerms = document.getElementsByName("permission");
+
+      groupPerms.forEach(addPerm);
       
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
@@ -34,23 +40,29 @@
           if (this.responseText == "1") {
             swal({
               type: "success",
-              title: "Berechtigungen aktualisiert",
-              text: "Die Berechtigungen wurden aktualisiert."
+              title: "Benutzergruppen aktualisiert",
+              text: "Die Benutzergruppen wurden aktualisiert."
             });
             setTimeout(function(){
-              location.replace("permissions.php?appID="+ai);
+              location.replace("groups.php?appID="+ai);
             }, 1000);
           } else {
             swal({
               type: "error",
-              title: "Fehler beim Aktualisieren der Berechtigungen",
+              title: "Fehler beim Aktualisieren der Benutzergruppen",
               text: this.responseText
             });
           }
         }
       }
-      xmlhttp.open("GET","functions/editPermission.php?appID="+ai+"&permissionID="+fi+"&permissionName="+fn+"&permissionDescription="+fd,true);
+      xmlhttp.open("GET","../functions/editGroup.php?appID="+ai+"&groupID="+gi+"&groupName="+gn+"&groupDescription="+gd+queryString,true);
       xmlhttp.send();
+    }
+
+    function addPerm(item, index) {
+      if (item.checked) {
+        queryString += "&"+item.id+"=1";
+      }
     }
   {/literal}
 </script>
@@ -60,13 +72,13 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin-Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin Administration</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Ich<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My account<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">Meine Einstellungen</a></li>
-              <li><a href="javascript:;">Abmelden</a></li>
+              <li><a href="javascript:;">My settings</a></li>
+              <li><a href="javascript:;">Log out</a></li>
             </ul>
           </li>
         </ul>
@@ -83,9 +95,9 @@
     <div class="container">
       <ul class="mainnav">
         <li><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-        <li class="active"><a href="apps.php"><i class="icon-list-alt"></i><span>Anwendungen</span> </a> </li>
-        <li><a href="admins.php"><i class="icon-legal"></i><span>Administratoren</span> </a></li>
-        <li><a href="docs.php"><i class="icon-book"></i><span>Dokumentation</span> </a> </li>
+        <li class="active"><a href="apps.php"><i class="icon-list-alt"></i><span>Applications</span> </a> </li>
+        <li><a href="admins.php"><i class="icon-legal"></i><span>Administrators</span> </a></li>
+        <li><a href="docs.php"><i class="icon-book"></i><span>Documentation</span> </a> </li>
       </ul>
     </div>
     <!-- /container --> 
@@ -102,34 +114,47 @@
           <div class="widget widget-table action-table">
             <div class="widget-header"> <i class="icon-list-alt"></i>
               {nocache}
-                <h3>{$appName} > Berechtigung {$actionName}</h3>
+                <h3>{$appName} > {$actionName} user group</h3>
               {/nocache}
             </div>
             <!-- /widget-header -->
             {nocache}
               <div class="widget-content">
                 <br />
-                  <form id="permissionEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editpermission({$appID}, {$permissionID}); return false;">
-                    <permissionset>
+                  <form id="groupEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editgroup({$appID}, {$groupID}); return false;">
+                    <fieldset>
                       <div class="control-group">
-                        <label class="control-label" for="permissionName">Name der Berechtigung:</label>
+                        <label class="control-label" for="groupName">Group name:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="permissionName" value="{$permissionName}">
+                          <input type="text" class="span6" id="groupName" value="{$groupName}">
                         </div> <!-- /controls -->				
                       </div> <!-- /control-group -->
 
                       <div class="control-group">
-                        <label class="control-label" for="permissionDescription">Beschreibung:</label>
+                        <label class="control-label" for="groupDescription">Description:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="permissionDescription" value="{$permissionDescription}">
+                          <input type="text" class="span6" id="groupDescription" value="{$groupDescription}">
                         </div> <!-- /controls -->				
                       </div> <!-- /control-group -->
+
+                      <div class="panel panel-danger" style="margin-left: 2%; width: 60%;">
+                        <div class="panel-heading">Permissions for this group</div>
+                        <div class="panel-body">
+                          {foreach from=$keys item=i}
+                            {if $permIDs[$i] != "-"}
+                              <label style="width: 40%;"><input type="checkbox" id="perm{$permIDs[$i]}" name="permission" class="filled-in chk-col-red" {$permValues[$i]}><span style="vertical-align: middle;"> {$permNames[$i]}</span></label>
+                            {else}
+                              {$permNames[$i]} <a href="permissionEdit.php?appID={$appID}" target="_blank"><u>Create</u></a>
+                            {/if}
+                          {/foreach}
+                        </div>
+                      </div>
 
                       <div class="form-actions" style="margin-bottom: 0px;">
-                        <button type="submit" class="btn btn-primary">Speichern</button> 
-                        <a class="btn" onclick="window.history.back();">Abbrechen</a>
+                        <button type="submit" class="btn btn-primary">Save</button> 
+                        <a class="btn" onclick="window.history.back();">Cancel</a>
                       </div> <!-- /form-actions -->
-                    </permissionset>
+                    </fieldset>
                   </form>
               </div>
             {/nocache}
@@ -149,7 +174,7 @@
   <div class="footer-inner">
     <div class="container">
       <div class="row">
-        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, entwickelt von <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
+        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, developed by <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
         <!-- /span12 --> 
       </div>
       <!-- /row --> 
@@ -162,16 +187,16 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="js/jquery-1.7.2.min.js"></script> 
-<script src="js/excanvas.min.js"></script> 
-<script src="js/chart.min.js" type="text/javascript"></script> 
-<script src="js/bootstrap.js"></script>
-<script language="javascript" type="text/javascript" src="js/full-calendar/fullcalendar.min.js"></script>
+<script src="../js/jquery-1.7.2.min.js"></script> 
+<script src="../js/excanvas.min.js"></script> 
+<script src="../js/chart.min.js" type="text/javascript"></script> 
+<script src="../js/bootstrap.js"></script>
+<script language="javascript" type="text/javascript" src="../js/full-calendar/fullcalendar.min.js"></script>
 
 <!-- SweetAlert Plugin Js -->
-<script src="js/sweetalert2.min.js"></script>
+<script src="../js/sweetalert2.min.js"></script>
 
-<script src="js/base.js"></script> 
+<script src="../js/base.js"></script> 
 <script>     
 
         var lineChartData = {

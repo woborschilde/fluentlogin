@@ -24,6 +24,9 @@
         }
     }
 
+	db_san($_GET);
+	db_san($_COOKIE);
+
     // Get session by cookie
     if (isset($_COOKIE["fl" . $appID])) {
         $sessionByCookie = $_COOKIE["fl" . $appID];
@@ -40,12 +43,18 @@
         db_sel("userName, loginToken", "fl_apps_users", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
 
         if (strpos($loginToken, "r") !== false) {
-            header("Location: https://intra.woborschil.net/fluentlogin/newPassword.php?appID=$appID&userID=$userID&redirect=$redirect");
-            die();
+            if (!(isset($_GET["noredirect"]))) {
+                header("Location: https://intra.woborschil.net/fluentlogin/newPassword.php?appID=$appID&userID=$userID&redirect=$redirect");
+            }
+            die("2");
         }
     } else {
         not_logged_in:
-        header("Location: https://intra.woborschil.net/fluentlogin/login.php?appID=$appID&redirect=$redirect");
-        die();
+        if (!(isset($_GET["noredirect"]))) {
+            header("Location: https://intra.woborschil.net/fluentlogin/login.php?appID=$appID&redirect=$redirect");
+        }
+        die("0");
     }
+
+    return 1;
 ?>

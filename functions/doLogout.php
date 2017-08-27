@@ -23,6 +23,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 
+	db_san($_GET);
+	
     // delete current session from database
     db_del("fl_apps_sessions", "sessionID='$sessionID'", __FILE__, __LINE__);
 

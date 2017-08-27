@@ -7,6 +7,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 
+	db_san($_GET);
+	
     db_del("fl_apps_permissions", "permID='$permissionID'", __FILE__, __LINE__);
     
     // deprecated:

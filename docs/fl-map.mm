@@ -36,7 +36,7 @@
 <icon BUILTIN="stop"/>
 </node>
 </node>
-<node CREATED="1503414114914" HGAP="-79" ID="ID_1241026782" MODIFIED="1503436051406" POSITION="right" TEXT="Red light: Not yet implemented&#xa;Yellow star: Added by plugin&#xa;Number: For upcoming release" VSHIFT="-9">
+<node COLOR="#006699" CREATED="1503414114914" HGAP="-79" ID="ID_1241026782" MODIFIED="1503776180608" POSITION="right" TEXT="Red light: Not yet implemented&#xa;Yellow star: Added by plugin&#xa;Number: For upcoming release" VSHIFT="-9">
 <edge STYLE="linear"/>
 <font NAME="Open Sans" SIZE="12"/>
 </node>
@@ -58,20 +58,20 @@
 <node BACKGROUND_COLOR="#3d8ceb" COLOR="#ffffff" CREATED="1503413879732" ID="ID_1901455733" MODIFIED="1503436242216" TEXT="Fields">
 <linktarget COLOR="#3d8ceb" DESTINATION="ID_1901455733" ENDARROW="Default" ENDINCLINATION="69;-13;" ID="Arrow_ID_675895276" SOURCE="ID_1442638749" STARTARROW="None" STARTINCLINATION="70;-13;"/>
 <font NAME="Open Sans" SIZE="14"/>
-<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" HGAP="104" ID="ID_202706862" MODIFIED="1503436433995" TEXT="User rights" VSHIFT="2">
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" HGAP="104" ID="ID_202706862" MODIFIED="1503776534698" TEXT="User rights" VSHIFT="2">
 <font NAME="Open Sans" SIZE="14"/>
-<icon BUILTIN="stop"/>
-<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" HGAP="25" ID="ID_1841450976" MODIFIED="1503436447133" TEXT="Read/Write">
+<icon BUILTIN="full-2"/>
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" HGAP="25" ID="ID_1841450976" MODIFIED="1503776508037" TEXT="Read/Write">
 <font NAME="Open Sans" SIZE="14"/>
-<icon BUILTIN="stop"/>
+<icon BUILTIN="full-2"/>
 </node>
 <node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" HGAP="25" ID="ID_962229935" MODIFIED="1503436451749" TEXT="Read-only">
 <font NAME="Open Sans" SIZE="14"/>
 <icon BUILTIN="full-2"/>
 </node>
-<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" HGAP="25" ID="ID_1465702170" MODIFIED="1503436459453" TEXT="Invisible">
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" HGAP="25" ID="ID_1465702170" MODIFIED="1503776538909" TEXT="Invisible">
 <font NAME="Open Sans" SIZE="14"/>
-<icon BUILTIN="full-2"/>
+<icon BUILTIN="go"/>
 </node>
 </node>
 </node>
@@ -90,9 +90,9 @@
 <font NAME="Open Sans" SIZE="14"/>
 <icon BUILTIN="stop"/>
 </node>
-<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_638326205" MODIFIED="1503436113294" TEXT="User activation" VSHIFT="8">
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_638326205" MODIFIED="1503779999255" TEXT="User activation" VSHIFT="8">
 <font NAME="Open Sans" SIZE="14"/>
-<icon BUILTIN="stop"/>
+<icon BUILTIN="full-2"/>
 <node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1733865971" MODIFIED="1503436087389" TEXT="Nothing">
 <font NAME="Open Sans" SIZE="14"/>
 <icon BUILTIN="full-2"/>
@@ -158,25 +158,29 @@
 </node>
 <node BACKGROUND_COLOR="#ffffcc" COLOR="#000000" CREATED="1503413879732" ID="ID_359646754" MODIFIED="1503646402748" TEXT="Tasks for release">
 <font BOLD="true" NAME="Open Sans" SIZE="14"/>
-<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1325109829" MODIFIED="1503646412138" TEXT="Set all text to English">
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1325109829" MODIFIED="1503780012392" TEXT="Set all text to English">
 <font NAME="Open Sans" SIZE="14"/>
-<icon BUILTIN="stop"/>
-</node>
-<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1360149403" MODIFIED="1503646435658" TEXT="Outsource appID check">
-<font NAME="Open Sans" SIZE="14"/>
-<icon BUILTIN="stop"/>
+<icon BUILTIN="go"/>
 </node>
 <node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1918942953" MODIFIED="1503651398579" TEXT="Purge unactivated accounts">
 <font NAME="Open Sans" SIZE="14"/>
 <icon BUILTIN="stop"/>
 </node>
-<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1038688082" MODIFIED="1503652674908" TEXT="Templates in subdirectory">
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1038688082" MODIFIED="1503780040923" TEXT="Templates in subdirectory">
 <font NAME="Open Sans" SIZE="14"/>
-<icon BUILTIN="stop"/>
+<icon BUILTIN="go"/>
 </node>
 <node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_581012642" MODIFIED="1503661809280" TEXT="Repair SweetAlert2 Font (from Git)">
 <font NAME="Open Sans" SIZE="14"/>
 <icon BUILTIN="stop"/>
+</node>
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1263817749" MODIFIED="1503780071341" TEXT="Fix security issues">
+<font NAME="Open Sans" SIZE="14"/>
+<icon BUILTIN="go"/>
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_839740838" MODIFIED="1503780058099" TEXT="Block SQL Injections" VSHIFT="2">
+<font NAME="Open Sans" SIZE="14"/>
+<icon BUILTIN="go"/>
+</node>
 </node>
 </node>
 </node>

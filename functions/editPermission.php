@@ -13,6 +13,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 
+	db_san($_GET);
+	
     if (isset($permissionID)) {
         db_upd("fl_apps_permissions", "permName='$permissionName', permDescription='$permissionDescription'", "permID='$permissionID'", __FILE__, __LINE__);
     } else {

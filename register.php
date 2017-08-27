@@ -26,6 +26,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
+	db_san($_GET);
+	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	if ($num_rows == 0) {
@@ -61,5 +63,5 @@
 	$smarty->assign("fieldIDs", $fieldIDs);
 	$smarty->assign("fieldNames", $fieldNames);
 
-	$smarty->display("register.tpl");
+	$smarty->display("templates/register.tpl");
 ?>

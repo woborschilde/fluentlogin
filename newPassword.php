@@ -28,6 +28,8 @@
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
+	db_san($_GET);
+	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	if ($num_rows == 0) {
@@ -41,5 +43,5 @@
 	
 	$smarty->assign("userID", $userID);
 
-	$smarty->display("newPassword.tpl");
+	$smarty->display("templates/newPassword.tpl");
 ?>

@@ -30,7 +30,7 @@
 	if ($query->num_rows == 0) {
 		$keys[] = $key;
 		$appIDs[] = "-";
-		$appNames[] = "Noch keine Anwendungen erstellt.";
+		$appNames[] = "No apps created yet.";
 	}
 
 	// Assign variables to smarty
@@ -38,5 +38,5 @@
 	$smarty->assign("appIDs", $appIDs);
 	$smarty->assign("appNames", $appNames);
 	
-	$smarty->display("apps.tpl");
+	$smarty->display("templates/apps.tpl");
 ?>

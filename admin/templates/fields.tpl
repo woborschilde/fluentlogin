@@ -2,60 +2,50 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-{nocache}
-  <title>Feld {$actionName} - fluentlogin-Administration</title>
-{/nocache}
+<title>Felder - fluentlogin Administration</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
-<link href="css/font-awesome.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/pages/dashboard.css" rel="stylesheet">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
+        rel="stylesheet">
+<link href="../css/font-awesome.css" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet">
+<link href="../css/pages/dashboard.css" rel="stylesheet">
 
 <!-- Sweetalert Css -->
-<link href="css/sweetalert2.css" rel="stylesheet" />
+<link href="../css/sweetalert2.css" rel="stylesheet" />
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    
-<script>
-  {literal}
-    function editField(ai, fi) {
-      var fn = document.getElementById("fieldName".toString()).value;
-      var fd = document.getElementById("fieldDescription".toString()).value;
-      var sol = document.getElementById("showOnLogin".toString()).checked;
-      
-      if (sol == true) { sol = "1"; } else { sol = "0"; }
 
-      xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          if (this.responseText == "1") {
-            swal({
-              type: "success",
-              title: "Felder aktualisiert",
-              text: "Die Felder wurden aktualisiert."
-            });
-            setTimeout(function(){
-              location.replace("fields.php?appID="+ai);
-            }, 1000);
-          } else {
-            swal({
-              type: "error",
-              title: "Fehler beim Aktualisieren der Felder",
-              text: this.responseText
-            });
-          }
-        }
+<script>
+		{literal}
+      function delField(i) {
+        var r = "fieldRow"+i.toString();
+        var k = document.getElementById("fieldID"+i.toString()).innerHTML;
+        var m = document.getElementById("fieldName"+i.toString()).innerHTML;
+        
+        i++;
+        
+        swal({
+          title: "Möchten Sie das Feld \""+m+"\" wirklich löschen?",
+          text: "Die Zuordnung zur Feld-ID \""+k+"\" bleibt weiterhin bestehen.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Ja, Feld löschen',
+          cancelButtonText: 'Cancel',
+        }).then(function () {
+          xmlhttp = new XMLHttpRequest();
+          xmlhttp.open("GET","../functions/delField.php?fieldID="+k,true);
+          xmlhttp.send();
+          document.getElementById(r).remove();
+        });
       }
-      xmlhttp.open("GET","functions/editField.php?appID="+ai+"&fieldID="+fi+"&fieldName="+fn+"&fieldDescription="+fd+"&showOnLogin="+sol,true);
-      xmlhttp.send();
-    }
-  {/literal}
+    {/literal}
 </script>
 
 </head>
@@ -63,13 +53,13 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin-Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin Administration</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Ich<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My account<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">Meine Einstellungen</a></li>
-              <li><a href="javascript:;">Abmelden</a></li>
+              <li><a href="javascript:;">My settings</a></li>
+              <li><a href="javascript:;">Log out</a></li>
             </ul>
           </li>
         </ul>
@@ -86,9 +76,9 @@
     <div class="container">
       <ul class="mainnav">
         <li><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-        <li class="active"><a href="apps.php"><i class="icon-list-alt"></i><span>Anwendungen</span> </a> </li>
-        <li><a href="admins.php"><i class="icon-legal"></i><span>Administratoren</span> </a></li>
-        <li><a href="docs.php"><i class="icon-book"></i><span>Dokumentation</span> </a> </li>
+        <li class="active"><a href="apps.php"><i class="icon-list-alt"></i><span>Applications</span> </a> </li>
+        <li><a href="admins.php"><i class="icon-legal"></i><span>Administrators</span> </a></li>
+        <li><a href="docs.php"><i class="icon-book"></i><span>Documentation</span> </a> </li>
       </ul>
     </div>
     <!-- /container --> 
@@ -105,43 +95,38 @@
           <div class="widget widget-table action-table">
             <div class="widget-header"> <i class="icon-list-alt"></i>
               {nocache}
-                <h3>{$appName} > Feld {$actionName}</h3>
+                <h3>{$appName} > Fields</h3>
+                <span style="text-align: right;"><a href="fieldEdit.php?appID={$appID}" class="btn btn-primary"><b>+</b>&nbsp;&nbsp;New field</a></span>
               {/nocache}
             </div>
             <!-- /widget-header -->
-            {nocache}
-              <div class="widget-content">
-                <br />
-                  <form id="fieldEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editField({$appID}, {$fieldID}); return false;">
-                    <fieldset>
-                      <div class="control-group">
-                        <label class="control-label" for="fieldName">Feldname:</label>
-                        <div class="controls">
-                          <input type="text" class="span6" id="fieldName" value="{$fieldName}">
-                        </div> <!-- /controls -->				
-                      </div> <!-- /control-group -->
-
-                      <div class="control-group">
-                        <label class="control-label" for="fieldDescription">Feldbeschreibung:</label>
-                        <div class="controls">
-                          <input type="text" class="span6" id="fieldDescription" value="{$fieldDescription}">
-                        </div> <!-- /controls -->				
-                      </div> <!-- /control-group -->
-
-                      <div class="control-group">
-                        <div class="controls">
-                          <label style="width: 40%;"><input type="checkbox" id="showOnLogin" class="field login-checkbox" {$showOnLogin}><span style="vertical-align: middle;"> Bei der Anmeldung anzeigen</span></label>
-                        </div> <!-- /controls -->				
-                      </div> <!-- /control-group -->
-
-                      <div class="form-actions" style="margin-bottom: 0px;">
-                        <button type="submit" class="btn btn-primary">Speichern</button> 
-                        <a class="btn" onclick="window.history.back();">Abbrechen</a>
-                      </div> <!-- /form-actions -->
-                    </fieldset>
-                  </form>
-              </div>
-            {/nocache}
+            <div class="widget-content">
+              <table class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th> ID </th>
+                    <th> Name </th>
+                    <th class="td-actions" style="width: 7%;"> Action </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {nocache}
+                    {foreach from=$keys item=i}
+                      <tr id="fieldRow{$i}">
+                        <td id="fieldID{$i}">{$fieldIDs[$i]}</td>
+                        <td id="fieldName{$i}" ondblclick="renameApp({$i});">{$fieldNames[$i]}</td>
+                        <td class="td-actions btn-group">
+                          {if $fieldNames[$i] != "Noch keine Felder erstellt."}
+                            <a href="fieldEdit.php?appID={$appID}&fieldID={$fieldIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;" onclick="renameApp({$i});"><i class="btn-icon-only icon-pencil"> </i></a>
+                            <a href="javascript:;" class="btn btn-small btn-danger" onclick="delField({$i});"><i class="btn-icon-only icon-remove"> </i></a>
+                          {/if}
+                        </td>
+                      </tr>
+                    {/foreach}
+                  {/nocache}
+                </tbody>
+              </table>
+            </div>
             <!-- /widget-content --> 
           </div>
         </div>
@@ -158,7 +143,7 @@
   <div class="footer-inner">
     <div class="container">
       <div class="row">
-        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, entwickelt von <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
+        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, developed by <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
         <!-- /span12 --> 
       </div>
       <!-- /row --> 
@@ -171,16 +156,16 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="js/jquery-1.7.2.min.js"></script> 
-<script src="js/excanvas.min.js"></script> 
-<script src="js/chart.min.js" type="text/javascript"></script> 
-<script src="js/bootstrap.js"></script>
-<script language="javascript" type="text/javascript" src="js/full-calendar/fullcalendar.min.js"></script>
+<script src="../js/jquery-1.7.2.min.js"></script> 
+<script src="../js/excanvas.min.js"></script> 
+<script src="../js/chart.min.js" type="text/javascript"></script> 
+<script src="../js/bootstrap.js"></script>
+<script language="javascript" type="text/javascript" src="../js/full-calendar/fullcalendar.min.js"></script>
 
 <!-- SweetAlert Plugin Js -->
-<script src="js/sweetalert2.min.js"></script>
+<script src="../js/sweetalert2.min.js"></script>
 
-<script src="js/base.js"></script> 
+<script src="../js/base.js"></script> 
 <script>     
 
         var lineChartData = {

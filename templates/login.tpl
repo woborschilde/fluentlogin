@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   
- <head>
+<head>
     <meta charset="utf-8">
     {nocache}
-		<title>Registrieren - {$appName}</title>
-	{/nocache}
+			<title>Login - {$appName}</title>
+		{/nocache}
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="apple-mobile-web-app-capable" content="yes"> 
     
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
@@ -26,25 +26,14 @@
   {literal}
     var queryString = "";
 
-    function register(ai) {
+    function login(ai) {
       var un = document.getElementById("username".toString()).value;
-	  var ue = document.getElementById("email".toString()).value;
       var up = document.getElementById("password".toString()).value;
-	  var uc = document.getElementById("confirm_password".toString()).value;
-	  
-	  var an = "AppName";
       
       var userFields = document.getElementsByName("field");
       userFields.forEach(setField);
-
-	  if (up != uc) {
-		swal({
-			type: "error",
-			title: "Registrierung fehlgeschlagen",
-			text: "Die eingegebenen Kennwörter stimmen nicht überein."
-		});
-		return;
-	  }
+      
+			var re = document.getElementById("remember".toString()).checked;
 
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
@@ -52,21 +41,24 @@
           if (this.responseText == "1") {
             swal({
               type: "success",
-              title: "Willkommen bei "+an+"!",
-              text: "Bitte klicken Sie zur Kontoaktivierung auf den Bestätigungslink, den wir Ihnen per E-Mail zugesendet haben."
-            }).then(function () {
-			  location.replace("{$redirect}"+"?appID="+ai);
-			});
+              title: "Logged in",
+              text: "You are now logged in."
+            });
+            setTimeout(function(){
+              {/literal}
+								location.replace("{$redirect}"+"?appID="+ai);
+							{literal}
+            }, 1000);
           } else {
             swal({
               type: "error",
-              title: "Registrierung fehlgeschlagen",
+              title: "Login failed",
               text: this.responseText
             });
           }
         }
       }
-      xmlhttp.open("GET","functions/doRegister.php?appID="+ai+"&userName="+un+"&userEmail="+ue+"&userPassword="+up+queryString, true);
+      xmlhttp.open("GET","functions/doLogin.php?appID="+ai+"&userName="+un+"&userPassword="+up+queryString+"&remember="+re,true);
       xmlhttp.send();
     }
 
@@ -99,9 +91,9 @@
 			<div class="nav-collapse">
 				<ul class="nav pull-right">
 					<li class="">						
-						<a href="index.html" class="">
+						<a href="" class="" onclick="goBack();">
 							<i class="icon-chevron-left"></i>
-							Zurück zur vorherigen Seite
+							Back to previous page
 						</a>
 					</li>
 				</ul>
@@ -116,44 +108,34 @@
 
 
 
-<div class="account-container register">
+<div class="account-container">
 	
 	<div class="content clearfix">
 		
-		<form onsubmit="register({$appID}); return false;">
+		<form onsubmit="login({$appID}); return false;">
 		
-			<h1>Create your account</h1>			
+			<h1>Log in to {nocache}{$appName}{/nocache}</h1>		
 			
 			<div class="login-fields">
 				
-				<p>Please fill in the following fields:</p>
+				<p>Please log in to continue.</p>
 				
 				<div class="field">
-					<label for="username">User name:</label>
-					<input type="text" id="username" name="username" value="" placeholder="User name" class="login" required />
-				</div> <!-- /field -->				
-				
-				<div class="field">
-					<label for="email">E-mail address:</label>
-					<input type="email" id="email" name="email" value="" placeholder="Email" class="login" required />
+					<label for="username">Username</label>
+					<input type="text" id="username" name="username" value="" placeholder="Username" class="login username-field" />
 				</div> <!-- /field -->
 				
 				<div class="field">
-					<label for="password">Password:</label>
-					<input type="password" id="password" name="password" value="" placeholder="Password" class="login" required />
-				</div> <!-- /field -->
-				
-				<div class="field">
-					<label for="confirm_password">Confirm Password:</label>
-					<input type="password" id="confirm_password" name="confirm_password" value="" placeholder="Confirm Password" class="login" required />
-				</div> <!-- /field -->
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" value="" placeholder="Password" class="login password-field"/>
+				</div> <!-- /password -->
 				
 				{nocache}
 				  {foreach from=$keys item=k}
 					  {if $fieldIDs[$k] != ""}
 						<div class="field">
 							<label for="field{$fieldIDs[$k]}">{$fieldNames[$k]}</label>
-							<input type="text" id="field{$fieldIDs[$k]}" name="field" value="" placeholder="{$fieldNames[$k]}" class="login" required />
+							<input type="text" id="field{$fieldIDs[$k]}" name="field" value="" placeholder="{$fieldNames[$k]}" class="login username-field" />
 						</div> <!-- /field -->
 					  {/if}
 				  {/foreach}
@@ -161,9 +143,18 @@
 
 			</div> <!-- /login-fields -->
 			
+			<div class="alert alert-info">
+				By logging in, you accept cookies to be saved on your computer.
+			</div>
+
 			<div class="login-actions">
+				
+				<span class="login-checkbox">
+					<input id="remember" name="remember" type="checkbox" class="field login-checkbox" value="First Choice" tabindex="4" />
+					<label class="choice" for="remember">Stay logged in</label>
+				</span>
 									
-				<button tyoe="submit" class="button btn btn-primary btn-large">Register</button>
+				<button type="submit" class="button btn btn-success btn-large">Log in</button>
 				
 			</div> <!-- .actions -->
 			
@@ -173,10 +164,10 @@
 	
 </div> <!-- /account-container -->
 
-<!-- Text Under Box -->
 <div class="login-extra" style="text-align: center;">
-	<a href="passwordLost.php?appID={$appID}">Passwort vergessen?</a> | <a href="login.php?appID={$appID}">Anmelden</a>
+	<a href="passwordLost.php?appID={$appID}">Lost password?</a> | <a href="license.php?appID={$appID}">Register</a>
 </div> <!-- /login-extra -->
+
 <hr />
 <div style="color: gray; text-align: center;">
 	Powered by <b>fluentlogin</b>
@@ -192,4 +183,4 @@
 
 </body>
 
- </html>
+</html>
