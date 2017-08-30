@@ -10,10 +10,10 @@
 	}
 
 	// Check user login status
-	//include("functions/checkLogin.php");
+	//require("functions/checkLogin.php");
 	
 	// Load Sidenav
-	//include("functions/loadSidenav.php");
+	//require("functions/loadSidenav.php");
 	
 	// Establish database connection
 	require("/var/www/unscramblephp/Unscramble.php");
@@ -28,7 +28,8 @@
 		die("An app with ID $appID does not exist!");
 	}
 
-    db_sel("settingValue", "fl_apps_settings", "appID='$appID' && settingName='license'", __FILE__, __LINE__);
+	db_sel("settingID", "fl_appsettings", "settingName='license'", __FILE__, __LINE__);
+    db_sel("settingValue", "fl_appsettings_values", "appID='$appID' && settingID='$settingID'", __FILE__, __LINE__);
 
 	if ($num_rows > 0) {
 		$license = $settingValue;

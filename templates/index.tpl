@@ -27,7 +27,7 @@
         <ul class="nav pull-right">
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$userName}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">Einstellungen</a></li>
+              <li><a href="settings.php?appID={$appID}">My settings</a></li>
               <li><a href="functions/doLogout.php?appID={$appID}&userID={$userID}">Log out</a></li>
             </ul>
           </li>
@@ -50,15 +50,16 @@
         <div class="span6" style="width: 100%;">
           <div class="widget">
             <div class="widget-header"> <i class="icon-bookmark"></i>
-              <h3>Funktionen</h3>
+              <h3>Features</h3>
             </div>
             <!-- /widget-header -->
             <div class="widget-content">
               {nocache}
-                <h1>Hallo, {$userName}!</h1>
+                <h1>Hello, {$userName}!</h1>
               {/nocache}
               <div class="shortcuts">
-                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-cog"></i><span class="shortcut-label">Einstellungen</span></a>
+                <a href="settings.php?appID={$appID}" class="shortcut"><i class="shortcut-icon icon-cog"></i><span class="shortcut-label">My settings</span></a>
+                <a href="functions/doLogout.php?appID={$appID}&userID={$userID}" class="shortcut"><i class="shortcut-icon icon-signout"></i><span class="shortcut-label">Log out</span></a>
               </div>
               <!-- /shortcuts --> 
             </div>

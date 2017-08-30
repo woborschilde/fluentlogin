@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Benutzergruppen - fluentlogin Administration</title>
+<title>User groups - fluentlogin Administration</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -31,16 +31,16 @@
         i++;
         
         swal({
-          title: "Möchten Sie die Gruppe \""+m+"\" wirklich löschen?",
-          text: "Sämtliche Verknüpfungen werden gelöscht.",
+          title: "Really delete user group \""+m+"\"?",
+          text: "All links will be removed.",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: '#d33',
-          confirmButtonText: 'Ja, Gruppe löschen',
+          confirmButtonText: 'Yes, delete user group',
           cancelButtonText: 'Cancel',
         }).then(function () {
           xmlhttp = new XMLHttpRequest();
-          xmlhttp.open("GET","../functions/delGroup.php?appID="+a+"&groupID="+k,true);
+          xmlhttp.open("GET","functions/delGroup.php?appID="+a+"&groupID="+k,true);
           xmlhttp.send();
           document.getElementById(r).remove();
         });
@@ -53,13 +53,12 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.php">fluentlogin Administration</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My account<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$adminName}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">My settings</a></li>
-              <li><a href="javascript:;">Log out</a></li>
+              <li><a href="functions/doLogout.php">Log out</a></li>
             </ul>
           </li>
         </ul>

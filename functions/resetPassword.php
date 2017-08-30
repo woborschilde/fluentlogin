@@ -52,7 +52,6 @@ https://intra.woborschil.net/fluentlogin/functions/doLogin.php?appID=$appID&user
 
 
 If you haven't requested a password reset, just ignore this message. Your account stays safe.
-support@woborschil.de
 
 
 Sincerely,

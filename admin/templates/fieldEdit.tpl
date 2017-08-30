@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 {nocache}
-  <title>Feld {$actionName} - fluentlogin Administration</title>
+  <title>{$actionName} field - fluentlogin Administration</title>
 {/nocache}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -28,8 +28,10 @@
       var fn = document.getElementById("fieldName".toString()).value;
       var fd = document.getElementById("fieldDescription".toString()).value;
       var sol = document.getElementById("showOnLogin".toString()).checked;
+      var sor = document.getElementById("showOnRegister".toString()).checked;
       
       if (sol == true) { sol = "1"; } else { sol = "0"; }
+      if (sor == true) { sor = "1"; } else { sor = "0"; }
 
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
@@ -52,7 +54,7 @@
           }
         }
       }
-      xmlhttp.open("GET","../functions/editField.php?appID="+ai+"&fieldID="+fi+"&fieldName="+fn+"&fieldDescription="+fd+"&showOnLogin="+sol,true);
+      xmlhttp.open("GET","functions/editField.php?appID="+ai+"&fieldID="+fi+"&fieldName="+fn+"&fieldDescription="+fd+"&showOnLogin="+sol+"&showOnRegister="+sor,true);
       xmlhttp.send();
     }
   {/literal}
@@ -63,13 +65,12 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.php">fluentlogin Administration</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My account<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$adminName}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">My settings</a></li>
-              <li><a href="javascript:;">Log out</a></li>
+              <li><a href="functions/doLogout.php">Log out</a></li>
             </ul>
           </li>
         </ul>
@@ -130,7 +131,8 @@
 
                       <div class="control-group">
                         <div class="controls">
-                          <label style="width: 40%;"><input type="checkbox" id="showOnLogin" class="field login-checkbox" {$showOnLogin}><span style="vertical-align: middle;"> Bei der Anmeldung anzeigen</span></label>
+                          <label style="width: 40%;"><input type="checkbox" id="showOnLogin" class="field login-checkbox" {$showOnLogin}><span style="vertical-align: middle;"> Show on login</span></label>
+                          <label style="width: 40%;"><input type="checkbox" id="showOnRegister" class="field login-checkbox" {$showOnRegister}><span style="vertical-align: middle;"> Show on registration</span></label>
                         </div> <!-- /controls -->				
                       </div> <!-- /control-group -->
 

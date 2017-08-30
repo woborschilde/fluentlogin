@@ -40,7 +40,7 @@
           cancelButtonText: 'Cancel',
         }).then(function () {
           xmlhttp = new XMLHttpRequest();
-          xmlhttp.open("GET","../functions/delUser.php?appID="+a+"&userID="+k,true);
+          xmlhttp.open("GET","functions/delUser.php?appID="+a+"&userID="+k,true);
           xmlhttp.send();
           document.getElementById(r).remove();
         });
@@ -53,13 +53,12 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.php">fluentlogin Administration</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My account<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$adminName}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">My settings</a></li>
-              <li><a href="javascript:;">Log out</a></li>
+              <li><a href="functions/doLogout.php">Log out</a></li>
             </ul>
           </li>
         </ul>

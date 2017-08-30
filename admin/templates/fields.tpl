@@ -31,16 +31,16 @@
         i++;
         
         swal({
-          title: "Möchten Sie das Feld \""+m+"\" wirklich löschen?",
-          text: "Die Zuordnung zur Feld-ID \""+k+"\" bleibt weiterhin bestehen.",
+          title: "Really delete field \""+m+"\"?",
+          text: "All links will be removed.",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: '#d33',
-          confirmButtonText: 'Ja, Feld löschen',
+          confirmButtonText: 'Yes, delete field',
           cancelButtonText: 'Cancel',
         }).then(function () {
           xmlhttp = new XMLHttpRequest();
-          xmlhttp.open("GET","../functions/delField.php?fieldID="+k,true);
+          xmlhttp.open("GET","functions/delField.php?fieldID="+k,true);
           xmlhttp.send();
           document.getElementById(r).remove();
         });
@@ -53,13 +53,12 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.php">fluentlogin Administration</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My account<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$adminName}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">My settings</a></li>
-              <li><a href="javascript:;">Log out</a></li>
+              <li><a href="functions/doLogout.php">Log out</a></li>
             </ul>
           </li>
         </ul>
@@ -117,7 +116,7 @@
                         <td id="fieldName{$i}" ondblclick="renameApp({$i});">{$fieldNames[$i]}</td>
                         <td class="td-actions btn-group">
                           {if $fieldNames[$i] != "Noch keine Felder erstellt."}
-                            <a href="fieldEdit.php?appID={$appID}&fieldID={$fieldIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;" onclick="renameApp({$i});"><i class="btn-icon-only icon-pencil"> </i></a>
+                            <a href="fieldEdit.php?appID={$appID}&fieldID={$fieldIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;"><i class="btn-icon-only icon-pencil"> </i></a>
                             <a href="javascript:;" class="btn btn-small btn-danger" onclick="delField({$i});"><i class="btn-icon-only icon-remove"> </i></a>
                           {/if}
                         </td>

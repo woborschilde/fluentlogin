@@ -16,12 +16,6 @@
 		$permissionID = 0;
 		$actionName = "Add";
 	}
-
-	// Check user login status
-	//include("functions/checkLogin.php");
-	
-	// Load Sidenav
-	//include("functions/loadSidenav.php");
 	
 	// Establish database connection
 	require("/var/www/unscramblephp/Unscramble.php");
@@ -29,6 +23,9 @@
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
 	db_san($_GET);
+
+	// Check admin login status
+	require("functions/checkLogin.php");
 	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
@@ -42,6 +39,7 @@
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
+	$smarty->assign("adminName", $adminName);
 	$smarty->assign("permissionID", $permissionID);
 	$smarty->assign("actionName", $actionName);
 	$smarty->assign("permissionName", $permName);

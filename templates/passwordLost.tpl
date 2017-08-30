@@ -25,6 +25,7 @@
 <script>
   {literal}
     function resetPassword(ai) {
+			var an = document.getElementById("appName".toString()).value;
       var un = document.getElementById("username".toString()).value;
 	 		var ue = document.getElementById("email".toString()).value;
 	  
@@ -108,6 +109,10 @@
 				
 				<p>Please enter your username <b>or</b> your e-mail you registered with. You don't need to fill in both fields. You'll get a reset link by mail.</p>
 				
+				{nocache}
+					<input type="hidden" id="appName" name="appName" value="{$appName}" />
+				{/nocache}
+
 				<div class="field">
 					<label for="username">Username:</label>
 					<input type="text" id="username" name="username" value="" placeholder="Username" class="login" />

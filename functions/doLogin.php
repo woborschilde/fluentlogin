@@ -5,7 +5,12 @@
 
     if (!(isset($_GET["loginToken"]))) {
         $userName = $_GET["userName"];
-        $userPassword = $_GET["userPassword"];
+
+        if (!(isset($_GET["nohash"]))) {
+            $userPassword = sha1($_GET["userPassword"]);
+        } else {
+            $userPassword = sha1(sha1($_GET["userPassword"]));
+        }
     } else {
         $userID = $_GET["userID"];
         $loginToken = $_GET["loginToken"];

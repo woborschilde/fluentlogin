@@ -10,31 +10,31 @@
 
 	// Check admin login status
 	require("functions/checkLogin.php");
-
+	
 	$key = 0;
 	
-	// Get accounts of user
-	$query = $conn->query("SELECT * FROM fl_apps ORDER BY appID ASC");
+	// Get admins of app
+	$query = $conn->query("SELECT * FROM fl_admins ORDER BY adminID ASC");
 	while ($row = $query->fetch_assoc()) {
-		$appID = $row["appID"];
-		$appName = $row["appName"];
+		$adminID = $row["adminID"];
+		$adminNameField = $row["adminName"];
 
 		$keys[] = $key; $key++;
-		$appIDs[] = $appID;
-		$appNames[] = $appName;
+		$adminIDs[] = $adminID;
+		$adminNames[] = $adminName;
 	}
 
 	if ($query->num_rows == 0) {
 		$keys[] = $key;
-		$appIDs[] = "-";
-		$appNames[] = "No applications created yet.";
+		$adminIDs[] = "-";
+		$adminNames[] = "No admins created yet.";
 	}
 
 	// Assign variables to smarty
-	$smarty->assign("adminName", $adminName);
+	$smarty->assign("adminName", $adminName);  // from checkLogin
 	$smarty->assign("keys", $keys);
-	$smarty->assign("appIDs", $appIDs);
-	$smarty->assign("appNames", $appNames);
+	$smarty->assign("adminIDs", $adminIDs);
+	$smarty->assign("adminNames", $adminNames);
 	
-	$smarty->display("templates/apps.tpl");
+	$smarty->display("templates/admins.tpl");
 ?>

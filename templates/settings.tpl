@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 {nocache}
-  <title>{$actionName} user group - fluentlogin Administration</title>
+  <title>My settings - {$appName}</title>
 {/nocache}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link href="../css/bootstrap.min.css" rel="stylesheet">
-<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
-<link href="../css/font-awesome.css" rel="stylesheet">
-<link href="../css/style.css" rel="stylesheet">
-<link href="../css/pages/dashboard.css" rel="stylesheet">
+<link href="css/font-awesome.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/pages/dashboard.css" rel="stylesheet">
 
 <!-- Sweetalert Css -->
-<link href="../css/sweetalert2.css" rel="stylesheet" />
+<link href="css/sweetalert2.css" rel="stylesheet" />
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -26,43 +26,52 @@
   {literal}
     var queryString = "";
 
-    function editgroup(ai, gi) {
-      var gn = document.getElementById("groupName".toString()).value;
-      var gd = document.getElementById("groupDescription".toString()).value;
+    function editSettings(ai) {
+      var up = document.getElementById("userPassword".toString()).value;
+      var np = document.getElementById("newPassword".toString()).value;
+      var nc = document.getElementById("newPasswordConfirm".toString()).value;
       
-      var groupPerms = document.getElementsByName("permission");
+      if (np != nc) {
+				swal({
+					type: "error",
+					title: "Couldn't save your settings",
+					text: "The entered new passwords do not match."
+				});
+				return;
+			}
 
-      groupPerms.forEach(addPerm);
-      
+      if (up == np) {
+				swal({
+					type: "error",
+					title: "Couldn't save your settings",
+					text: "Your new password can't be the same as your current password."
+				});
+				return;
+			}
+
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           if (this.responseText == "1") {
             swal({
               type: "success",
-              title: "Benutzergruppen aktualisiert",
-              text: "Die Benutzergruppen wurden aktualisiert."
+              title: "Settings updated",
+              text: "Your changes have been saved successfully."
             });
             setTimeout(function(){
-              location.replace("groups.php?appID="+ai);
+              location.replace("index.php?appID="+ai);
             }, 1000);
           } else {
             swal({
               type: "error",
-              title: "Fehler beim Aktualisieren der Benutzergruppen",
+              title: "Couldn't save your settings",
               text: this.responseText
             });
           }
         }
       }
-      xmlhttp.open("GET","functions/editGroup.php?appID="+ai+"&groupID="+gi+"&groupName="+gn+"&groupDescription="+gd+queryString,true);
+      xmlhttp.open("GET","functions/editSettings.php?appID="+ai+"&userPassword="+up+"&newPassword="+np,true);
       xmlhttp.send();
-    }
-
-    function addPerm(item, index) {
-      if (item.checked) {
-        queryString += "&"+item.id+"=1";
-      }
     }
   {/literal}
 </script>
@@ -72,12 +81,13 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.php">fluentlogin Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">{$appName}</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$adminName}<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$userName}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="functions/doLogout.php">Log out</a></li>
+              <li><a href="javascript:;">My settings</a></li>
+              <li><a href="javascript:;">Log out</a></li>
             </ul>
           </li>
         </ul>
@@ -89,21 +99,7 @@
   <!-- /navbar-inner --> 
 </div>
 <!-- /navbar -->
-<div class="subnavbar">
-  <div class="subnavbar-inner">
-    <div class="container">
-      <ul class="mainnav">
-        <li><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-        <li class="active"><a href="apps.php"><i class="icon-list-alt"></i><span>Applications</span> </a> </li>
-        <li><a href="admins.php"><i class="icon-legal"></i><span>Administrators</span> </a></li>
-        <li><a href="docs.php"><i class="icon-book"></i><span>Documentation</span> </a> </li>
-      </ul>
-    </div>
-    <!-- /container --> 
-  </div>
-  <!-- /subnavbar-inner --> 
-</div>
-<!-- /subnavbar -->
+<br />
 <div class="main">
   <div class="main-inner">
     <div class="container">
@@ -112,42 +108,35 @@
         <div class="span6" style="width: 100%;">
           <div class="widget widget-table action-table">
             <div class="widget-header"> <i class="icon-list-alt"></i>
-              {nocache}
-                <h3>{$appName} > {$actionName} user group</h3>
-              {/nocache}
+              <h3>My settings</h3>
             </div>
             <!-- /widget-header -->
             {nocache}
               <div class="widget-content">
                 <br />
-                  <form id="groupEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editgroup({$appID}, {$groupID}); return false;">
+                  <form id="userEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editSettings({$appID}); return false;">
                     <fieldset>
+                      <h3 style="margin-left: 26px;">Change password</h3><br />
                       <div class="control-group">
-                        <label class="control-label" for="groupName">Group name:</label>
+                        <label class="control-label" for="userPassword">Current Password:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="groupName" value="{$groupName}">
+                          <input type="password" class="span6" id="userPassword" value="">
                         </div> <!-- /controls -->				
                       </div> <!-- /control-group -->
 
                       <div class="control-group">
-                        <label class="control-label" for="groupDescription">Description:</label>
+                        <label class="control-label" for="newPassword">New Password:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="groupDescription" value="{$groupDescription}">
+                          <input type="password" class="span6" id="newPassword" value="" placeholder="Leave empty to unchange">
                         </div> <!-- /controls -->				
                       </div> <!-- /control-group -->
 
-                      <div class="panel panel-danger" style="margin-left: 2%; width: 60%;">
-                        <div class="panel-heading">Permissions for this group</div>
-                        <div class="panel-body">
-                          {foreach from=$keys item=i}
-                            {if $permIDs[$i] != "-"}
-                              <label style="width: 40%;"><input type="checkbox" id="perm{$permIDs[$i]}" name="permission" class="filled-in chk-col-red" {$permValues[$i]}><span style="vertical-align: middle;"> {$permNames[$i]}</span></label>
-                            {else}
-                              {$permNames[$i]} <a href="permissionEdit.php?appID={$appID}" target="_blank"><u>Create</u></a>
-                            {/if}
-                          {/foreach}
-                        </div>
-                      </div>
+                      <div class="control-group">
+                        <label class="control-label" for="newPasswordConfirm">Confirm New Password:</label>
+                        <div class="controls">
+                          <input type="password" class="span6" id="newPasswordConfirm" value="" placeholder="Leave empty to unchange">
+                        </div> <!-- /controls -->				
+                      </div> <!-- /control-group -->
 
                       <div class="form-actions" style="margin-bottom: 0px;">
                         <button type="submit" class="btn btn-primary">Save</button> 
@@ -186,16 +175,16 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="../js/jquery-1.7.2.min.js"></script> 
-<script src="../js/excanvas.min.js"></script> 
-<script src="../js/chart.min.js" type="text/javascript"></script> 
-<script src="../js/bootstrap.js"></script>
-<script language="javascript" type="text/javascript" src="../js/full-calendar/fullcalendar.min.js"></script>
+<script src="js/jquery-1.7.2.min.js"></script> 
+<script src="js/excanvas.min.js"></script> 
+<script src="js/chart.min.js" type="text/javascript"></script> 
+<script src="js/bootstrap.js"></script>
+<script language="javascript" type="text/javascript" src="js/full-calendar/fullcalendar.min.js"></script>
 
 <!-- SweetAlert Plugin Js -->
-<script src="../js/sweetalert2.min.js"></script>
+<script src="js/sweetalert2.min.js"></script>
 
-<script src="../js/base.js"></script> 
+<script src="js/base.js"></script> 
 <script>     
 
         var lineChartData = {

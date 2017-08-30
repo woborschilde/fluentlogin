@@ -10,7 +10,12 @@
 	$appID = $_GET["appID"];
     $userName = $_GET["userName"];
     $userEmail = $_GET["userEmail"];
-    $userPassword = $_GET["userPassword"];
+    
+    if (!(isset($_GET["nohash"]))) {
+        $userPassword = sha1($_GET["userPassword"]);
+    } else {
+        $userPassword = sha1(sha1($_GET["userPassword"]));
+    }
     
     db_conn();
     db_switch("fluentlogin", __FILE__, __LINE__);
@@ -23,7 +28,16 @@
         die("An app with ID $appID does not exist!");
     }
 
-    db_sel("NULL", "fl_apps_users", "appID='$appID' && userName='$userName' && userEmail='$userEmail'", __FILE__, __LINE__);
+    // get if registration is enabled for this app
+	db_sel("settingID", "fl_appsettings", "settingName='registration'", __FILE__, __LINE__);
+	db_sel("NULL", "fl_appsettings_values", "appID='$appID' && settingID='$settingID' && settingValue='on'", __FILE__, __LINE__);
+
+	if ($num_rows == 0) {
+		die("Registration is currently disabled.");
+	}
+	//
+
+    db_sel("NULL", "fl_apps_users", "appID='$appID' && (userName='$userName' || userEmail='$userEmail')", __FILE__, __LINE__);
 
     if ($num_rows > 0) {
         die("Ein Konto mit diesem Benutzernamen oder dieser E-Mail-Adresse existiert bereits.");
@@ -54,9 +68,7 @@ It has to be activated by clicking on the following link:
 https://intra.woborschil.net/fluentlogin/functions/confirmUser.php?appID=$appID&userID=$userID&confirmationCode=$confirmationCode
 
 
-If you haven't registered an account, just ignore this message. The unactivated account will be automatically deleted after 7 days.
-If you would like to block your e-mail address for registration, just contact the support:
-support@woborschil.de
+If you haven't registered an account, just ignore this message.
 
 
 Sincerely,

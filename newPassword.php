@@ -18,10 +18,10 @@
 	}
 
 	// Check user login status
-	//include("functions/checkLogin.php");
+	//require("functions/checkLogin.php");
 	
 	// Load Sidenav
-	//include("functions/loadSidenav.php");
+	//require("functions/loadSidenav.php");
 	
 	// Establish database connection
 	require("/var/www/unscramblephp/Unscramble.php");

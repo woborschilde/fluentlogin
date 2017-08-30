@@ -27,12 +27,11 @@
     var queryString = "";
 
     function register(ai) {
+			var an = document.getElementById("appName".toString()).value;
       var un = document.getElementById("username".toString()).value;
 	  	var ue = document.getElementById("email".toString()).value;
       var up = document.getElementById("password".toString()).value;
 	  	var uc = document.getElementById("confirm_password".toString()).value;
-			
-	  	var an = "AppName";
       
       var userFields = document.getElementsByName("field");
       userFields.forEach(setField);
@@ -46,17 +45,21 @@
 				return;
 			}
 
+			swal.showLoading();
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+					swal.hideLoading();
           if (this.responseText == "1") {
             swal({
               type: "success",
               title: "Welcome to "+an+"!",
               text: "Please click the confirmation link we've sent you by e-mail to activate your account."
             }).then(function () {
-			  location.replace("{$redirect}"+"?appID="+ai);
-			});
+			  			{/literal}
+								location.replace("{$redirect}"+"?appID="+ai);
+							{literal}
+						});
           } else {
             swal({
               type: "error",
@@ -66,7 +69,7 @@
           }
         }
       }
-      xmlhttp.open("GET","functions/doRegister.php?appID="+ai+"&userName="+un+"&userEmail="+ue+"&userPassword="+up+queryString, true);
+      xmlhttp.open("GET","functions/doRegister.php?appID="+ai+"&userName="+un+"&userEmail="+ue+"&userPassword="+sha1(up)+queryString, true);
       xmlhttp.send();
     }
 
@@ -124,48 +127,58 @@
 		
 			<h1>Create your account</h1>			
 			
-			<div class="login-fields">
-				
-				<p>Please fill in the following fields:</p>
-				
-				<div class="field">
-					<label for="username">Username:</label>
-					<input type="text" id="username" name="username" value="" placeholder="Choose a username..." class="login" required />
-				</div> <!-- /field -->				
-				
-				<div class="field">
-					<label for="email">E-mail address:</label>
-					<input type="email" id="email" name="email" value="" placeholder="Email" class="login" required />
-				</div> <!-- /field -->
-				
-				<div class="field">
-					<label for="password">Password:</label>
-					<input type="password" id="password" name="password" value="" placeholder="Password" class="login" required />
-				</div> <!-- /field -->
-				
-				<div class="field">
-					<label for="confirm_password">Confirm Password:</label>
-					<input type="password" id="confirm_password" name="confirm_password" value="" placeholder="Confirm Password" class="login" required />
-				</div> <!-- /field -->
-				
-				{nocache}
-				  {foreach from=$keys item=k}
-					  {if $fieldIDs[$k] != ""}
-						<div class="field">
-							<label for="field{$fieldIDs[$k]}">{$fieldNames[$k]}</label>
-							<input type="text" id="field{$fieldIDs[$k]}" name="field" value="" placeholder="{$fieldNames[$k]}" class="login" required />
-						</div> <!-- /field -->
-					  {/if}
-				  {/foreach}
-				{/nocache}
+			{nocache}
+				{if $registrationEnabled == "1"}
+					<div class="login-fields">
+						
+						<p>Please fill in the following fields:</p>
+						
+						{nocache}
+							<input type="hidden" id="appName" name="appName" value="{$appName}" />
+						{/nocache}
 
-			</div> <!-- /login-fields -->
-			
-			<div class="login-actions">
-									
-				<button tyoe="submit" class="button btn btn-primary btn-large">Register</button>
-				
-			</div> <!-- .actions -->
+						<div class="field">
+							<label for="username">Username:</label>
+							<input type="text" id="username" name="username" value="" placeholder="Choose a username..." class="login" required />
+						</div> <!-- /field -->				
+						
+						<div class="field">
+							<label for="email">E-mail address:</label>
+							<input type="email" id="email" name="email" value="" placeholder="Email" class="login" required />
+						</div> <!-- /field -->
+						
+						<div class="field">
+							<label for="password">Password:</label>
+							<input type="password" id="password" name="password" value="" placeholder="Password" class="login" required />
+						</div> <!-- /field -->
+						
+						<div class="field">
+							<label for="confirm_password">Confirm Password:</label>
+							<input type="password" id="confirm_password" name="confirm_password" value="" placeholder="Confirm Password" class="login" required />
+						</div> <!-- /field -->
+						
+						{foreach from=$keys item=k}
+							{if $fieldIDs[$k] != ""}
+							<div class="field">
+								<label for="field{$fieldIDs[$k]}">{$fieldNames[$k]}</label>
+								<input type="text" id="field{$fieldIDs[$k]}" name="field" value="" placeholder="{$fieldNames[$k]}" class="login" required />
+							</div> <!-- /field -->
+							{/if}
+						{/foreach}
+
+					</div> <!-- /login-fields -->
+					
+					<div class="login-actions">
+											
+						<button tyoe="submit" class="button btn btn-primary btn-large">Register</button>
+						
+					</div> <!-- .actions -->
+				{else}
+					<div class="alert alert-danger">
+						Registration is currently disabled.
+					</div>
+				{/if}
+			{/nocache}
 			
 		</form>
 		
@@ -189,6 +202,9 @@
 
 <!-- SweetAlert Plugin Js -->
 <script src="js/sweetalert2.min.js"></script>
+
+<!-- SHA-1 Plugin Js -->
+<script src="js/sha1.min.js"></script>
 
 </body>
 

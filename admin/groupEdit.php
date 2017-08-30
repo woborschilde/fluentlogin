@@ -16,12 +16,6 @@
 		$groupID = 0;
 		$actionName = "Add";
 	}
-
-	// Check user login status
-	//include("functions/checkLogin.php");
-	
-	// Load Sidenav
-	//include("functions/loadSidenav.php");
 	
 	// Establish database connection
 	require("/var/www/unscramblephp/Unscramble.php");
@@ -29,6 +23,9 @@
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
 	db_san($_GET);
+
+	// Check admin login status
+	require("functions/checkLogin.php");
 	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
@@ -52,9 +49,9 @@
 		$permNames[] = $permName;
 
 		// Get permission values of group
-		$query1 = $conn->query("SELECT value FROM fl_apps_perms_values WHERE permID='$permID' && groupID='$groupID' && appID='$appID' ORDER BY valueID ASC");
+		$query1 = $conn->query("SELECT permValue FROM fl_apps_perms_values WHERE permID='$permID' && groupID='$groupID' && appID='$appID' ORDER BY valueID ASC");
 		while ($row1 = $query1->fetch_assoc()) {
-			$permValue = $row1["value"];
+			$permValue = $row1["permValue"];
 
 			if ($permValue == "1") {
 				$permValue = "checked";  // due to HTML specification - checked must be set or omitted
@@ -81,6 +78,7 @@
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
+	$smarty->assign("adminName", $adminName);
 	$smarty->assign("groupID", $groupID);
 	$smarty->assign("actionName", $actionName);
 	$smarty->assign("groupName", $groupName);

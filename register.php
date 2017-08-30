@@ -16,10 +16,10 @@
 	}
 
 	// Check user login status
-	//include("functions/checkLogin.php");
+	//require("functions/checkLogin.php");
 	
 	// Load Sidenav
-	//include("functions/loadSidenav.php");
+	//require("functions/loadSidenav.php");
 	
 	// Establish database connection
 	require("/var/www/unscramblephp/Unscramble.php");
@@ -33,6 +33,17 @@
 	if ($num_rows == 0) {
 		die("An app with ID $appID does not exist!");
 	}
+
+	// get if registration is enabled for this app
+	db_sel("settingID", "fl_appsettings", "settingName='registration'", __FILE__, __LINE__);
+	db_sel("NULL", "fl_appsettings_values", "appID='$appID' && settingID='$settingID' && settingValue='on'", __FILE__, __LINE__);
+
+	if ($num_rows > 0) {
+		$registrationEnabled = "1";
+	} else {
+		$registrationEnabled = "0";
+	}
+	//
 
 	$key = 0;
 
@@ -58,6 +69,7 @@
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
 	$smarty->assign("redirect", $redirect);
+	$smarty->assign("registrationEnabled", $registrationEnabled);
 	
 	$smarty->assign("keys", $keys);
 	$smarty->assign("fieldIDs", $fieldIDs);

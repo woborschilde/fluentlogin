@@ -8,6 +8,9 @@
     db_switch("fluentlogin", __FILE__, __LINE__);
 
 	db_san($_GET);
+
+	// Check admin login status
+	require("checkLogin.php");
 	
     db_sel("appName", "fl_apps", "appName='$appName'", __FILE__, __LINE__);
     if ($query->num_rows > 0) {

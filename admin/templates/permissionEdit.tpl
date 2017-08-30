@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 {nocache}
-  <title>Berechtigung {$actionName} - fluentlogin Administration</title>
+  <title>{$actionName} permission - fluentlogin Administration</title>
 {/nocache}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,7 +49,7 @@
           }
         }
       }
-      xmlhttp.open("GET","../functions/editPermission.php?appID="+ai+"&permissionID="+fi+"&permissionName="+fn+"&permissionDescription="+fd,true);
+      xmlhttp.open("GET","functions/editPermission.php?appID="+ai+"&permissionID="+fi+"&permissionName="+fn+"&permissionDescription="+fd,true);
       xmlhttp.send();
     }
   {/literal}
@@ -60,13 +60,12 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.php">fluentlogin Administration</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My account<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$adminName}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">My settings</a></li>
-              <li><a href="javascript:;">Log out</a></li>
+              <li><a href="functions/doLogout.php">Log out</a></li>
             </ul>
           </li>
         </ul>

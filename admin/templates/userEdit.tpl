@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 {nocache}
-  <title>Benutzer {$actionName} - fluentlogin Administration</title>
+  <title>{$actionName} user - fluentlogin Administration</title>
 {/nocache}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -57,7 +57,7 @@
           }
         }
       }
-      xmlhttp.open("GET","../functions/editUser.php?appID="+ai+"&userID="+ui+"&userName="+un+"&userPassword="+up+queryString,true);
+      xmlhttp.open("GET","functions/editUser.php?appID="+ai+"&userID="+ui+"&userName="+un+"&userPassword="+up+queryString,true);
       xmlhttp.send();
     }
 
@@ -78,13 +78,12 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">fluentlogin Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.php">fluentlogin Administration</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My account<b class="caret"></b></a>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$adminName}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">My settings</a></li>
-              <li><a href="javascript:;">Log out</a></li>
+              <li><a href="functions/doLogout.php">Log out</a></li>
             </ul>
           </li>
         </ul>
@@ -132,7 +131,7 @@
                       <div class="control-group">
                         <label class="control-label" for="userName">Username:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="userName" value="{$userName}">
+                          <input type="text" class="span6" id="userName" value="{$adminName}">
                         </div> <!-- /controls -->				
                       </div> <!-- /control-group -->
 

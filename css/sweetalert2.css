@@ -46,7 +46,7 @@ body.swal2-iosfix {
     overflow-y: hidden; }
   .swal2-modal .swal2-title {
     color: #595959;
-    font-size: 30px;
+    font-size: 26px; /* orig: 30px */
     text-align: center;
     font-weight: 600;
     text-transform: none;
@@ -138,7 +138,7 @@ body.swal2-iosfix {
   .swal2-modal > .swal2-checkbox {
     display: none; }
   .swal2-modal .swal2-content {
-    font-size: 18px;
+    font-size: 16px;  /* orig: 18px */
     text-align: center;
     font-weight: 300;
     position: relative;

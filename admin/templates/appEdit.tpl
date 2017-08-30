@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Applications - fluentlogin Administration</title>
+{nocache}
+  <title>{$actionName} application - fluentlogin Administration</title>
+{/nocache}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
-        rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
 <link href="../css/font-awesome.css" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
 <link href="../css/pages/dashboard.css" rel="stylesheet">
@@ -16,113 +17,51 @@
 <!-- Sweetalert Css -->
 <link href="../css/sweetalert2.css" rel="stylesheet" />
 
-<!-- Tooltip Balloon.css -->
-<link href="../css/balloon.css" rel="stylesheet" />
-
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
+    
 <script>
-		{literal}
-      function newApp() {
-        var v = "";
+  {literal}
+    var queryString = "";
 
-        swal({
-          title: "Neue Anwendung",
-          text: "Geben Sie einen Namen für die neue Anwendung ein.",
-          input: "text",
-          showCancelButton: true,
-          cancelButtonText: "Cancel",
-          showLoaderOnConfirm: true,
-          inputValidator: function(value) {
-            return new Promise(function (resolve, reject) {
-              xmlhttp = new XMLHttpRequest();
-              xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  if (this.responseText == "1") {
-                    resolve();
-                  } else {
-                    reject(this.responseText);
-                  }
-                }
-              }
-              v = value;
-              xmlhttp.open("GET","functions/newApp.php?appName="+v,true);
-              xmlhttp.send();
+    function editApp(ai) {
+      var an = document.getElementById("appName".toString()).value;
+      
+      var appSettings = document.getElementsByName("setting");
+
+      appSettings.forEach(setSetting);
+      
+      xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          if (this.responseText == "1") {
+            swal({
+              type: "success",
+              title: "Application updated",
+              text: "Your changes have been saved successfully."
             });
-          },
-        }).then(function () {
-          swal({
-            type: "success",
-            title: "Anwendung erstellt",
-            text: "Die Anwendung \""+v+"\" wurde erstellt."
-          });
-          setTimeout(function(){
-            location.replace("apps.php");
-          }, 1000);
-        });
-      }
-
-      function renameApp(i) {
-        var v = "";
-        var k = document.getElementById("appID"+i.toString()).innerHTML;
-        var m = document.getElementById("appName"+i.toString()).innerHTML;
-
-        swal({
-          title: "Anwendung umbenennen",
-          text: "Geben Sie einen neuen Namen für die Anwendung \""+m+"\" ein.",
-          input: "text",
-          inputValue: m,
-          showCancelButton: true,
-          cancelButtonText: "Cancel",
-          showLoaderOnConfirm: true,
-          inputValidator: function(value) {
-            return new Promise(function (resolve, reject) {
-              xmlhttp = new XMLHttpRequest();
-              xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  if (this.responseText == "1") {
-                    resolve();
-                  } else {
-                    reject(this.responseText);
-                  }
-                }
-              }
-              v = value;
-              xmlhttp.open("GET","functions/renameApp.php?appID="+k+"&appName="+v,true);
-              xmlhttp.send();
+            setTimeout(function(){
+              location.replace("apps.php");
+            }, 1000);
+          } else {
+            swal({
+              type: "error",
+              title: "Couldn't save application",
+              text: this.responseText
             });
-          },
-        }).then(function () {
-          document.getElementById("appName"+i.toString()).innerHTML = v;
-        });
+          }
+        }
       }
+      xmlhttp.open("GET","functions/editApp.php?appID="+ai+"&appName="+an+queryString,true);
+      xmlhttp.send();
+    }
 
-      function delApp(i) {
-        var r = "appRow"+i.toString();
-        var k = document.getElementById("appID"+i.toString()).innerHTML;
-        var m = document.getElementById("appName"+i.toString()).innerHTML;
-        
-        i++;
-        
-        swal({
-          title: "Do you really want to delete \""+m+"\"?",
-          text: "All users, user groups, fields and permissions will be removed! This process cannot be undone!",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete application',
-          cancelButtonText: 'Cancel',
-        }).then(function () {
-          xmlhttp = new XMLHttpRequest();
-          xmlhttp.open("GET","functions/delApp.php?appID="+k,true);
-          xmlhttp.send();
-          document.getElementById(r).remove();
-        });
-      }
-    {/literal}
+    function setSetting(item, index) {
+      queryString += "&"+item.id+"="+item.value;
+    }
+  {/literal}
 </script>
 
 </head>
@@ -170,41 +109,42 @@
         <div class="span6" style="width: 100%;">
           <div class="widget widget-table action-table">
             <div class="widget-header"> <i class="icon-list-alt"></i>
-              <h3>Applications</h3>
-              <span style="text-align: right;"><a href="appEdit.php" class="btn btn-success"><b>+</b>&nbsp;&nbsp;New application</a></span>
+              {nocache}
+                <h3>{$actionName} application</h3>
+              {/nocache}
             </div>
             <!-- /widget-header -->
-            <div class="widget-content">
-              <table class="table table-striped table-bordered">
-                <thead>
-                  <tr>
-                    <th> ID </th>
-                    <th> Name </th>
-                    <th class="td-actions" style="width: 15%;"> Action </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {nocache}
-                    {foreach from=$keys item=i}
-                      <tr id="appRow{$i}">
-                        <td id="appID{$i}">{$appIDs[$i]}</td>
-                        <td id="appName{$i}" ondblclick="renameApp({$i});">{$appNames[$i]}</td>
-                        <td class="td-actions btn-group">
-                          {if $appNames[$i] != "No applications created yet."}
-                            <a href="users.php?appID={$appIDs[$i]}" class="btn btn-small btn-info" style="margin-right: 0px;" data-balloon="Users" data-balloon-pos="up"><i class="btn-icon-only icon-user"> </i></a>
-                            <a href="groups.php?appID={$appIDs[$i]}" class="btn btn-small btn-warning" style="margin-right: 0px;" data-balloon="User groups" data-balloon-pos="up"><i class="btn-icon-only icon-asterisk"> </i></a>
-                            <a href="fields.php?appID={$appIDs[$i]}" class="btn btn-small btn-primary" style="margin-right: 0px;" data-balloon="Fields" data-balloon-pos="up"><i class="btn-icon-only icon-table"> </i></a>
-                            <a href="permissions.php?appID={$appIDs[$i]}" class="btn btn-small btn-danger" style="margin-right: 0px;" data-balloon="Permissions" data-balloon-pos="up"><i class="btn-icon-only icon-legal"> </i></a>
-                            <a href="appEdit.php?appID={$appIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;" data-balloon="Edit" data-balloon-pos="up"><i class="btn-icon-only icon-pencil"> </i></a>
-                            <a href="javascript:;" class="btn btn-small btn-danger" onclick="delApp({$i});" data-balloon="Delete" data-balloon-pos="up"><i class="btn-icon-only icon-remove"> </i></a>
-                          {/if}
-                        </td>
-                      </tr>
-                    {/foreach}
-                  {/nocache}
-                </tbody>
-              </table>
-            </div>
+            {nocache}
+              <div class="widget-content">
+                <br />
+                  <form id="userEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editApp({$appID}); return false;">
+                    <fieldset>
+                      <div class="control-group">
+                        <label class="control-label" for="appName">App Name:</label>
+                        <div class="controls">
+                          <input type="text" class="span6" id="appName" value="{$appName}">
+                        </div> <!-- /controls -->				
+                      </div> <!-- /control-group -->
+
+                      {foreach from=$keys item=k}
+                        {if $settingIDs[$k] != "-"}
+                          <div class="control-group">
+                            <label class="control-label" for="setting{$settingIDs[$k]}">{$settingNames[$k]}:</label>
+                            <div class="controls">
+                              <input type="text" class="span6" id="setting{$settingIDs[$k]}" name="setting" value="{$settingValues[$k]}">
+                            </div> <!-- /controls -->				
+                          </div> <!-- /control-group -->
+                        {/if}
+                      {/foreach}
+
+                      <div class="form-actions" style="margin-bottom: 0px;">
+                        <button type="submit" class="btn btn-primary">Save</button> 
+                        <a class="btn" onclick="window.history.back();">Cancel</a>
+                      </div> <!-- /form-actions -->
+                    </fieldset>
+                  </form>
+              </div>
+            {/nocache}
             <!-- /widget-content --> 
           </div>
         </div>

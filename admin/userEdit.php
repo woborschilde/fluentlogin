@@ -16,12 +16,6 @@
 		$userID = 0;
 		$actionName = "Add";
 	}
-
-	// Check user login status
-	//include("functions/checkLogin.php");
-	
-	// Load Sidenav
-	//include("functions/loadSidenav.php");
 	
 	// Establish database connection
 	require("/var/www/unscramblephp/Unscramble.php");
@@ -29,6 +23,9 @@
     db_switch("fluentlogin", __FILE__, __LINE__);
 	
 	db_san($_GET);
+
+	// Check admin login status
+	require("functions/checkLogin.php");
 	
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
@@ -53,10 +50,10 @@
 		$fieldNames[] = $fieldName;
 
 		// Get field values for user
-		//db_sel("value", "fl_apps_fields_values", "fieldID='$fieldID' && userID='$userID' && appID='$appID'", __FILE__, __LINE__);
-		$query1 = $conn->query("SELECT value FROM fl_apps_fields_values WHERE fieldID='$fieldID' && userID='$userID' && appID='$appID'");
+		//db_sel("fieldValue", "fl_apps_fields_values", "fieldID='$fieldID' && userID='$userID' && appID='$appID'", __FILE__, __LINE__);
+		$query1 = $conn->query("SELECT fieldValue FROM fl_apps_fields_values WHERE fieldID='$fieldID' && userID='$userID' && appID='$appID'");
 		while ($row1 = $query1->fetch_assoc()) {
-			$fieldValues[] = $row1["value"];
+			$fieldValues[] = $row1["fieldValue"];
 		}
 
 		if ($query1->num_rows == 0) {
@@ -106,6 +103,7 @@
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
+	$smarty->assign("adminName", $adminName);
 	$smarty->assign("userID", $userID);
 	$smarty->assign("actionName", $actionName);
 	$smarty->assign("userName", $userName);

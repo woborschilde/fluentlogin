@@ -14,6 +14,9 @@
     db_switch("fluentlogin", __FILE__, __LINE__);
 
 	db_san($_GET);
+
+	// Check admin login status
+	require("checkLogin.php");
 	
     if (isset($userID)) {
         db_upd("fl_apps_users", "userName='$userName', userPassword='$userPassword'", "userID='$userID'", __FILE__, __LINE__);
@@ -30,9 +33,9 @@
             db_sel("NULL", "fl_apps_fields_values", "appID='$appID' && userID='$userID' && fieldID='$fieldID'", __FILE__, __LINE__);
             
             if ($num_rows > 0) {
-                db_upd("fl_apps_fields_values", "value='$value'", "appID='$appID' && userID='$userID' && fieldID='$fieldID'", __FILE__, __LINE__);
+                db_upd("fl_apps_fields_values", "fieldValue='$value'", "appID='$appID' && userID='$userID' && fieldID='$fieldID'", __FILE__, __LINE__);
             } else {
-                db_ins("fl_apps_fields_values", "appID, fieldID, userID, value", "'$appID', '$fieldID', '$userID', '$value'", __FILE__, __LINE__);
+                db_ins("fl_apps_fields_values", "appID, fieldID, userID, fieldValue", "'$appID', '$fieldID', '$userID', '$value'", __FILE__, __LINE__);
             }
         }
     }
