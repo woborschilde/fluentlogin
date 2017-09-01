@@ -1,5 +1,5 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../lib/unsphp/Unscramble.php");
 
     foreach ($_GET as $key => $value) {
         if ((strpos($value, "'") !== false) || (strpos($value, '"') !== false)) {
@@ -8,14 +8,25 @@
     }
 
 	$appID = $_GET["appID"];
-    $userPassword = $_GET["userPassword"];
-    $newPassword = $_GET["newPassword"];
+
+    if (!(isset($_GET["nohash"]))) {
+        $userPassword = sha1($_GET["userPassword"]);
+        $newPassword = sha1($_GET["newPassword"]);
+    } else {
+        $userPassword = sha1(sha1($_GET["userPassword"]));
+        $newPassword = sha1(sha1($_GET["newPassword"]));
+    }
     
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 	
+    // Check user login status
+	$embed = 1;
+	$redirect = "settings.php";
+	require("checkLogin.php");
+
     db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
     if ($num_rows == 0) {

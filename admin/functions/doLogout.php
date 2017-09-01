@@ -1,5 +1,8 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../../lib/unsphp/Unscramble.php");
+
+    // Load system settings
+	require("functions/loadSettings.php");
 
     if (isset($_COOKIE["fla"])) {
 		$sessionID = $_COOKIE["fla"];
@@ -8,7 +11,7 @@
 	}
 
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 	
@@ -17,8 +20,8 @@
 
     // delete session cookie
     $expiryTime = time() - 1; // 1 second ago
-    setcookie("fla", "$sessionID", $expiryTime, "/fluentlogin/");
+    setcookie("fla", $sessionID, $expiryTime, "/" . basename(__DIR__) . "/");
 
-    header("Location: https://intra.woborschil.net/fluentlogin/admin/index.php");
+    header("Location: " . $systemPath . "admin/index.php");
     die();
 ?>

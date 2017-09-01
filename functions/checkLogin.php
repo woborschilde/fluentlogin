@@ -1,9 +1,9 @@
 <?php
     if (!(isset($embed))) {
         // Establish database connection
-        require("/var/www/unscramblephp/Unscramble.php");
+        require("../lib/unsphp/Unscramble.php");
         db_conn();
-        db_switch("fluentlogin", __FILE__, __LINE__);
+        db_switch($db_database, __FILE__, __LINE__);
 
         if (isset($_GET["appID"])) {
             $appID = $_GET["appID"];
@@ -20,12 +20,15 @@
         if (isset($_GET["redirect"])) {
             $redirect = $_GET["redirect"];
         } else {
-            $redirect = "index.php";
+            $redirect = "index.php?appID=$appID";
         }
     }
 
 	db_san($_GET);
 	db_san($_COOKIE);
+
+    // Load system settings
+	require(__DIR__ . "/../admin/functions/loadSettings.php");
 
     // Get session by cookie
     if (isset($_COOKIE["fl" . $appID])) {
@@ -44,17 +47,26 @@
 
         if (strpos($loginToken, "r") !== false) {
             if (!(isset($_GET["noredirect"]))) {
-                header("Location: https://intra.woborschil.net/fluentlogin/newPassword.php?appID=$appID&userID=$userID&redirect=$redirect");
+                header("Location: " . $systemPath . "newPassword.php?appID=$appID&userID=$userID&redirect=$redirect");
             }
             die("2");
         }
     } else {
         not_logged_in:
-        if (!(isset($_GET["noredirect"]))) {
-            header("Location: https://intra.woborschil.net/fluentlogin/login.php?appID=$appID&redirect=$redirect");
+        if (!(isset($invert))) {
+            if (!(isset($_GET["noredirect"]))) {
+                header("Location: " . $systemPath . "login.php?appID=$appID&redirect=$redirect");
+            }
+            die("0");
+        } else {
+            return 0;
         }
-        die("0");
     }
 
-    return 1;
+    if (!(isset($invert))) {
+        return 1;
+    } else {
+        header("Location: " . $systemPath . $redirect);
+        die("1");
+    }
 ?>

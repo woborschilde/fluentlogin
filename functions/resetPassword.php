@@ -1,15 +1,23 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     $userName = $_GET["userName"];
     $userEmail = $_GET["userEmail"];
     
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
-	
+
+    // Check user login status
+    $embed = 1;
+	$invert = 1;  // redirect to user panel if logged in - no infinite loop
+	require("checkLogin.php");
+
+    // Load system settings
+	require("../admin/functions/loadSettings.php");
+
     db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
     if ($num_rows == 0) {
@@ -48,7 +56,7 @@
 
 Somebody requested to reset your user account password for $appName.
 If this was you, click this link to set a new password:
-https://intra.woborschil.net/fluentlogin/functions/doLogin.php?appID=$appID&userID=$userID&loginToken=$loginToken
+" . $systemPath . "functions/doLogin.php?appID=$appID&userID=$userID&loginToken=$loginToken
 
 
 If you haven't requested a password reset, just ignore this message. Your account stays safe.

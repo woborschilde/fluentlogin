@@ -1,6 +1,6 @@
 <?php
 	// Include Smarty Template Engine
-	require("/usr/local/installed/smarty/app/fluentlogin/smartyInclude.php");
+	require("lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
 	
 	if (isset($_GET["appID"])) {
@@ -14,20 +14,19 @@
 	} else {
 		$redirect = "index.php";
 	}
-
-	// Check user login status
-	//require("functions/checkLogin.php");
-	
-	// Load Sidenav
-	//require("functions/loadSidenav.php");
 	
 	// Establish database connection
-	require("/var/www/unscramblephp/Unscramble.php");
+	require("lib/unsphp/Unscramble.php");
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 	
 	db_san($_GET);
 	
+	// Check user login status
+	$embed = 1;
+	$invert = 1;  // redirect to user panel if logged in - no infinite loop
+	require("functions/checkLogin.php");
+
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	if ($num_rows == 0) {

@@ -1,5 +1,5 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     
@@ -11,7 +11,7 @@
     $groupDescription = $_GET["groupDescription"];
 
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 
@@ -22,7 +22,7 @@
         db_upd("fl_apps_groups", "groupName='$groupName', groupDescription='$groupDescription'", "groupID='$groupID'", __FILE__, __LINE__);
         db_upd("fl_apps_perms_values", "permValue='0'", "appID='$appID' && groupID='$groupID'", __FILE__, __LINE__);  // reset permission values (to 0)
     } else {
-        db_get_ai("fluentlogin", "fl_apps_groups", __FILE__, __LINE__); $groupID = $ai;
+        db_get_ai($db_database, "fl_apps_groups", __FILE__, __LINE__); $groupID = $ai;
         db_ins("fl_apps_groups", "appID, groupName, groupDescription", "'$appID', '$groupName', '$groupDescription'", __FILE__, __LINE__);
     }
 

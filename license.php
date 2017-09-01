@@ -1,6 +1,6 @@
 <?php
 	// Include Smarty Template Engine
-	require("/usr/local/installed/smarty/app/fluentlogin/smartyInclude.php");
+	require("lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
 	
 	if (isset($_GET["appID"])) {
@@ -8,17 +8,11 @@
 	} else {
 		die("Argument ''appID'' is required!");
 	}
-
-	// Check user login status
-	//require("functions/checkLogin.php");
-	
-	// Load Sidenav
-	//require("functions/loadSidenav.php");
 	
 	// Establish database connection
-	require("/var/www/unscramblephp/Unscramble.php");
+	require("lib/unsphp/Unscramble.php");
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 	
 	db_san($_GET);
 	

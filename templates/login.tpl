@@ -53,7 +53,7 @@
             swal({
               type: "error",
               title: "Login failed",
-              text: this.responseText
+              html: this.responseText
             });
           }
         }

@@ -64,7 +64,7 @@
             swal({
               type: "error",
               title: "Registration failed",
-              text: this.responseText
+              html: this.responseText
             });
           }
         }

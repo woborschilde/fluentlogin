@@ -56,7 +56,7 @@
             swal({
               type: "error",
               title: "Couldn't change password",
-              text: this.responseText
+              html: this.responseText
             });
           }
         }

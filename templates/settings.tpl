@@ -65,12 +65,12 @@
             swal({
               type: "error",
               title: "Couldn't save your settings",
-              text: this.responseText
+              html: this.responseText
             });
           }
         }
       }
-      xmlhttp.open("GET","functions/editSettings.php?appID="+ai+"&userPassword="+up+"&newPassword="+np,true);
+      xmlhttp.open("GET","functions/editSettings.php?appID="+ai+"&userPassword="+sha1(up)+"&newPassword="+sha1(np),true);
       xmlhttp.send();
     }
   {/literal}
@@ -162,7 +162,7 @@
   <div class="footer-inner">
     <div class="container">
       <div class="row">
-        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, developed by <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
+        <div class="span12"> &copy; 2017 <a href="http://www.woborschil.de/fluentlogin"><b>fluentlogin Beta 1</b></a>, developed by <a href="http://www.woborschil.de"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="https://www.egrappler.com/templatevamp-twitter-bootstrap-admin-template-now-available/"><b>Bootstrap Responsive Admin Template</b></a>.</div>
         <!-- /span12 --> 
       </div>
       <!-- /row --> 
@@ -183,6 +183,9 @@
 
 <!-- SweetAlert Plugin Js -->
 <script src="js/sweetalert2.min.js"></script>
+
+<!-- SHA-1 Plugin Js -->
+<script src="js/sha1.min.js"></script>
 
 <script src="js/base.js"></script> 
 <script>     

@@ -1,6 +1,6 @@
 <?php
 	// Include Smarty Template Engine
-	require("/usr/local/installed/smarty/app/fluentlogin/smartyInclude.php");
+	require("../lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
 
 	if (isset($_GET["appID"])) {
@@ -12,9 +12,9 @@
 	}
 
 	// Establish database connection
-	require("/var/www/unscramblephp/Unscramble.php");
+	require("../lib/unsphp/Unscramble.php");
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 	
 	db_san($_GET);
 
@@ -31,12 +31,12 @@
 	$key = 0;
 	
 	// Get settings of app
-	$query0 = $conn->query("SELECT settingID, settingName, settingPlaceholder FROM fl_appsettings ORDER BY settingID ASC");
+	$query0 = $conn->query("SELECT settingID, settingName, settingDefault FROM fl_appsettings ORDER BY settingID ASC");
 	$num_rows0 = $query0->num_rows;
 	while ($row0 = $query0->fetch_assoc()) {
 		$settingID = $row0["settingID"];
 		$settingName = $row0["settingName"];
-		$settingPlaceholder = $row0["settingPlaceholder"];
+		$settingDefault = $row0["settingDefault"];
 
 		$keys[] = $key; $key++;
 		$settingIDs[] = $settingID;
@@ -49,7 +49,7 @@
 		}
 
 		if ($query1->num_rows == 0) {
-			$settingValues[] = $settingPlaceholder;
+			$settingValues[] = $settingDefault;
 		}
 		//
 	}

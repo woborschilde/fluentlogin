@@ -138,6 +138,10 @@
 <font NAME="Open Sans" SIZE="14"/>
 <icon BUILTIN="bookmark"/>
 </node>
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_925589313" MODIFIED="1504126532208" TEXT="Password policies">
+<font NAME="Open Sans" SIZE="14"/>
+<icon BUILTIN="full-2"/>
+</node>
 </node>
 </node>
 <node BACKGROUND_COLOR="#be3535" COLOR="#ffffff" CREATED="1503413879732" HGAP="19" ID="ID_1984202461" MODIFIED="1504021549871" TEXT="Administrators" VSHIFT="25">
@@ -179,6 +183,10 @@
 <node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_168764621" MODIFIED="1504032886717" TEXT="Setup (+ API-Gen.)">
 <font NAME="Open Sans" SIZE="14"/>
 <icon BUILTIN="stop"/>
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1035806704" MODIFIED="1504252716309" TEXT="Ask for write permissions">
+<font NAME="Open Sans" SIZE="14"/>
+<icon BUILTIN="stop"/>
+</node>
 </node>
 <node BACKGROUND_COLOR="#ffffcc" COLOR="#000000" CREATED="1503413879732" ID="ID_359646754" MODIFIED="1504038787622" TEXT="Tasks for release">
 <font BOLD="true" NAME="Open Sans" SIZE="14"/>

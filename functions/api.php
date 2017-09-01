@@ -1,5 +1,5 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     $mode = $_GET["mode"];
@@ -18,7 +18,7 @@
     }
 
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 	
@@ -47,6 +47,14 @@
             db_sel("userEmail", "fl_apps_users", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
             if ($num_rows > 0) {
                 echo $userEmail;
+            } else {
+                echo 0;
+            }
+            break;
+        case "userregdate":
+            db_sel("registrationDate", "fl_apps_users", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
+            if ($num_rows > 0) {
+                echo $registrationDate;
             } else {
                 echo 0;
             }

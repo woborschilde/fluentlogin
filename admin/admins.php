@@ -1,12 +1,12 @@
 <?php
 	// Include Smarty Template Engine
-	require("/usr/local/installed/smarty/app/fluentlogin/smartyInclude.php");
+	require("../lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
 	
 	// Establish database connection
-	require("/var/www/unscramblephp/Unscramble.php");
+	require("../lib/unsphp/Unscramble.php");
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	// Check admin login status
 	require("functions/checkLogin.php");

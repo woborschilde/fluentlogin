@@ -1,5 +1,5 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     
@@ -13,7 +13,7 @@
     $showOnRegister = $_GET["showOnRegister"];
 
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 

@@ -1,5 +1,5 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     
@@ -11,7 +11,7 @@
     $permissionDescription = $_GET["permissionDescription"];
 
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 
@@ -22,7 +22,7 @@
         db_upd("fl_apps_permissions", "permName='$permissionName', permDescription='$permissionDescription'", "permID='$permissionID'", __FILE__, __LINE__);
     } else {
         // deprecated:
-        //db_get_ai("fluentlogin", "fl_apps_permissions", __FILE__, __LINE__);
+        //db_get_ai($db_database, "fl_apps_permissions", __FILE__, __LINE__);
         //$permissionID = $ai;
         
         db_ins("fl_apps_permissions", "appID, permName, permDescription", "'$appID', '$permissionName', '$permissionDescription'", __FILE__, __LINE__);

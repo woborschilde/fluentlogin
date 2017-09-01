@@ -1,5 +1,5 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../lib/unsphp/Unscramble.php");
 
     if ((isset($_GET["appID"])) && (isset($_GET["userID"]))) {
 		$appID = $_GET["appID"];
@@ -21,17 +21,20 @@
     }
 
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 	
+    // Load system settings
+	require("../admin/functions/loadSettings.php");
+
     // delete current session from database
     db_del("fl_apps_sessions", "sessionID='$sessionID'", __FILE__, __LINE__);
 
     // delete session cookie
     $expiryTime = time() - 1; // 1 second ago
-    setcookie("fl$appID", "$sessionID", $expiryTime, "/fluentlogin/");
+    setcookie("fl$appID", $sessionID, $expiryTime, "/" . basename(__DIR__) . "/");
 
-    header("Location: https://intra.woborschil.net/fluentlogin/$redirect?appID=$appID");
+    header("Location: " . $systemPath . "$redirect?appID=$appID");
     die();
 ?>

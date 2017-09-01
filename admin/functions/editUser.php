@@ -1,5 +1,5 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     
@@ -11,7 +11,7 @@
     $userPassword = $_GET["userPassword"];
 
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 
@@ -22,7 +22,7 @@
         db_upd("fl_apps_users", "userName='$userName', userPassword='$userPassword'", "userID='$userID'", __FILE__, __LINE__);
         db_del("fl_apps_user_to_groups", "userID='$userID' && appID='$appID'", __FILE__, __LINE__); // reset user to group assignments (delete)
     } else {
-        db_get_ai("fluentlogin", "fl_apps_users", __FILE__, __LINE__); $userID = $ai;
+        db_get_ai($db_database, "fl_apps_users", __FILE__, __LINE__); $userID = $ai;
         db_ins("fl_apps_users", "appID, userName, userPassword", "'$appID', '$userName', '$userPassword'", __FILE__, __LINE__);
     }
 

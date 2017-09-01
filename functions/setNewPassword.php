@@ -1,15 +1,20 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     $userID = $_GET["userID"];
     $userPassword = $_GET["userPassword"];
     
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 	
+    // Check user login status
+	$embed = 1;
+	$redirect = "setNewPassword.php";
+	require("checkLogin.php");
+
     db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
     if ($num_rows == 0) {

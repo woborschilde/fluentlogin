@@ -1,13 +1,17 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../../lib/unsphp/Unscramble.php");
 
     $adminName = $_GET["userName"];
     $adminPassword = $_GET["userPassword"];
 
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
     db_san($_GET);
+
+    // Check admin login status
+	$invert = 1;  // redirect to admin panel if logged in - no infinite loop
+	require("checkLogin.php");
 
     db_sel("adminID", "fl_admins", "adminName COLLATE latin1_general_cs ='$adminName' && adminPassword COLLATE latin1_general_cs ='$adminPassword'", __FILE__, __LINE__);
 
@@ -27,7 +31,7 @@
 
     
     db_ins("fl_admins_sessions", "sessionID, adminID, expiryTime", "'$sessionID', '$adminID', '$expiryTime'", __FILE__, __LINE__);
-    setcookie("fla", "$sessionID", $expiryCookie, "/fluentlogin/");
+    setcookie("fla", "$sessionID", $expiryCookie, "/" . basename(__DIR__) . "/");
 
     echo "1";
 ?>

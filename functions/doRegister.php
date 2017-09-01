@@ -1,5 +1,5 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../lib/unsphp/Unscramble.php");
 
     foreach ($_GET as $key => $value) {
         if ((strpos($value, "'") !== false) || (strpos($value, '"') !== false)) {
@@ -18,10 +18,18 @@
     }
     
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 	
+    // Check user login status
+    $embed = 1;
+	$invert = 1;  // redirect to user panel if logged in - no infinite loop
+	require("checkLogin.php");
+
+    // Load system settings
+	require("../admin/functions/loadSettings.php");
+
     db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
     if ($num_rows == 0) {
@@ -40,7 +48,7 @@
     db_sel("NULL", "fl_apps_users", "appID='$appID' && (userName='$userName' || userEmail='$userEmail')", __FILE__, __LINE__);
 
     if ($num_rows > 0) {
-        die("Ein Konto mit diesem Benutzernamen oder dieser E-Mail-Adresse existiert bereits.");
+        die("An account with this username or this e-mail address already exists.");
     }
 
     // set field values
@@ -57,15 +65,16 @@
         }
     }*/
     
+    $registrationDate = time();
     $confirmationCode = mt_rand(100000,999999);
 
-    db_get_ai("fluentlogin", "fl_apps_users", __FILE__, __LINE__); $userID = $ai;
-    db_ins("fl_apps_users", "appID, userName, userEmail, userPassword, confirmationCode", "'$appID', '$userName', '$userEmail', '$userPassword', '$confirmationCode'", __FILE__, __LINE__);
+    db_get_ai($db_database, "fl_apps_users", __FILE__, __LINE__); $userID = $ai;
+    db_ins("fl_apps_users", "appID, userName, userEmail, userPassword, registrationDate, confirmationCode", "'$appID', '$userName', '$userEmail', '$userPassword', '$registrationDate', '$confirmationCode'", __FILE__, __LINE__);
 
     $msg = "Hello $userName,
 A user account has just been registered for $appName with this e-mail address ($userEmail).
 It has to be activated by clicking on the following link:
-https://intra.woborschil.net/fluentlogin/functions/confirmUser.php?appID=$appID&userID=$userID&confirmationCode=$confirmationCode
+" . $systemPath . "functions/confirmUser.php?appID=$appID&userID=$userID&confirmationCode=$confirmationCode
 
 
 If you haven't registered an account, just ignore this message.

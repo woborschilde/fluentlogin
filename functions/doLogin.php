@@ -1,5 +1,5 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
 
@@ -23,9 +23,17 @@
 	}
 
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
     db_san($_GET);
+
+    // Check user login status
+    $embed = 1;
+	$invert = 1;  // redirect to user panel if logged in - no infinite loop
+	require("checkLogin.php");
+
+    // Load system settings
+	require("../admin/functions/loadSettings.php");
 
     if (!(isset($_GET["loginToken"]))) {
         db_sel("userID", "fl_apps_users", "appID='$appID' && userName COLLATE latin1_general_cs ='$userName' && userPassword COLLATE latin1_general_cs ='$userPassword'", __FILE__, __LINE__);
@@ -49,7 +57,7 @@
         if (strpos($loginToken, "r") !== false) {
             db_upd("fl_apps_users", "forceNewPassword='1'", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
 
-            header("Location: https://intra.woborschil.net/fluentlogin/newPassword.php?appID=$appID&userID=$userID&redirect=index.php");
+            header("Location: " . $systemPath . "newPassword.php?appID=$appID&userID=$userID&redirect=index.php");
             die();
         }
     }
@@ -82,7 +90,7 @@
     }
     
     db_ins("fl_apps_sessions", "sessionID, appID, userID, expiryTime", "'$sessionID', '$appID', '$userID', '$expiryTime'", __FILE__, __LINE__);
-    setcookie("fl$appID", "$sessionID", $expiryTime, "/fluentlogin/");
+    setcookie("fl$appID", $sessionID, $expiryTime, "/" . basename(__DIR__) . "/");
 
     echo "1";
 ?>

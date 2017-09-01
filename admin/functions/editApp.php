@@ -1,5 +1,5 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../../lib/unsphp/Unscramble.php");
 
 	if ($_GET["appID"] != "0") {
 		$appID = $_GET["appID"];
@@ -8,7 +8,7 @@
     $appName = $_GET["appName"];
 
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 
@@ -17,7 +17,7 @@
 	
     // get appID for new app
     if (!(isset($appID))) {
-        db_get_ai("fluentlogin", "fl_apps", __FILE__, __LINE__); $appID = $ai;
+        db_get_ai($db_database, "fl_apps", __FILE__, __LINE__); $appID = $ai;
     }
     
     // check if appName already exists but ignore when existing app unchanged

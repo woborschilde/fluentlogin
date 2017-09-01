@@ -46,7 +46,7 @@
             swal({
               type: "error",
               title: "Password reset not possible",
-              text: this.responseText
+              html: this.responseText
             });
           }
         }

@@ -1,5 +1,5 @@
 <?php
-    require("/var/www/unscramblephp/Unscramble.php");
+    require("../../lib/unsphp/Unscramble.php");
     
 	if ($_GET["adminID"] != "0") {
 		$adminID = $_GET["adminID"];
@@ -9,7 +9,7 @@
     $adminPassword = $_GET["adminPassword"];
 
     db_conn();
-    db_switch("fluentlogin", __FILE__, __LINE__);
+    db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
 

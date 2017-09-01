@@ -1,6 +1,8 @@
 <?php
-	db_san($_GET);
 	db_san($_COOKIE);
+
+    // Load system settings
+	require("loadSettings.php");
 
     // Get session by cookie
     if (isset($_COOKIE["fla"])) {
@@ -19,7 +21,7 @@
     } else {
         not_logged_in:
         if (!(isset($invert))) {
-            header("Location: https://intra.woborschil.net/fluentlogin/admin/login.php");
+            header("Location: " . $systemPath . "admin/login.php");
             die("0");
         } else {
             return 0;
@@ -29,7 +31,7 @@
     if (!(isset($invert))) {
         return 1;
     } else {
-        header("Location: https://intra.woborschil.net/fluentlogin/admin/index.php");
+        header("Location: " . $systemPath . "admin/index.php");
         die("1");
     }
 ?>
