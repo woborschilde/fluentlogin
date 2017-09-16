@@ -1,13 +1,22 @@
 <?php
+
+	/* fluentlogin User Management System
+	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+
+	Copyright (C) 2017 woborschil.de
+
+	@link    http://www.woborschil.de/fluentlogin
+	*/
+	
 	// Include Smarty Template Engine
 	require("../lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
-
+	
 	if (isset($_GET["adminID"])) {
-		$adminID = $_GET["adminID"];
-		$actionName = "($adminID) Edit";
+		$adminIDField = $_GET["adminID"];
+		$actionName = "($adminIDField) Edit";
 	} else {
-		$adminID = 0;
+		$adminIDField = 0;
 		$actionName = "Add";
 	}
 	
@@ -19,15 +28,30 @@
 	db_san($_GET);
 
 	// Check admin login status
+	if (isset($_GET["sos"])) {
+		$sos = "&sos=1";  // allow access even without login -> for admin password reset
+	} else {
+		$sos = "";
+	}
+	$sosok = 0;  // SOS granted by checkLogin.php?
 	require("functions/checkLogin.php");
 
-	if ($adminID > 0) {
-		db_sel("adminName, adminPassword", "fl_admins", "adminID='$adminID'", __FILE__, __LINE__);
+	$selfWarning = 0;
+
+	if ($adminIDField > 0) {
+		db_sel("adminName, adminPassword", "fl_admins", "adminID='$adminIDField'", __FILE__, __LINE__);
 		$adminNameField = $adminName;
+
+		if ($adminIDField == $adminID) {
+			$selfWarning = 1;
+		}
 	} else {
 		$adminNameField = "";
 		$adminPassword = "";
 	}
+
+	// Check admin login status -- double import because of variable naming issues
+	require("functions/checkLogin.php");
 
 	$key = 0;
 
@@ -61,11 +85,15 @@
 	} */
 
 	// Assign variables to smarty
-	$smarty->assign("adminID", $adminID);
+	$smarty->assign("adminID", $adminID); // from checkLogin
+	$smarty->assign("adminIDField", $adminIDField);
 	$smarty->assign("actionName", $actionName);
 	$smarty->assign("adminName", $adminName);  // from checkLogin
 	$smarty->assign("adminNameField", $adminNameField);
 	$smarty->assign("adminPassword", $adminPassword);
+	$smarty->assign("selfWarning", $selfWarning);
+	$smarty->assign("sos", $sos);
+	$smarty->assign("sosok", $sosok);
 
 	// $smarty->assign("keys", $keys);
 	// $smarty->assign("groupIDs", $groupIDs);

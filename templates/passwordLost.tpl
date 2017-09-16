@@ -28,9 +28,7 @@
 			var an = document.getElementById("appName".toString()).value;
       var un = document.getElementById("username".toString()).value;
 	 		var ue = document.getElementById("email".toString()).value;
-	  
-	  	var an = "AppName";
-
+			
 			swal.showLoading();
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
@@ -73,16 +71,16 @@
 				<span class="icon-bar"></span>
 			</a>
 			
-			<a class="brand" href="index.html">
+			<a class="brand" href="index.php?appID={$appID}">
 				{nocache}{$appName}{/nocache}
 			</a>		
 			
 			<div class="nav-collapse">
 				<ul class="nav pull-right">
 					<li class="">						
-						<a href="index.html" class="">
+						<a href="" class="" onclick="window.history.back();">
 							<i class="icon-chevron-left"></i>
-							Zurück zur vorherigen Seite
+							Back to previous page
 						</a>
 					</li>
 				</ul>
@@ -101,7 +99,7 @@
 	
 	<div class="content clearfix">
 		
-		<form onsubmit="resetPassword({$appID}); return false;">
+		<form onsubmit="resetPassword({nocache}{$appID}{/nocache}); return false;">
 		
 			<h1>Reset password</h1>			
 			

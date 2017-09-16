@@ -3,6 +3,7 @@
 
   UnscramblePHP v0.1.2 by RW Productions Software (aka idnaos from woborschil.de)
         Simplify your PHP code by shortening big repeating code blocks.
+    Licensed under GNU LGPLv3: https://www.gnu.org/licenses/lgpl-3.0.en.html
                           Last Change: 2017/09/01
 
   =================================================================================
@@ -121,12 +122,28 @@
         }
     }
 
-    function db_create_table($table, $colstypes) {
+    function db_create_table($table, $colstypes, $file, $line) {
         global $conn;
         $sql = "CREATE TABLE $table($colstypes)";
         $query = $conn->query($sql);
         if ($conn->error) {
             db_err($conn->error, __FUNCTION__, $sql, $file, $line);
+        }
+    }
+
+    function db_table_exists($db, $table, $file, $line) {
+        global $conn;
+
+        $sql = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA='$db' && TABLE_NAME='$table'";
+        $query = $conn->query($sql);
+        if ($conn->error) {
+            db_err($conn->error, __FUNCTION__, $sql, $file, $line);
+        }
+
+        if ($query->num_rows > 0) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 

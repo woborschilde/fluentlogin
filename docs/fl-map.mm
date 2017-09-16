@@ -1,23 +1,26 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node BACKGROUND_COLOR="#00ba8b" COLOR="#ffffff" CREATED="1503412248318" ID="ID_572535225" MODIFIED="1503435729188" STYLE="fork" TEXT="fluentlogin">
+<node BACKGROUND_COLOR="#00ba8b" COLOR="#ffffff" CREATED="1503412248318" ID="ID_572535225" MODIFIED="1505391734114" STYLE="fork" TEXT="fluentlogin">
 <edge COLOR="#808080" STYLE="bezier" WIDTH="thin"/>
 <font BOLD="true" NAME="Open Sans" SIZE="24"/>
 <node BACKGROUND_COLOR="#128cff" COLOR="#ffffff" CREATED="1503412576078" HGAP="6" ID="ID_1430546514" MODIFIED="1503414402819" POSITION="left" STYLE="bubble" TEXT="User" VSHIFT="99">
 <edge COLOR="#808080" STYLE="sharp_bezier" WIDTH="thin"/>
 <font BOLD="true" NAME="Open Sans" SIZE="20"/>
-<node BACKGROUND_COLOR="#80bf51" COLOR="#ffffff" CREATED="1503413879732" ID="ID_1320434161" MODIFIED="1503416318313" TEXT="Login">
+<node BACKGROUND_COLOR="#80bf51" COLOR="#ffffff" CREATED="1503413879732" ID="ID_1320434161" MODIFIED="1505391731271" TEXT="Login">
 <font NAME="Open Sans" SIZE="14"/>
-<node BACKGROUND_COLOR="#999f3d" COLOR="#ffffff" CREATED="1503413879732" ID="ID_416009380" MODIFIED="1503416224994" TEXT="Sessions">
+<icon BUILTIN="go"/>
+<node BACKGROUND_COLOR="#999f3d" COLOR="#ffffff" CREATED="1503413879732" ID="ID_416009380" MODIFIED="1505391720071" TEXT="Sessions">
 <font NAME="Open Sans" SIZE="14"/>
+<icon BUILTIN="go"/>
 </node>
 <node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1555336249" MODIFIED="1503435434902" TEXT="QR Code / 2-Factor">
 <font NAME="Open Sans" SIZE="14"/>
 <icon BUILTIN="bookmark"/>
 </node>
 </node>
-<node BACKGROUND_COLOR="#bf5151" COLOR="#ffffff" CREATED="1503413879732" ID="ID_1196912648" MODIFIED="1503414099633" TEXT="Logout">
+<node BACKGROUND_COLOR="#bf5151" COLOR="#ffffff" CREATED="1503413879732" ID="ID_1196912648" MODIFIED="1505391733161" TEXT="Logout">
 <font NAME="Open Sans" SIZE="14"/>
+<icon BUILTIN="go"/>
 </node>
 <node BACKGROUND_COLOR="#5178bf" COLOR="#ffffff" CREATED="1503413879732" ID="ID_1377492486" MODIFIED="1503647536385" TEXT="Register">
 <font NAME="Open Sans" SIZE="14"/>
@@ -142,6 +145,18 @@
 <font NAME="Open Sans" SIZE="14"/>
 <icon BUILTIN="full-2"/>
 </node>
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1503610158" MODIFIED="1504967106100" TEXT="Force user to set a new password">
+<font NAME="Open Sans" SIZE="14"/>
+<icon BUILTIN="full-2"/>
+</node>
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_880769231" MODIFIED="1505391093489" TEXT="Trashmail Blocker">
+<font NAME="Open Sans" SIZE="14"/>
+<icon BUILTIN="bookmark"/>
+</node>
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_138417038" MODIFIED="1505403567907" TEXT="Password strength indicator">
+<font NAME="Open Sans" SIZE="14"/>
+<icon BUILTIN="bookmark"/>
+</node>
 </node>
 </node>
 <node BACKGROUND_COLOR="#be3535" COLOR="#ffffff" CREATED="1503413879732" HGAP="19" ID="ID_1984202461" MODIFIED="1504021549871" TEXT="Administrators" VSHIFT="25">
@@ -168,24 +183,20 @@
 <font NAME="Open Sans" SIZE="14"/>
 <icon BUILTIN="full-2"/>
 </node>
-<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1122505034" MODIFIED="1503645475929" TEXT="E-mail settings">
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_863175357" MODIFIED="1505391146144" TEXT="Server settings (Domain, etc.)">
 <font NAME="Open Sans" SIZE="14"/>
-<icon BUILTIN="full-2"/>
+<icon BUILTIN="go"/>
 <node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1168927529" MODIFIED="1503646016282" TEXT="E-mail blacklist">
 <font NAME="Open Sans" SIZE="14"/>
 <icon BUILTIN="full-2"/>
 </node>
 </node>
-<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_863175357" MODIFIED="1503645696753" TEXT="Server settings (Domain, etc.)">
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_168764621" MODIFIED="1505391142982" TEXT="Setup (+ API-Gen.)">
 <font NAME="Open Sans" SIZE="14"/>
-<icon BUILTIN="stop"/>
-</node>
-<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_168764621" MODIFIED="1504032886717" TEXT="Setup (+ API-Gen.)">
+<icon BUILTIN="go"/>
+<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1035806704" MODIFIED="1505391137559" TEXT="Ask for write permissions">
 <font NAME="Open Sans" SIZE="14"/>
-<icon BUILTIN="stop"/>
-<node BACKGROUND_COLOR="#eeeeee" COLOR="#000000" CREATED="1503413879732" ID="ID_1035806704" MODIFIED="1504252716309" TEXT="Ask for write permissions">
-<font NAME="Open Sans" SIZE="14"/>
-<icon BUILTIN="stop"/>
+<icon BUILTIN="go"/>
 </node>
 </node>
 <node BACKGROUND_COLOR="#ffffcc" COLOR="#000000" CREATED="1503413879732" ID="ID_359646754" MODIFIED="1504038787622" TEXT="Tasks for release">

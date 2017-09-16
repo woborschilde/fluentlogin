@@ -30,8 +30,8 @@
 			var an = document.getElementById("appName".toString()).value;
       var un = document.getElementById("username".toString()).value;
 	  	var ue = document.getElementById("email".toString()).value;
-      var up = document.getElementById("password".toString()).value;
-	  	var uc = document.getElementById("confirm_password".toString()).value;
+      var up = sha1(document.getElementById("password".toString()).value);
+	  	var uc = sha1(document.getElementById("confirm_password".toString()).value);
       
       var userFields = document.getElementsByName("field");
       userFields.forEach(setField);
@@ -55,7 +55,7 @@
               type: "success",
               title: "Welcome to "+an+"!",
               text: "Please click the confirmation link we've sent you by e-mail to activate your account."
-            }).then(function () {
+            }).then(function() {
 			  			{/literal}
 								location.replace("{$redirect}"+"?appID="+ai);
 							{literal}
@@ -69,7 +69,7 @@
           }
         }
       }
-      xmlhttp.open("GET","functions/doRegister.php?appID="+ai+"&userName="+un+"&userEmail="+ue+"&userPassword="+sha1(up)+queryString, true);
+      xmlhttp.open("GET","functions/doRegister.php?appID="+ai+"&userName="+un+"&userEmail="+ue+"&userPassword="+up+queryString, true);
       xmlhttp.send();
     }
 
@@ -95,14 +95,14 @@
 				<span class="icon-bar"></span>
 			</a>
 			
-			<a class="brand" href="index.html">
+			<a class="brand" href="index.php?appID={$appID}">
 				{nocache}{$appName}{/nocache}
 			</a>		
 			
 			<div class="nav-collapse">
 				<ul class="nav pull-right">
 					<li class="">						
-						<a href="" class="" onclick="goBack();">
+						<a href="" class="" onclick="window.history.back();">
 							<i class="icon-chevron-left"></i>
 							Back to previous page
 						</a>
@@ -123,7 +123,7 @@
 	
 	<div class="content clearfix">
 		
-		<form onsubmit="register({$appID}); return false;">
+		<form onsubmit="register({nocache}{$appID}{/nocache}); return false;">
 		
 			<h1>Create your account</h1>			
 			
@@ -192,7 +192,7 @@
 </div> <!-- /login-extra -->
 <hr />
 <div style="color: gray; text-align: center;">
-	Powered by <b>fluentlogin</b>
+	Powered by <a href="http://www.woborschil.de/fluentlogin" target="_blank" style="color: inherit;"><b>fluentlogin</b></a>
 </div>
 
 <script src="js/jquery-1.7.2.min.js"></script>

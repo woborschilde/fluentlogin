@@ -1,4 +1,13 @@
 <?php
+
+	/* fluentlogin User Management System
+	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+
+	Copyright (C) 2017 woborschil.de
+
+	@link    http://www.woborschil.de/fluentlogin
+	*/
+	
     require("../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
@@ -36,7 +45,7 @@
 	require("../admin/functions/loadSettings.php");
 
     if (!(isset($_GET["loginToken"]))) {
-        db_sel("userID", "fl_apps_users", "appID='$appID' && userName COLLATE latin1_general_cs ='$userName' && userPassword COLLATE latin1_general_cs ='$userPassword'", __FILE__, __LINE__);
+        db_sel("userID", "fl_apps_users", "appID='$appID' && userName COLLATE latin1_general_cs = '$userName' && userPassword COLLATE latin1_general_cs = '$userPassword'", __FILE__, __LINE__);
 
         if ($num_rows == 0) {
             die("Username or password are wrong.");
@@ -63,18 +72,17 @@
     }
 
     // set field values
-    /* foreach ($_GET as $key => $value) {
+    foreach ($_GET as $key => $value) {
         if (strpos($key, "field") !== false) {
             $fieldID = substr($key, 5);
-            db_sel("NULL", "fl_apps_fields_values", "appID='$appID' && userID='$userID' && fieldID='$fieldID'", __FILE__, __LINE__);
+            db_sel("fieldName", "fl_apps_fields", "appID='$appID' && fieldID='$fieldID'", __FILE__, __LINE__);
+            db_sel("NULL", "fl_apps_fields_values", "appID='$appID' && userID='$userID' && fieldID='$fieldID' && fieldValue COLLATE latin1_general_cs = '$value'", __FILE__, __LINE__);
             
-            if ($num_rows > 0) {
-                db_upd("fl_apps_fields_values", "value='$value'", "appID='$appID' && userID='$userID' && fieldID='$fieldID'", __FILE__, __LINE__);
-            } else {
-                db_ins("fl_apps_fields_values", "appID, fieldID, userID, value", "'$appID', '$fieldID', '$userID', '$value'", __FILE__, __LINE__);
+            if ($num_rows == 0) {
+                die("'$fieldName' does not match with this account.");
             }
         }
-    }*/
+    }
 
     // delete old sessions from database
     $t = time();
@@ -90,7 +98,8 @@
     }
     
     db_ins("fl_apps_sessions", "sessionID, appID, userID, expiryTime", "'$sessionID', '$appID', '$userID', '$expiryTime'", __FILE__, __LINE__);
-    setcookie("fl$appID", $sessionID, $expiryTime, "/" . basename(__DIR__) . "/");
+    setcookie("fl$appID", $sessionID, $expiryTime, "/");
+    //setcookie("fla", $sessionID, $expiryTime, "/" . basename(__DIR__) . "/");
 
     echo "1";
 ?>

@@ -1,4 +1,13 @@
 <?php
+
+	/* fluentlogin User Management System
+	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+
+	Copyright (C) 2017 woborschil.de
+
+	@link    http://www.woborschil.de/fluentlogin
+	*/
+	
     if (!(isset($embed))) {
         // Establish database connection
         require("../lib/unsphp/Unscramble.php");
@@ -20,7 +29,7 @@
         if (isset($_GET["redirect"])) {
             $redirect = $_GET["redirect"];
         } else {
-            $redirect = "index.php?appID=$appID";
+            $redirect = "index.php";
         }
     }
 
@@ -43,30 +52,45 @@
             goto not_logged_in;
 	    }
 
-        db_sel("userName, loginToken", "fl_apps_users", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
+        db_sel("userName, loginToken, forceNewPassword", "fl_apps_users", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
 
-        if (strpos($loginToken, "r") !== false) {
-            if (!(isset($_GET["noredirect"]))) {
+        if ((strpos($loginToken, "r") !== false) || ($forceNewPassword == "1")) {
+            if ((isset($_GET["noredirect"])) || (isset($invert))) {
+                if (!(isset($_GET["noredirect"]))) {
+                    return -1;
+                } else {
+                    die("-1");
+                }
+            } else {
                 header("Location: " . $systemPath . "newPassword.php?appID=$appID&userID=$userID&redirect=$redirect");
             }
-            die("2");
         }
     } else {
         not_logged_in:
-        if (!(isset($invert))) {
+        if (!(isset($invert)) && !(isset($_GET["invert"]))) {
             if (!(isset($_GET["noredirect"]))) {
                 header("Location: " . $systemPath . "login.php?appID=$appID&redirect=$redirect");
             }
             die("0");
         } else {
-            return 0;
+            if (!(isset($_GET["noredirect"]))) {
+                return 1;
+            } else {
+                die("1");
+            }
         }
     }
 
-    if (!(isset($invert))) {
-        return 1;
+    if (!(isset($invert)) && !(isset($_GET["invert"]))) {
+        if (!(isset($_GET["noredirect"]))) {
+            return $userID;
+        } else {
+            die($userID);
+        }
     } else {
-        header("Location: " . $systemPath . $redirect);
-        die("1");
+        if (!(isset($_GET["noredirect"]))) {
+            header("Location: " . $redirect . "?appID=$appID");
+        }
+        die("0");
     }
 ?>

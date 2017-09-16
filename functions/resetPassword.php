@@ -1,4 +1,13 @@
 <?php
+
+	/* fluentlogin User Management System
+	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+
+	Copyright (C) 2017 woborschil.de
+
+	@link    http://www.woborschil.de/fluentlogin
+	*/
+	
     require("../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
@@ -33,20 +42,6 @@
             die("Sorry, we couln't find a user registered with these credentials.");
         }
     }
-
-    // set field values
-    /* foreach ($_GET as $key => $value) {
-        if (strpos($key, "field") !== false) {
-            $fieldID = substr($key, 5);
-            db_sel("NULL", "fl_apps_fields_values", "appID='$appID' && userID='$userID' && fieldID='$fieldID'", __FILE__, __LINE__);
-            
-            if ($num_rows > 0) {
-                db_upd("fl_apps_fields_values", "value='$value'", "appID='$appID' && userID='$userID' && fieldID='$fieldID'", __FILE__, __LINE__);
-            } else {
-                db_ins("fl_apps_fields_values", "appID, fieldID, userID, value", "'$appID', '$fieldID', '$userID', '$value'", __FILE__, __LINE__);
-            }
-        }
-    }*/
     
     $loginToken = "r" . mt_rand(10000,99999);
     

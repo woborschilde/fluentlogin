@@ -1,4 +1,13 @@
 <?php
+
+	/* fluentlogin User Management System
+	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+
+	Copyright (C) 2017 woborschil.de
+
+	@link    http://www.woborschil.de/fluentlogin
+	*/
+	
     require("../lib/unsphp/Unscramble.php");
 
     foreach ($_GET as $key => $value) {
@@ -7,7 +16,8 @@
         }
     }
 
-	$appID = $_GET["appID"];
+    $appID = $_GET["appID"];
+    $userEmail = $_GET["userEmail"];
 
     if (!(isset($_GET["nohash"]))) {
         $userPassword = sha1($_GET["userPassword"]);
@@ -38,13 +48,20 @@
 	$redirect = "settings.php";
 	require("checkLogin.php");
 
-    db_sel("userPassword", "fl_apps_users", "appID='$appID' && userID='$userID' && userPassword COLLATE latin1_general_cs ='$userPassword'", __FILE__, __LINE__);
+    db_upd("fl_apps_users", "userEmail='$userEmail'", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
 
-    if ($num_rows == 0) {
-        die("Entered current password is wrong.");
-    }
-    
-    if ($newPassword != "") {
+    $emptySha1 = "10a34637ad661d98ba3344717656fcc76209c2f8";
+    if ($userPassword != $emptySha1) {
+        db_sel("userPassword", "fl_apps_users", "appID='$appID' && userID='$userID' && userPassword COLLATE latin1_general_cs ='$userPassword'", __FILE__, __LINE__);
+
+        if ($num_rows == 0) {
+            die("Entered current password is wrong.");
+        }
+        
+        if ($newPassword == $emptySha1) {
+            die("You can't remove your password.");
+        }
+
         db_upd("fl_apps_users", "userPassword='$newPassword'", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
     }
 

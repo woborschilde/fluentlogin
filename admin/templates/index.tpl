@@ -16,8 +16,26 @@
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+<script>
+  function checkForUpdates() {
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        if (this.responseText > 0.1) {
+          document.getElementById("updateblock").innerHTML = "fluentlogin Version <b>"+this.responseText+"</b> is available! <a href='http://www.woborschil.de/fluentlogin.htm#xl_greenflow' target='_blank'><u>Download now</u></a>";
+        } else {
+          document.getElementById("updateblock").innerHTML = "Your fluentlogin is <b>up to date</b>! :)";
+        }
+      }
+    }
+    xmlhttp.open("GET","https://intra.woborschil.net/files/fluentlogin-update.html", true);
+    xmlhttp.send();
+  }
+</script>
+
 </head>
-<body>
+<body onload="checkForUpdates();">
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
@@ -45,7 +63,8 @@
         <li class="active"><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
         <li><a href="apps.php"><i class="icon-list-alt"></i><span>Applications</span> </a> </li>
         <li><a href="admins.php"><i class="icon-legal"></i><span>Administrators</span> </a></li>
-        <li><a href="docs.php"><i class="icon-book"></i><span>Documentation</span> </a> </li>
+        <li><a href="settings.php"><i class="icon-cog"></i><span>System settings</span> </a></li>
+        <li><a href="https://intra.woborschil.net/docs/en/fluentlogin/start" target="_blank"><i class="icon-book"></i><span>Documentation</span> </a> </li>
       </ul>
     </div>
     <!-- /container --> 
@@ -60,67 +79,62 @@
         <!-- /span6 -->
         <div class="span6" style="width: 100%;">
           <div class="widget">
+
+            <div id="updateblock" name="updateblock" class="alert alert-info">
+              Checking for updates...
+            </div>
+
             <div class="widget-header"> <i class="icon-bookmark"></i>
-              <h3>Funktionen</h3>
+              <h3>Features</h3>
             </div>
             <!-- /widget-header -->
             <div class="widget-content">
               <div class="shortcuts">
-                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-list-alt"></i><span class="shortcut-label">Applications</span></a>
-                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-legal"></i><span class="shortcut-label">Administrators</span></a>
-                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-book"></i><span class="shortcut-label">Documentation</span></a>
+                <a href="apps.php" class="shortcut"><i class="shortcut-icon icon-list-alt"></i><span class="shortcut-label">Applications</span></a>
+                <a href="admins.php" class="shortcut"><i class="shortcut-icon icon-legal"></i><span class="shortcut-label">Administrators</span></a>
+                <a href="settings.php" class="shortcut"><i class="shortcut-icon icon-cog"></i><span class="shortcut-label">System settings</span></a>
+                <a href="https://intra.woborschil.net/docs/en/fluentlogin/start" target="_blank" class="shortcut"><i class="shortcut-icon icon-book"></i><span class="shortcut-label">Documentation</span></a>
               </div>
               <!-- /shortcuts --> 
             </div>
             <!-- /widget-content --> 
           </div>
           <!-- /widget -->
-          <div class="widget widget-table action-table">
-            <div class="widget-header"> <i class="icon-th-list"></i>
-              <h3>A Table Example</h3>
+
+          <div class="widget">
+            <div class="widget-header"> <i class="icon-info-sign"></i>
+              <h3>About</h3>
             </div>
             <!-- /widget-header -->
             <div class="widget-content">
-              <table class="table table-striped table-bordered">
-                <thead>
-                  <tr>
-                    <th> Free Resource </th>
-                    <th> Download</th>
-                    <th class="td-actions"> </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                  <tr>
-                    <td> Fresh Web Development Resources </td>
-                    <td> http://www.egrappler.com/ </td>
-                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                  </tr>
-                
-                </tbody>
-              </table>
+              <b>fluentlogin</b> Beta 1 (v0.1), 2017/09/17<br />
+              Copyright © 2017, woborschil.de.<br />
+              Extensions are copyright of their respective owners.<br />
+              <hr />
+              <h4>3rd party libraries / Thanks to ...</h4>
+              <ul>
+                <li><a href="https://www.egrappler.com/templatevamp-twitter-bootstrap-admin-template-now-available/" target="_blank"><b>Bootstrap Responsive Admin Template</b></a> by egrappler.com</li>
+                <li><a href="http://fontawesome.io" target="_blank"><b>Font Awesome</b></a> by Dave Gandy</li>
+                <li><a href="https://www.smarty.net" target="_blank"><b>Smarty Template Engine</b></a> by New Digital Group, Inc.</li>
+                <li><a href="https://intra.woborschil.net/git/idnaos/unscramblephp" target="_blank"><b>UnscramblePHP</b></a> by woborschil.de</li>
+              </ul>
+              <hr />
+              <h4>License</h4>
+              This program is free software: you can redistribute it and/or modify<br />
+              it under the terms of the GNU General Public License as published by<br />
+              the Free Software Foundation, either version 3 of the License, or<br />
+              (at your option) any later version.<br />
+              <br />
+              This program is distributed in the hope that it will be useful,<br />
+              but WITHOUT ANY WARRANTY; without even the implied warranty of<br />
+              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br />
+              GNU General Public License for more details.<br />
+              <br />
+              <a href="../LICENSE.html" target="_blank">Read the full license</a>
             </div>
             <!-- /widget-content --> 
           </div>
+          <!-- /widget -->
         </div>
         <!-- /span6 --> 
       </div>
@@ -135,7 +149,7 @@
   <div class="footer-inner">
     <div class="container">
       <div class="row">
-        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, developed by <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
+        <div class="span12"> &copy; 2017 <a href="http://www.woborschil.de/fluentlogin" target="_blank"><b>fluentlogin Beta 1</b></a>, developed by <a href="http://www.woborschil.de" target="_blank"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="https://www.egrappler.com/templatevamp-twitter-bootstrap-admin-template-now-available/" target="_blank"><b>Bootstrap Responsive Admin Template</b></a>.</div>
         <!-- /span12 --> 
       </div>
       <!-- /row --> 
@@ -155,126 +169,6 @@
 <script language="javascript" type="text/javascript" src="../js/full-calendar/fullcalendar.min.js"></script>
  
 <script src="../js/base.js"></script> 
-<script>     
 
-        var lineChartData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [
-				{
-				    fillColor: "rgba(220,220,220,0.5)",
-				    strokeColor: "rgba(220,220,220,1)",
-				    pointColor: "rgba(220,220,220,1)",
-				    pointStrokeColor: "#fff",
-				    data: [65, 59, 90, 81, 56, 55, 40]
-				},
-				{
-				    fillColor: "rgba(151,187,205,0.5)",
-				    strokeColor: "rgba(151,187,205,1)",
-				    pointColor: "rgba(151,187,205,1)",
-				    pointStrokeColor: "#fff",
-				    data: [28, 48, 40, 19, 96, 27, 100]
-				}
-			]
-
-        }
-
-        var myLine = new Chart(document.getElementById("area-chart").getContext("2d")).Line(lineChartData);
-
-
-        var barChartData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [
-				{
-				    fillColor: "rgba(220,220,220,0.5)",
-				    strokeColor: "rgba(220,220,220,1)",
-				    data: [65, 59, 90, 81, 56, 55, 40]
-				},
-				{
-				    fillColor: "rgba(151,187,205,0.5)",
-				    strokeColor: "rgba(151,187,205,1)",
-				    data: [28, 48, 40, 19, 96, 27, 100]
-				}
-			]
-
-        }    
-
-        $(document).ready(function() {
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
-        var calendar = $('#calendar').fullCalendar({
-          header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-          },
-          selectable: true,
-          selectHelper: true,
-          select: function(start, end, allDay) {
-            var title = prompt('Event Title:');
-            if (title) {
-              calendar.fullCalendar('renderEvent',
-                {
-                  title: title,
-                  start: start,
-                  end: end,
-                  allDay: allDay
-                },
-                true // make the event "stick"
-              );
-            }
-            calendar.fullCalendar('unselect');
-          },
-          editable: true,
-          events: [
-            {
-              title: 'All Day Event',
-              start: new Date(y, m, 1)
-            },
-            {
-              title: 'Long Event',
-              start: new Date(y, m, d+5),
-              end: new Date(y, m, d+7)
-            },
-            {
-              id: 999,
-              title: 'Repeating Event',
-              start: new Date(y, m, d-3, 16, 0),
-              allDay: false
-            },
-            {
-              id: 999,
-              title: 'Repeating Event',
-              start: new Date(y, m, d+4, 16, 0),
-              allDay: false
-            },
-            {
-              title: 'Meeting',
-              start: new Date(y, m, d, 10, 30),
-              allDay: false
-            },
-            {
-              title: 'Lunch',
-              start: new Date(y, m, d, 12, 0),
-              end: new Date(y, m, d, 14, 0),
-              allDay: false
-            },
-            {
-              title: 'Birthday Party',
-              start: new Date(y, m, d+1, 19, 0),
-              end: new Date(y, m, d+1, 22, 30),
-              allDay: false
-            },
-            {
-              title: 'EGrappler.com',
-              start: new Date(y, m, 28),
-              end: new Date(y, m, 29),
-              url: 'http://EGrappler.com/'
-            }
-          ]
-        });
-      });
-    </script><!-- /Calendar -->
 </body>
 </html>

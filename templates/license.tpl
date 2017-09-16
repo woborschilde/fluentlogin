@@ -36,16 +36,16 @@
 				<span class="icon-bar"></span>
 			</a>
 			
-			<a class="brand" href="index.html">
+			<a class="brand" href="index.php?appID={$appID}">
 				{nocache}{$appName}{/nocache}
 			</a>		
 			
 			<div class="nav-collapse">
 				<ul class="nav pull-right">
 					<li class="">						
-						<a href="index.html" class="">
+						<a href="" class="" onclick="window.history.back();">
 							<i class="icon-chevron-left"></i>
-							Zurück zur vorherigen Seite
+							Back to previous page
 						</a>
 					</li>
 				</ul>

@@ -1,4 +1,13 @@
 <?php
+
+	/* fluentlogin User Management System
+	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+
+	Copyright (C) 2017 woborschil.de
+
+	@link    http://www.woborschil.de/fluentlogin
+	*/
+	
 	db_san($_COOKIE);
 
     // Load system settings
@@ -20,14 +29,38 @@
         }
     } else {
         not_logged_in:
-        if (!(isset($invert))) {
+        db_sel("adminPassword", "fl_admins", "adminID='1'", __FILE__, __LINE__);
+        
+        /* if (!(isset($invert)) && ($sos == "")) {
             header("Location: " . $systemPath . "admin/login.php");
             die("0");
         } else {
+            if ($adminPassword == "" && ($sos == "")) {
+                header("Location: " . $systemPath . "admin/adminEdit.php?adminID=1&sos=1");
+                die("2");
+            } else if ($adminPassword == "" && ($sos != "")) {
+                $adminID = 1; $adminName = "SOS";
+            }
             return 0;
+        } */
+
+        if (!(isset($invert)) && ($adminPassword != "")) {
+            header("Location: " . $systemPath . "admin/login.php");
+            die("0");
+        } else if ($adminPassword == "") {
+            if ($sos == "") {  // normal admin page
+                header("Location: " . $systemPath . "admin/adminEdit.php?adminID=1&sos=1");
+                die("2");
+            } else if ($sos != "") {  // adminEdit.php - prevents endless redirect loop
+                $adminID = 1; $adminName = "SOS"; $sosok = 1;
+            }
+            return 0;
+        } else if (isset($invert)) {
+            return 1;
         }
     }
-
+    
+    // if user is logged in (above-metioned else case always ends before this point)
     if (!(isset($invert))) {
         return 1;
     } else {

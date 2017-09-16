@@ -26,80 +26,6 @@
 
 <script>
 		{literal}
-      function newApp() {
-        var v = "";
-
-        swal({
-          title: "Neue Anwendung",
-          text: "Geben Sie einen Namen für die neue Anwendung ein.",
-          input: "text",
-          showCancelButton: true,
-          cancelButtonText: "Cancel",
-          showLoaderOnConfirm: true,
-          inputValidator: function(value) {
-            return new Promise(function (resolve, reject) {
-              xmlhttp = new XMLHttpRequest();
-              xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  if (this.responseText == "1") {
-                    resolve();
-                  } else {
-                    reject(this.responseText);
-                  }
-                }
-              }
-              v = value;
-              xmlhttp.open("GET","functions/newApp.php?appName="+v,true);
-              xmlhttp.send();
-            });
-          },
-        }).then(function () {
-          swal({
-            type: "success",
-            title: "Anwendung erstellt",
-            text: "Die Anwendung \""+v+"\" wurde erstellt."
-          });
-          setTimeout(function(){
-            location.replace("apps.php");
-          }, 1000);
-        });
-      }
-
-      function renameApp(i) {
-        var v = "";
-        var k = document.getElementById("appID"+i.toString()).innerHTML;
-        var m = document.getElementById("appName"+i.toString()).innerHTML;
-
-        swal({
-          title: "Anwendung umbenennen",
-          text: "Geben Sie einen neuen Namen für die Anwendung \""+m+"\" ein.",
-          input: "text",
-          inputValue: m,
-          showCancelButton: true,
-          cancelButtonText: "Cancel",
-          showLoaderOnConfirm: true,
-          inputValidator: function(value) {
-            return new Promise(function (resolve, reject) {
-              xmlhttp = new XMLHttpRequest();
-              xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  if (this.responseText == "1") {
-                    resolve();
-                  } else {
-                    reject(this.responseText);
-                  }
-                }
-              }
-              v = value;
-              xmlhttp.open("GET","functions/renameApp.php?appID="+k+"&appName="+v,true);
-              xmlhttp.send();
-            });
-          },
-        }).then(function () {
-          document.getElementById("appName"+i.toString()).innerHTML = v;
-        });
-      }
-
       function delApp(i) {
         var r = "appRow"+i.toString();
         var k = document.getElementById("appID"+i.toString()).innerHTML;
@@ -154,7 +80,8 @@
         <li><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
         <li class="active"><a href="apps.php"><i class="icon-list-alt"></i><span>Applications</span> </a> </li>
         <li><a href="admins.php"><i class="icon-legal"></i><span>Administrators</span> </a></li>
-        <li><a href="docs.php"><i class="icon-book"></i><span>Documentation</span> </a> </li>
+        <li><a href="settings.php"><i class="icon-cog"></i><span>System settings</span> </a></li>
+        <li><a href="https://intra.woborschil.net/docs/en/fluentlogin/start" target="_blank"><i class="icon-book"></i><span>Documentation</span> </a> </li>
       </ul>
     </div>
     <!-- /container --> 
@@ -180,7 +107,7 @@
                   <tr>
                     <th> ID </th>
                     <th> Name </th>
-                    <th class="td-actions" style="width: 15%;"> Action </th>
+                    <th class="td-actions" style="width: 18%;"> Action </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -188,15 +115,16 @@
                     {foreach from=$keys item=i}
                       <tr id="appRow{$i}">
                         <td id="appID{$i}">{$appIDs[$i]}</td>
-                        <td id="appName{$i}" ondblclick="renameApp({$i});">{$appNames[$i]}</td>
+                        <td id="appName{$i}">{$appNames[$i]}</td>
                         <td class="td-actions btn-group">
-                          {if $appNames[$i] != "No applications created yet."}
+                          {if $appIDs[$i] != "-"}
                             <a href="users.php?appID={$appIDs[$i]}" class="btn btn-small btn-info" style="margin-right: 0px;" data-balloon="Users" data-balloon-pos="up"><i class="btn-icon-only icon-user"> </i></a>
                             <a href="groups.php?appID={$appIDs[$i]}" class="btn btn-small btn-warning" style="margin-right: 0px;" data-balloon="User groups" data-balloon-pos="up"><i class="btn-icon-only icon-asterisk"> </i></a>
                             <a href="fields.php?appID={$appIDs[$i]}" class="btn btn-small btn-primary" style="margin-right: 0px;" data-balloon="Fields" data-balloon-pos="up"><i class="btn-icon-only icon-table"> </i></a>
-                            <a href="permissions.php?appID={$appIDs[$i]}" class="btn btn-small btn-danger" style="margin-right: 0px;" data-balloon="Permissions" data-balloon-pos="up"><i class="btn-icon-only icon-legal"> </i></a>
+                            <a href="permissions.php?appID={$appIDs[$i]}" class="btn btn-small btn-danger" style="margin-right: 5px;" data-balloon="Permissions" data-balloon-pos="up"><i class="btn-icon-only icon-legal"> </i></a>
                             <a href="appEdit.php?appID={$appIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;" data-balloon="Edit" data-balloon-pos="up"><i class="btn-icon-only icon-pencil"> </i></a>
-                            <a href="javascript:;" class="btn btn-small btn-danger" onclick="delApp({$i});" data-balloon="Delete" data-balloon-pos="up"><i class="btn-icon-only icon-remove"> </i></a>
+                            <a href="javascript:;" class="btn btn-small btn-danger" onclick="delApp({$i});" style="margin-right: 0px;" data-balloon="Delete" data-balloon-pos="up"><i class="btn-icon-only icon-remove"> </i></a>
+                            <a href="../index.php?appID={$appIDs[$i]}" target="_blank" class="btn btn-small btn-primary" style="margin-right: 0px;" data-balloon="App Page" data-balloon-pos="up"><i class="btn-icon-only icon-arrow-right"> </i></a>
                           {/if}
                         </td>
                       </tr>
@@ -221,7 +149,7 @@
   <div class="footer-inner">
     <div class="container">
       <div class="row">
-        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, developed by <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
+        <div class="span12"> &copy; 2017 <a href="http://www.woborschil.de/fluentlogin" target="_blank"><b>fluentlogin Beta 1</b></a>, developed by <a href="http://www.woborschil.de" target="_blank"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="https://www.egrappler.com/templatevamp-twitter-bootstrap-admin-template-now-available/" target="_blank"><b>Bootstrap Responsive Admin Template</b></a>.</div>
         <!-- /span12 --> 
       </div>
       <!-- /row --> 
@@ -244,126 +172,6 @@
 <script src="../js/sweetalert2.min.js"></script>
 
 <script src="../js/base.js"></script> 
-<script>     
 
-        var lineChartData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [
-				{
-				    fillColor: "rgba(220,220,220,0.5)",
-				    strokeColor: "rgba(220,220,220,1)",
-				    pointColor: "rgba(220,220,220,1)",
-				    pointStrokeColor: "#fff",
-				    data: [65, 59, 90, 81, 56, 55, 40]
-				},
-				{
-				    fillColor: "rgba(151,187,205,0.5)",
-				    strokeColor: "rgba(151,187,205,1)",
-				    pointColor: "rgba(151,187,205,1)",
-				    pointStrokeColor: "#fff",
-				    data: [28, 48, 40, 19, 96, 27, 100]
-				}
-			]
-
-        }
-
-        var myLine = new Chart(document.getElementById("area-chart").getContext("2d")).Line(lineChartData);
-
-
-        var barChartData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [
-				{
-				    fillColor: "rgba(220,220,220,0.5)",
-				    strokeColor: "rgba(220,220,220,1)",
-				    data: [65, 59, 90, 81, 56, 55, 40]
-				},
-				{
-				    fillColor: "rgba(151,187,205,0.5)",
-				    strokeColor: "rgba(151,187,205,1)",
-				    data: [28, 48, 40, 19, 96, 27, 100]
-				}
-			]
-
-        }    
-
-        $(document).ready(function() {
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
-        var calendar = $('#calendar').fullCalendar({
-          header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-          },
-          selectable: true,
-          selectHelper: true,
-          select: function(start, end, allDay) {
-            var title = prompt('Event Title:');
-            if (title) {
-              calendar.fullCalendar('renderEvent',
-                {
-                  title: title,
-                  start: start,
-                  end: end,
-                  allDay: allDay
-                },
-                true // make the event "stick"
-              );
-            }
-            calendar.fullCalendar('unselect');
-          },
-          editable: true,
-          events: [
-            {
-              title: 'All Day Event',
-              start: new Date(y, m, 1)
-            },
-            {
-              title: 'Long Event',
-              start: new Date(y, m, d+5),
-              end: new Date(y, m, d+7)
-            },
-            {
-              id: 999,
-              title: 'Repeating Event',
-              start: new Date(y, m, d-3, 16, 0),
-              allDay: false
-            },
-            {
-              id: 999,
-              title: 'Repeating Event',
-              start: new Date(y, m, d+4, 16, 0),
-              allDay: false
-            },
-            {
-              title: 'Meeting',
-              start: new Date(y, m, d, 10, 30),
-              allDay: false
-            },
-            {
-              title: 'Lunch',
-              start: new Date(y, m, d, 12, 0),
-              end: new Date(y, m, d, 14, 0),
-              allDay: false
-            },
-            {
-              title: 'Birthday Party',
-              start: new Date(y, m, d+1, 19, 0),
-              end: new Date(y, m, d+1, 22, 30),
-              allDay: false
-            },
-            {
-              title: 'EGrappler.com',
-              start: new Date(y, m, 28),
-              end: new Date(y, m, 29),
-              url: 'http://EGrappler.com/'
-            }
-          ]
-        });
-      });
-    </script><!-- /Calendar -->
 </body>
 </html>

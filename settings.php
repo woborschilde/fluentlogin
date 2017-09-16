@@ -1,4 +1,13 @@
 <?php
+
+	/* fluentlogin User Management System
+	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+
+	Copyright (C) 2017 woborschil.de
+
+	@link    http://www.woborschil.de/fluentlogin
+	*/
+	
 	// Include Smarty Template Engine
 	require("lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
@@ -23,12 +32,15 @@
 
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
+	db_sel("userEmail", "fl_apps_users", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
+
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
 	
 	$smarty->assign("userID", $userID);
 	$smarty->assign("userName", $userName);
+	$smarty->assign("userEmail", $userEmail);
 	
 	$smarty->display("templates/settings.tpl");
 ?>

@@ -1,4 +1,13 @@
 <?php
+
+	/* fluentlogin User Management System
+	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+
+	Copyright (C) 2017 woborschil.de
+
+	@link    http://www.woborschil.de/fluentlogin
+	*/
+	
     require("../lib/unsphp/Unscramble.php");
 
     foreach ($_GET as $key => $value) {
@@ -51,24 +60,19 @@
         die("An account with this username or this e-mail address already exists.");
     }
 
+    db_get_ai($db_database, "fl_apps_users", __FILE__, __LINE__); $userID = $ai;
+
     // set field values
-    /* foreach ($_GET as $key => $value) {
+    foreach ($_GET as $key => $value) {
         if (strpos($key, "field") !== false) {
             $fieldID = substr($key, 5);
-            db_sel("NULL", "fl_apps_fields_values", "appID='$appID' && userID='$userID' && fieldID='$fieldID'", __FILE__, __LINE__);
-            
-            if ($num_rows > 0) {
-                db_upd("fl_apps_fields_values", "value='$value'", "appID='$appID' && userID='$userID' && fieldID='$fieldID'", __FILE__, __LINE__);
-            } else {
-                db_ins("fl_apps_fields_values", "appID, fieldID, userID, value", "'$appID', '$fieldID', '$userID', '$value'", __FILE__, __LINE__);
-            }
+            db_ins("fl_apps_fields_values", "appID, fieldID, userID, fieldValue", "'$appID', '$fieldID', '$userID', '$value'", __FILE__, __LINE__);
         }
-    }*/
+    }
     
     $registrationDate = time();
     $confirmationCode = mt_rand(100000,999999);
 
-    db_get_ai($db_database, "fl_apps_users", __FILE__, __LINE__); $userID = $ai;
     db_ins("fl_apps_users", "appID, userName, userEmail, userPassword, registrationDate, confirmationCode", "'$appID', '$userName', '$userEmail', '$userPassword', '$registrationDate', '$confirmationCode'", __FILE__, __LINE__);
 
     $msg = "Hello $userName,

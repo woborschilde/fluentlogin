@@ -27,9 +27,11 @@
     var queryString = "";
 
     function editAdmin(adi) {
-      var an = document.getElementById("adminName".toString()).value;
-      var ap = document.getElementById("adminPassword".toString()).value;
+      var an = document.getElementById("adminNameField".toString()).value;
+      var ap = sha1(document.getElementById("adminPasswordField".toString()).value);
       
+      var sos = {/literal}{nocache}"{$sos}"{/nocache}{literal};
+
       //var adminFields = document.getElementsByName("field");
       //var adminGroups = document.getElementsByName("group");
 
@@ -50,13 +52,13 @@
           } else {
             swal({
               type: "error",
-              title: "Failed",
+              title: "Couldn't save admin",
               text: this.responseText
             });
           }
         }
       }
-      xmlhttp.open("GET","functions/editAdmin.php?adminID="+adi+"&adminName="+an+"&adminPassword="+ap,true);
+      xmlhttp.open("GET","functions/editAdmin.php?adminIDField="+adi+"&adminNameField="+an+"&adminPasswordField="+ap+sos,true);
       xmlhttp.send();
     }
 
@@ -73,14 +75,18 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.php">fluentlogin Administration</a>
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.php">fluentlogin Administration{nocache}{if $sosok} - SOS Mode{/if}{/nocache}</a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$adminName}<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="functions/doLogout.php">Log out</a></li>
-            </ul>
-          </li>
+          {nocache}
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$adminName}{if !$sosok}<b class="caret"></b>{/if}</a>
+              {if !$sosok}
+                <ul class="dropdown-menu">
+                  <li><a href="functions/doLogout.php">Log out</a></li>
+                </ul>
+              {/if}
+            </li>
+          {/nocache}
         </ul>
       </div>
       <!--/.nav-collapse --> 
@@ -97,7 +103,8 @@
         <li><a href="index.php"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
         <li><a href="apps.php"><i class="icon-list-alt"></i><span>Applications</span> </a> </li>
         <li class="active"><a href="admins.php"><i class="icon-legal"></i><span>Administrators</span> </a></li>
-        <li><a href="docs.php"><i class="icon-book"></i><span>Documentation</span> </a> </li>
+        <li><a href="settings.php"><i class="icon-cog"></i><span>System settings</span> </a></li>
+        <li><a href="https://intra.woborschil.net/docs/en/fluentlogin/start" target="_blank"><i class="icon-book"></i><span>Documentation</span> </a> </li>
       </ul>
     </div>
     <!-- /container --> 
@@ -112,28 +119,35 @@
         <!-- /span6 -->
         <div class="span6" style="width: 100%;">
           <div class="widget widget-table action-table">
-            <div class="widget-header"> <i class="icon-list-alt"></i>
+            <div class="widget-header"> <i class="icon-legal"></i>
               {nocache}
-                <h3>{$actionName} admin</h3>
+                <h3>Administrators > {$actionName} admin</h3>
               {/nocache}
             </div>
             <!-- /widget-header -->
             {nocache}
               <div class="widget-content">
                 <br />
-                  <form id="adminEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editAdmin({$adminID}); return false;">
+                  <form id="adminEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editAdmin({$adminIDField}); return false;">
                     <fieldset>
+
+                      {if $sos && !$sosok}
+                        <div class="alert alert-info" style="margin-left: 2%; width: 60%;">
+                          No need for SOS Mode. ;)
+                        </div>
+                      {/if}
+
                       <div class="control-group">
-                        <label class="control-label" for="adminName">Admin name:</label>
+                        <label class="control-label" for="adminNameField">Admin name:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="adminName" value="{$adminNameField}">
+                          <input type="text" class="span6" id="adminNameField" value="{$adminNameField}">
                         </div> <!-- /controls -->				
                       </div> <!-- /control-group -->
 
                       <div class="control-group">
-                        <label class="control-label" for="adminPassword">Password:</label>
+                        <label class="control-label" for="adminPasswordField">Password:</label>
                         <div class="controls">
-                          <input type="password" class="span6" id="adminPassword" value="{$adminPassword}">
+                          <input type="password" class="span6" id="adminPasswordField" value="" {if $sos}placeholder="Please specify a new password for admin 1." required{else}placeholder="Leave empty to stay unchanged"{/if}>
                         </div> <!-- /controls -->				
                       </div> <!-- /control-group -->
 
@@ -150,10 +164,16 @@
                         </div>
                       </div> -->
                       
-                      <div class="alert alert-danger" style="margin-left: 2%; width: 60%;">
-				                <b>Beware!</b> Administrators have full access to all settings of this fluentlogin installation.
-			                </div>
-                      
+                      {if $selfWarning == 1 && !$sosok}
+                        <div class="alert alert-warning" style="margin-left: 2%; width: 60%;">
+                          <b>Warning!</b> You are about to edit your own administrative account. You may lose access to the fluentlogin Administration Panel when making mistakes.
+                        </div>
+                      {elseif $selfWarning == 0 && !$sosok}
+                        <div class="alert alert-danger" style="margin-left: 2%; width: 60%;">
+                          <b>Beware!</b> Administrators have full access to all settings of this fluentlogin installation.
+                        </div>
+                      {/if}
+
                       <div class="form-actions" style="margin-bottom: 0px;">
                         <button type="submit" class="btn btn-primary">Save</button> 
                         <a class="btn" onclick="window.history.back();">Cancel</a>
@@ -178,7 +198,7 @@
   <div class="footer-inner">
     <div class="container">
       <div class="row">
-        <div class="span12"> &copy; 2017 <a href="#"><b>fluentlogin</b></a>, developed by <a href="#"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="#"><b>Bootstrap Responsive Admin Templat</b>e</a>.</div>
+        <div class="span12"> &copy; 2017 <a href="http://www.woborschil.de/fluentlogin" target="_blank"><b>fluentlogin Beta 1</b></a>, developed by <a href="http://www.woborschil.de" target="_blank"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="https://www.egrappler.com/templatevamp-twitter-bootstrap-admin-template-now-available/" target="_blank"><b>Bootstrap Responsive Admin Template</b></a>.</div>
         <!-- /span12 --> 
       </div>
       <!-- /row --> 
@@ -200,127 +220,10 @@
 <!-- SweetAlert Plugin Js -->
 <script src="../js/sweetalert2.min.js"></script>
 
+<!-- SHA-1 Plugin Js -->
+<script src="../js/sha1.min.js"></script>
+
 <script src="../js/base.js"></script> 
-<script>     
 
-        var lineChartData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [
-				{
-				    fillColor: "rgba(220,220,220,0.5)",
-				    strokeColor: "rgba(220,220,220,1)",
-				    pointColor: "rgba(220,220,220,1)",
-				    pointStrokeColor: "#fff",
-				    data: [65, 59, 90, 81, 56, 55, 40]
-				},
-				{
-				    fillColor: "rgba(151,187,205,0.5)",
-				    strokeColor: "rgba(151,187,205,1)",
-				    pointColor: "rgba(151,187,205,1)",
-				    pointStrokeColor: "#fff",
-				    data: [28, 48, 40, 19, 96, 27, 100]
-				}
-			]
-
-        }
-
-        var myLine = new Chart(document.getElementById("area-chart").getContext("2d")).Line(lineChartData);
-
-
-        var barChartData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [
-				{
-				    fillColor: "rgba(220,220,220,0.5)",
-				    strokeColor: "rgba(220,220,220,1)",
-				    data: [65, 59, 90, 81, 56, 55, 40]
-				},
-				{
-				    fillColor: "rgba(151,187,205,0.5)",
-				    strokeColor: "rgba(151,187,205,1)",
-				    data: [28, 48, 40, 19, 96, 27, 100]
-				}
-			]
-
-        }    
-
-        $(document).ready(function() {
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
-        var calendar = $('#calendar').fullCalendar({
-          header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-          },
-          selectable: true,
-          selectHelper: true,
-          select: function(start, end, allDay) {
-            var title = prompt('Event Title:');
-            if (title) {
-              calendar.fullCalendar('renderEvent',
-                {
-                  title: title,
-                  start: start,
-                  end: end,
-                  allDay: allDay
-                },
-                true // make the event "stick"
-              );
-            }
-            calendar.fullCalendar('unselect');
-          },
-          editable: true,
-          events: [
-            {
-              title: 'All Day Event',
-              start: new Date(y, m, 1)
-            },
-            {
-              title: 'Long Event',
-              start: new Date(y, m, d+5),
-              end: new Date(y, m, d+7)
-            },
-            {
-              id: 999,
-              title: 'Repeating Event',
-              start: new Date(y, m, d-3, 16, 0),
-              allDay: false
-            },
-            {
-              id: 999,
-              title: 'Repeating Event',
-              start: new Date(y, m, d+4, 16, 0),
-              allDay: false
-            },
-            {
-              title: 'Meeting',
-              start: new Date(y, m, d, 10, 30),
-              allDay: false
-            },
-            {
-              title: 'Lunch',
-              start: new Date(y, m, d, 12, 0),
-              end: new Date(y, m, d, 14, 0),
-              allDay: false
-            },
-            {
-              title: 'Birthday Party',
-              start: new Date(y, m, d+1, 19, 0),
-              end: new Date(y, m, d+1, 22, 30),
-              allDay: false
-            },
-            {
-              title: 'EGrappler.com',
-              start: new Date(y, m, 28),
-              end: new Date(y, m, 29),
-              url: 'http://EGrappler.com/'
-            }
-          ]
-        });
-      });
-    </script><!-- /Calendar -->
 </body>
 </html>

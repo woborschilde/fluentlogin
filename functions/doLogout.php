@@ -1,4 +1,13 @@
 <?php
+
+	/* fluentlogin User Management System
+	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+
+	Copyright (C) 2017 woborschil.de
+
+	@link    http://www.woborschil.de/fluentlogin
+	*/
+	
     require("../lib/unsphp/Unscramble.php");
 
     if ((isset($_GET["appID"])) && (isset($_GET["userID"]))) {
@@ -33,7 +42,7 @@
 
     // delete session cookie
     $expiryTime = time() - 1; // 1 second ago
-    setcookie("fl$appID", $sessionID, $expiryTime, "/" . basename(__DIR__) . "/");
+    setcookie("fl$appID", $sessionID, $expiryTime, "/");
 
     header("Location: " . $systemPath . "$redirect?appID=$appID");
     die();

@@ -25,12 +25,14 @@
 <script>
   {literal}
     function login() {
-      var un = document.getElementById("username".toString()).value;
-      var up = document.getElementById("password".toString()).value;
+      var an = document.getElementById("username".toString()).value;
+      var ap = sha1(document.getElementById("password".toString()).value);
 
+			swal.showLoading();
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+					swal.hideLoading();
           if (this.responseText == "1") {
             swal({
               type: "success",
@@ -51,7 +53,7 @@
           }
         }
       }
-      xmlhttp.open("GET","functions/doLogin.php?userName="+un+"&userPassword="+up,true);
+      xmlhttp.open("GET","functions/doLogin.php?adminName="+an+"&adminPassword="+ap,true);
       xmlhttp.send();
     }
   {/literal}
@@ -138,7 +140,7 @@
 
 <hr />
 <div style="color: gray; text-align: center;">
-	Powered by <b>fluentlogin</b>
+	Powered by <a href="http://www.woborschil.de/fluentlogin" target="_blank" style="color: inherit;"><b>fluentlogin</b></a>
 </div>
 
 <script src="../js/jquery-1.7.2.min.js"></script>
@@ -148,6 +150,9 @@
 
 <!-- SweetAlert Plugin Js -->
 <script src="../js/sweetalert2.min.js"></script>
+
+<!-- SHA-1 Plugin Js -->
+<script src="../js/sha1.min.js"></script>
 
 </body>
 

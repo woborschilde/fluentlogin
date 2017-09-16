@@ -1,4 +1,13 @@
 <?php
+
+	/* fluentlogin User Management System
+	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
+
+	Copyright (C) 2017 woborschil.de
+
+	@link    http://www.woborschil.de/fluentlogin
+	*/
+	
 	// Include Smarty Template Engine
 	require("../lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
@@ -16,12 +25,12 @@
 	// Get admins of app
 	$query = $conn->query("SELECT * FROM fl_admins ORDER BY adminID ASC");
 	while ($row = $query->fetch_assoc()) {
-		$adminID = $row["adminID"];
+		$adminIDField = $row["adminID"];
 		$adminNameField = $row["adminName"];
 
 		$keys[] = $key; $key++;
-		$adminIDs[] = $adminID;
-		$adminNames[] = $adminName;
+		$adminIDs[] = $adminIDField;
+		$adminNames[] = $adminNameField;
 	}
 
 	if ($query->num_rows == 0) {
@@ -31,6 +40,7 @@
 	}
 
 	// Assign variables to smarty
+	$smarty->assign("adminID", $adminID);  // from checkLogin
 	$smarty->assign("adminName", $adminName);  // from checkLogin
 	$smarty->assign("keys", $keys);
 	$smarty->assign("adminIDs", $adminIDs);

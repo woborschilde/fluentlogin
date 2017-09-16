@@ -26,8 +26,8 @@
   {literal}
     function setNewPassword(ai) {
 			var ui = document.getElementById("userID".toString()).value;
-      var up = document.getElementById("password".toString()).value;
-	  	var uc = document.getElementById("confirm_password".toString()).value;
+      var up = sha1(document.getElementById("password".toString()).value);
+	  	var uc = sha1(document.getElementById("confirm_password".toString()).value);
 
 			if (up != uc) {
 				swal({
@@ -83,16 +83,16 @@
 				<span class="icon-bar"></span>
 			</a>
 			
-			<a class="brand" href="index.html">
+			<a class="brand" href="index.php?appID={$appID}">
 				{nocache}{$appName}{/nocache}
 			</a>		
 			
 			<div class="nav-collapse">
 				<ul class="nav pull-right">
 					<li class="">						
-						<a href="index.html" class="">
+						<a href="" class="" onclick="window.history.back();">
 							<i class="icon-chevron-left"></i>
-							Zurück zur vorherigen Seite
+							Back to previous page
 						</a>
 					</li>
 				</ul>
@@ -111,7 +111,7 @@
 	
 	<div class="content clearfix">
 		
-		<form onsubmit="setNewPassword({$appID}); return false;">
+		<form onsubmit="setNewPassword({nocache}{$appID}{/nocache}); return false;">
 		
 			<h1>Set new password</h1>		
 			
@@ -138,7 +138,7 @@
 			<div class="login-actions">
 				
 				<button type="submit" class="button btn btn-primary btn-large">Save</button>
-				<a href="" class="button btn btn-default btn-large" style="margin-right: 10px;" onclick="window.history.back();">Logout</a>
+				<a href="functions/doLogout.php?appID={$appID}&userID={$userID}" class="button btn btn-default btn-large" style="margin-right: 10px;">Logout</a>
 				
 			</div> <!-- .actions -->
 			
@@ -160,6 +160,9 @@
 
 <!-- SweetAlert Plugin Js -->
 <script src="js/sweetalert2.min.js"></script>
+
+<!-- SHA-1 Plugin Js -->
+<script src="js/sha1.min.js"></script>
 
 </body>
 
