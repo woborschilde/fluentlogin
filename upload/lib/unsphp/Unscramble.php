@@ -1,10 +1,10 @@
 <?php
 /*
 
-  UnscramblePHP v0.1.2 by RW Productions Software (aka idnaos from woborschil.de)
+  UnscramblePHP v0.1.3 by RW Productions Software (aka idnaos from woborschil.de)
         Simplify your PHP code by shortening big repeating code blocks.
     Licensed under GNU LGPLv3: https://www.gnu.org/licenses/lgpl-3.0.en.html
-                          Last Change: 2017/09/01
+                          Last Change: 2017/11/12
 
   =================================================================================
    ### CONFIGURATION ###
@@ -190,12 +190,20 @@
         }
     }
 
-    function db_san($get) {
+    function db_san($get, $filter = "") {
         // SQL Sanitizer
         global $conn;
 
+        if ($filter == "") {
+            $nofilter = true;
+        } else {
+            $nofilter = false;
+        }
+
         foreach ($get as $key => $value) {
-            if ((strpos($value, "'") !== false) || (strpos($value, '"') !== false)) {
+            if ($nofilter) { $filter = $key; }  // empty filter should return true (and not false) in the next line
+
+            if (((strpos($value, "'") !== false) || (strpos($value, '"') !== false)) && (strpos($key, $filter) === 0)) {  // only search in filtered cookies
                 die("Please remove any apostrophes or quotation marks from your request and try again.");
             }
         }

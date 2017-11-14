@@ -8,11 +8,11 @@
 	@link    http://www.woborschil.de/fluentlogin
 	*/
 	
-    require("../lib/unsphp/Unscramble.php");
+    require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     $userName = $_GET["userName"];
-    $userEmail = $_GET["userEmail"];
+    $userEmailGet = $_GET["userEmail"];
     
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
@@ -25,7 +25,7 @@
 	require("checkLogin.php");
 
     // Load system settings
-	require("../admin/functions/loadSettings.php");
+	require_once(__DIR__ . "/../admin/functions/loadSettings.php");
 
     db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
@@ -35,11 +35,15 @@
 
     db_sel("userID, userEmail", "fl_apps_users", "appID='$appID' && userName='$userName' && confirmationCode='0'", __FILE__, __LINE__);
     
-    if ($num_rows == 0 || $userName == "") {
-        db_sel("userID, userName", "fl_apps_users", "appID='$appID' && userEmail='$userEmail' && confirmationCode='0'", __FILE__, __LINE__);
+    if ($num_rows == 0 || $userName == "" || ($num_rows > 0 && $userEmailGet != "")) {  // user entered e-mail field only / both fields
+        if ($num_rows == 0) {
+            db_sel("userID, userName", "fl_apps_users", "appID='$appID' && userEmail='$userEmailGet' && confirmationCode='0'", __FILE__, __LINE__);
+        } else {
+            db_sel("userID, userName", "fl_apps_users", "appID='$appID' && userName='$userName' && userEmail='$userEmailGet' && confirmationCode='0'", __FILE__, __LINE__);
+        }
 
-        if ($num_rows == 0 || $userEmail == "") {
-            die("Sorry, we couln't find a user registered with these credentials.");
+        if ($num_rows == 0 || $userEmailGet == "") {
+            die("Sorry, we couldn't find a user registered with these credentials.");
         }
     }
     
@@ -61,7 +65,7 @@ Sincerely,
 The fluentlogin system
 [THIS IS AN AUTO GENERATED MESSAGE, IN CASE OF QUESTIONS: support@woborschil.de]";
     
-    mail($userEmail, "Password reset requested", $msg, "From: $appName <noreply@intra.woborschil.net>");
+    mail($userEmailGet, "Password reset requested", $msg, "From: $appName <noreply@intra.woborschil.net>");
 
     echo "1";
 ?>

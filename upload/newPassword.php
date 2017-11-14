@@ -23,7 +23,13 @@
 	if (isset($_GET["redirect"])) {
 		$redirect = $_GET["redirect"];
 	} else {
-		$redirect = "index.php?appID=$appID";
+		$redirect = "settings.php";
+	}
+
+	if (isset($_GET["noredirect"])) {
+		$noredirect = $_GET["noredirect"];
+	} else {
+		$noredirect = 0;
 	}
 
 	// Establish database connection

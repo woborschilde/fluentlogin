@@ -8,13 +8,7 @@
 	@link    http://www.woborschil.de/fluentlogin
 	*/
 	
-    require("../lib/unsphp/Unscramble.php");
-
-    foreach ($_GET as $key => $value) {
-        if ((strpos($value, "'") !== false) || (strpos($value, '"') !== false)) {
-            die("You are not allowed to use apostrophes or quotation marks in your credentials.");
-        }
-    }
+    require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     $userName = $_GET["userName"];
@@ -37,7 +31,7 @@
 	require("checkLogin.php");
 
     // Load system settings
-	require("../admin/functions/loadSettings.php");
+	require_once(__DIR__ . "/../admin/functions/loadSettings.php");
 
     db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 

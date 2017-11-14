@@ -47,9 +47,9 @@
               text: "You are now logged in."
             });
             setTimeout(function(){
-              {/literal}
+              {/literal}{nocache}
 								location.replace("{$redirect}"+"?appID="+ai);
-							{literal}
+							{/nocache}{literal}
             }, 1000);
           } else {
             swal({

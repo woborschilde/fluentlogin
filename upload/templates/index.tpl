@@ -28,7 +28,7 @@
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$userName}<b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="settings.php?appID={$appID}">My settings</a></li>
-              <li><a href="functions/doLogout.php?appID={$appID}&userID={$userID}">Log out</a></li>
+              <li><a href="functions/doLogout.php?appID={$appID}">Log out</a></li>
             </ul>
           </li>
         </ul>
@@ -59,7 +59,7 @@
               {/nocache}
               <div class="shortcuts">
                 <a href="settings.php?appID={$appID}" class="shortcut"><i class="shortcut-icon icon-cog"></i><span class="shortcut-label">My settings</span></a>
-                <a href="functions/doLogout.php?appID={$appID}&userID={$userID}" class="shortcut"><i class="shortcut-icon icon-signout"></i><span class="shortcut-label">Log out</span></a>
+                <a href="functions/doLogout.php?appID={$appID}" class="shortcut"><i class="shortcut-icon icon-signout"></i><span class="shortcut-label">Log out</span></a>
               </div>
               <!-- /shortcuts --> 
             </div>

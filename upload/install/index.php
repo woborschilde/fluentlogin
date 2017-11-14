@@ -34,17 +34,17 @@
 	$cache_dir = "lib/smarty/app/fluentlogin/cache/";
 	$template_cache_dir = "lib/smarty/app/fluentlogin/templates_c/";
 
-	if (!(is_writable("../$cache_dir"))) {
+	if (!(is_writable(__DIR__ . "/../$cache_dir"))) {
 		die("Directory <b>$cache_dir</b> is not writable!<br />" . $write_error_msg);
 	}
 
-	if (!(is_writable("../$template_cache_dir"))) {
+	if (!(is_writable(__DIR__ . "/../$template_cache_dir"))) {
 		die("Directory <b>$template_cache_dir</b> is not writable!<br />" . $write_error_msg);
 	}
 
 	// Check if database credentials are set
 
-	require("../lib/unsphp/Unscramble.php");
+	require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 	require($db_loginpath);
 	
 	if (($db_host == "") || ($db_username == "") || ($db_password == "") || ($db_database == "")) {

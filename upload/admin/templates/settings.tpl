@@ -57,6 +57,24 @@
     function setSetting(item, index) {
       queryString += "&"+item.id+"="+item.value;
     }
+
+    function showApiKey() {
+      var apikey = {/literal}{nocache}{$keyID}{/nocache}{literal};
+
+      swal({
+        title: "Show API Key?",
+        html: "With the API Key, you can access parts of the fluentlogin database by URL call. Please keep this key secret as everybody can authenticate at the API with it!<br /><a href='https://intra.woborschil.net/docs/en/fluentlogin/api' target='_blank'>Learn more about the API</a><br /><br />Show your key now?",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes"
+      }).then(function () {
+        swal({
+          title: "Your API Key is",
+          html: "<b>"+apikey+"</b>",
+          type: "info"
+        })
+      })
+    }
   {/literal}
 </script>
 
@@ -128,7 +146,7 @@
                       <div class="control-group">
                         <label class="control-label">API Key:</label>
                         <div class="controls" style="margin-top: 3px;">
-                          <b>{$keyID}</b>
+                          <a href='#' onclick='showApiKey();'><u>Show</u></a>
                         </div> <!-- /controls -->				
                       </div> <!-- /control-group -->
 

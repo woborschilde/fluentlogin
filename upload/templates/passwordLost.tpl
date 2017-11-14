@@ -4,7 +4,7 @@
  <head>
     <meta charset="utf-8">
     {nocache}
-		<title>Passwort vergessen - {$appName}</title>
+		<title>Lost password - {$appName}</title>
 	{/nocache}
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">

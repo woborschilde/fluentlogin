@@ -9,7 +9,7 @@
 	*/
 	
 	// Include Smarty Template Engine
-	require("../lib/smarty/app/fluentlogin/smartyInclude.php");
+	require(__DIR__ . "/../lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
 
 	if (isset($_GET["appID"])) {
@@ -27,7 +27,7 @@
 	}
 	
 	// Establish database connection
-	require("../lib/unsphp/Unscramble.php");
+	require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
 	

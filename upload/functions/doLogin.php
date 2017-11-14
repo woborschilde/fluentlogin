@@ -8,32 +8,11 @@
 	@link    http://www.woborschil.de/fluentlogin
 	*/
 	
-    require("../lib/unsphp/Unscramble.php");
-
-	$appID = $_GET["appID"];
-
-    if (!(isset($_GET["loginToken"]))) {
-        $userName = $_GET["userName"];
-
-        if (!(isset($_GET["nohash"]))) {
-            $userPassword = sha1($_GET["userPassword"]);
-        } else {
-            $userPassword = sha1(sha1($_GET["userPassword"]));
-        }
-    } else {
-        $userID = $_GET["userID"];
-        $loginToken = $_GET["loginToken"];
-    }
-
-    if (isset($_GET["remember"])) {
-		$remember = $_GET["remember"];
-	} else {
-		$remember = "false";
-	}
+    require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
-
+    
     db_san($_GET);
 
     // Check user login status
@@ -41,37 +20,54 @@
 	$invert = 1;  // redirect to user panel if logged in - no infinite loop
 	require("checkLogin.php");
 
-    // Load system settings
-	require("../admin/functions/loadSettings.php");
+    if (!(isset($_GET["loginToken"]))) {
+        getVariable("userName", "die");
+
+        if (!(isset($_GET["nohash"]))) {
+            $userPassword = sha1($_GET["userPassword"]);
+        } else {
+            $userPassword = sha1(sha1($_GET["userPassword"]));
+        }
+    } else {
+        getVariable("userID", "die");
+        getVariable("loginToken", "die");
+    }
+
+    getVariable("remember", false);
+    getVariable("noredirect", false);
 
     if (!(isset($_GET["loginToken"]))) {
         db_sel("userID", "fl_apps_users", "appID='$appID' && userName COLLATE latin1_general_cs = '$userName' && userPassword COLLATE latin1_general_cs = '$userPassword'", __FILE__, __LINE__);
 
         if ($num_rows == 0) {
-            die("Username or password are wrong.");
+            die("2: Username or password are wrong.");
         }
 
         db_sel("NULL", "fl_apps_users", "appID='$appID' && userName='$userName' && confirmationCode>'0'", __FILE__, __LINE__);
 
         if ($num_rows > 0) {
-            die("This account has not been activated yet.");
+            die("3: This account has not been activated yet.");
         }
     } else {
         db_sel("NULL", "fl_apps_users", "appID='$appID' && userID='$userID' && loginToken='$loginToken'", __FILE__, __LINE__);
 
         if ($num_rows == 0) {
-            die("This token is invalid.");
+            die("4: This token is invalid.");
         }
 
         if (strpos($loginToken, "r") !== false) {
             db_upd("fl_apps_users", "forceNewPassword='1'", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
 
-            header("Location: " . $systemPath . "newPassword.php?appID=$appID&userID=$userID&redirect=index.php");
-            die();
+            if (!($noredirect)) {
+                header("Location: " . $systemPath . "newPassword.php?appID=$appID&userID=$userID&redirect=index.php");
+                die();
+            } else {
+                die("5: Your current password has expired. In order to continue, you have to set a new one.");
+            }
         }
     }
 
-    // set field values
+    // check field values
     foreach ($_GET as $key => $value) {
         if (strpos($key, "field") !== false) {
             $fieldID = substr($key, 5);
@@ -79,7 +75,7 @@
             db_sel("NULL", "fl_apps_fields_values", "appID='$appID' && userID='$userID' && fieldID='$fieldID' && fieldValue COLLATE latin1_general_cs = '$value'", __FILE__, __LINE__);
             
             if ($num_rows == 0) {
-                die("'$fieldName' does not match with this account.");
+                die("6: '$fieldName' does not match with this account.");
             }
         }
     }
@@ -99,7 +95,7 @@
     
     db_ins("fl_apps_sessions", "sessionID, appID, userID, expiryTime", "'$sessionID', '$appID', '$userID', '$expiryTime'", __FILE__, __LINE__);
     setcookie("fl$appID", $sessionID, $expiryTime, "/");
-    //setcookie("fla", $sessionID, $expiryTime, "/" . basename(__DIR__) . "/");
+    //setcookie("fl$appID", $sessionID, $expiryTime, "/" . basename(__DIR__) . "/");
 
     echo "1";
 ?>

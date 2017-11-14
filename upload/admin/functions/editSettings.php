@@ -8,7 +8,7 @@
 	@link    http://www.woborschil.de/fluentlogin
 	*/
 	
-    require("../../lib/unsphp/Unscramble.php");
+    require(__DIR__ . "/../../lib/unsphp/Unscramble.php");
 
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);

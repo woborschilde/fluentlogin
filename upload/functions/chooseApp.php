@@ -8,7 +8,7 @@
 	@link    http://www.woborschil.de/fluentlogin
 	*/
 	
-    require("../lib/unsphp/Unscramble.php");
+    require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     

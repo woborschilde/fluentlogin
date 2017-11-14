@@ -60,7 +60,9 @@
               text: "Your changes have been saved successfully."
             });
             setTimeout(function(){
-              location.replace("index.php?appID="+ai);
+              {/literal}{nocache}
+								location.replace("{$redirect_after_save}"+"?appID="+ai);
+							{/nocache}{literal}
             }, 1000);
           } else {
             swal({

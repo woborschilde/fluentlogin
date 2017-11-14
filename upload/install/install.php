@@ -19,7 +19,7 @@
 
 	// Install database tables
 
-	require("../lib/unsphp/Unscramble.php");
+	require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 	db_conn();
 	
 	$query = $conn->query("CREATE DATABASE IF NOT EXISTS $db_database");

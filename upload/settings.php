@@ -18,6 +18,12 @@
 		die("Argument ''appID'' is required!");
 	}
 
+	if (isset($_GET["redirect"])) {
+		$redirect_after_save = $_GET["redirect"];
+	} else {
+		$redirect_after_save = "index.php";
+	}
+
 	// Establish database connection
 	require("lib/unsphp/Unscramble.php");
     db_conn();
@@ -37,6 +43,7 @@
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
+	$smarty->assign("redirect_after_save", $redirect_after_save);
 	
 	$smarty->assign("userID", $userID);
 	$smarty->assign("userName", $userName);

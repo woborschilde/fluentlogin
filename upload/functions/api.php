@@ -8,9 +8,12 @@
 	@link    http://www.woborschil.de/fluentlogin
 	*/
 	
-    require("../lib/unsphp/Unscramble.php");
+    require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 
-	$appID = $_GET["appID"];
+    db_conn();
+    db_switch($db_database, __FILE__, __LINE__);
+
+    $appID = $_GET["appID"];
     $mode = $_GET["mode"];
     $keyID = $_GET["keyID"];
     
@@ -26,8 +29,9 @@
         $checkID = $_GET["checkID"];
     }
 
-    db_conn();
-    db_switch($db_database, __FILE__, __LINE__);
+    if (isset($_GET["newValue"])) {
+        $newValue = $_GET["newValue"];
+    }
 
 	db_san($_GET);
 	
@@ -102,6 +106,21 @@
                 }
             }
             echo 0;
+            break;
+        case "set_group":
+            db_ins("fl_apps_user_to_groups", "appID, userID, groupID", "'$appID', '$userID', '$checkID'", __FILE__, __LINE__);
+            echo 1; break;
+        case "unset_group":
+            db_del("fl_apps_user_to_groups", "appID='$appID' && userID='$userID' && groupID='$checkID'", __FILE__, __LINE__);
+            echo 1; break;
+        case "set_field":
+            db_sel("NULL", "fl_apps_fields_values", "appID='$appID' && userID='$userID' && fieldID='$checkID'", __FILE__, __LINE__);
+            if ($num_rows > 0) {
+                db_upd("fl_apps_fields_values", "fieldValue='$newValue'", "fieldID='$checkID'", __FILE__, __LINE__);
+            } else {
+                db_ins("fl_apps_fields_values", "appID, fieldID, userID, fieldValue", "'$appID', '$checkID', '$userID', '$newValue'", __FILE__, __LINE__);
+            }
+            echo 1;
             break;
     }
 ?>

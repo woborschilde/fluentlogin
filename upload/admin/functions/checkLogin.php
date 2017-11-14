@@ -8,7 +8,7 @@
 	@link    http://www.woborschil.de/fluentlogin
 	*/
 	
-	db_san($_COOKIE);
+	db_san($_COOKIE, "fl");
 
     // Load system settings
 	require("loadSettings.php");

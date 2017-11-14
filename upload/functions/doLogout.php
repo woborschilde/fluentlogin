@@ -8,26 +8,7 @@
 	@link    http://www.woborschil.de/fluentlogin
 	*/
 	
-    require("../lib/unsphp/Unscramble.php");
-
-    if ((isset($_GET["appID"])) && (isset($_GET["userID"]))) {
-		$appID = $_GET["appID"];
-        $userID = $_GET["userID"];
-	} else {
-		die("Argument ''appID'' and ''userID'' are required!");
-	}
-
-    if (isset($_COOKIE["fl" . $appID])) {
-		$sessionID = $_COOKIE["fl" . $appID];
-	} else {
-		die("You can't log out because you aren't logged in!");
-	}
-
-    if (isset($_GET["redirect"])) {
-        $redirect = $_GET["redirect"];
-    } else {
-        $redirect = "index.php";
-    }
+    require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
@@ -35,7 +16,16 @@
 	db_san($_GET);
 	
     // Load system settings
-	require("../admin/functions/loadSettings.php");
+	require_once(__DIR__ . "/../admin/functions/loadSettings.php");
+
+    getVariable("appID", "die");
+    getVariable("redirect", "index.php");
+
+    if (isset($_COOKIE["fl" . $appID])) {
+		$sessionID = $_COOKIE["fl" . $appID];
+	} else {
+		die("You can't log out because you aren't logged in!");
+	}
 
     // delete current session from database
     db_del("fl_apps_sessions", "sessionID='$sessionID'", __FILE__, __LINE__);
@@ -44,6 +34,6 @@
     $expiryTime = time() - 1; // 1 second ago
     setcookie("fl$appID", $sessionID, $expiryTime, "/");
 
-    header("Location: " . $systemPath . "$redirect?appID=$appID");
+    header("Location: " . $redirect . "?appID=$appID");
     die();
 ?>

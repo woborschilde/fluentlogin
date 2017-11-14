@@ -13,4 +13,21 @@
 	while ($row = $query->fetch_assoc()) {
         ${$row["settingName"]} = $row["settingValue"];
 	}
+
+	// Variable Getter Function (from predefined var on require() or by GET Query String)
+	function getVariable($key, $default) {
+		global ${$key};
+		
+        if (isset(${$key})) {
+            // do nothing, everything okay (from PHP require call)
+        } else if (isset($_GET[$key])) {
+			${$key} = $_GET[$key];  // (URL call)
+        } else {
+			if ($default != "die") {
+				${$key} = $default;  // nothing passed
+			} else {
+				die("Argument ''$key'' is required!");
+			}
+        }
+	}
 ?>

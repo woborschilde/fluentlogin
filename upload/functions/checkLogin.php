@@ -10,35 +10,29 @@
 	
     if (!(isset($embed))) {
         // Establish database connection
-        require("../lib/unsphp/Unscramble.php");
+        require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
         db_conn();
         db_switch($db_database, __FILE__, __LINE__);
-
-        if (isset($_GET["appID"])) {
-            $appID = $_GET["appID"];
-        } else {
-            die("Argument ''appID'' is required!");
-        }
-
-        db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
-
-        if ($num_rows == 0) {
-            die("An app with ID $appID does not exist!");
-        }
-
-        if (isset($_GET["redirect"])) {
-            $redirect = $_GET["redirect"];
-        } else {
-            $redirect = "index.php";
-        }
     }
-
+    
 	db_san($_GET);
-	db_san($_COOKIE);
+	db_san($_COOKIE, "fl");
 
     // Load system settings
-	require(__DIR__ . "/../admin/functions/loadSettings.php");
+	require_once(__DIR__ . "/../admin/functions/loadSettings.php");
 
+    getVariable("appID", "die");
+    getVariable("redirect", "index.php");
+    getVariable("noredirect", false);
+    getVariable("invert", false);
+    getVariable("print", false);
+    
+    db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
+
+    if ($num_rows == 0) {
+        die("An app with ID $appID does not exist!");
+    }
+    
     // Get session by cookie
     if (isset($_COOKIE["fl" . $appID])) {
         $sessionByCookie = $_COOKIE["fl" . $appID];
@@ -55,42 +49,40 @@
         db_sel("userName, loginToken, forceNewPassword", "fl_apps_users", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
 
         if ((strpos($loginToken, "r") !== false) || ($forceNewPassword == "1")) {
-            if ((isset($_GET["noredirect"])) || (isset($invert))) {
-                if (!(isset($_GET["noredirect"]))) {
-                    return -1;
-                } else {
-                    die("-1");
-                }
+            if ($noredirect) {
+                setResult(-1);
             } else {
-                header("Location: " . $systemPath . "newPassword.php?appID=$appID&userID=$userID&redirect=$redirect");
+                header("Location: " . $systemPath . "newPassword.php?appID=$appID&userID=$userID&noredirect=1&redirect=$redirect");
+            }
+        } else {
+            if ($noredirect) {
+                setResult($userID);
+            } else {
+                if ($invert) {
+                    header("Location: " . $redirect . "?appID=$appID");
+                } else {
+                    setResult($userID);
+                }
             }
         }
     } else {
         not_logged_in:
-        if (!(isset($invert)) && !(isset($_GET["invert"]))) {
-            if (!(isset($_GET["noredirect"]))) {
-                header("Location: " . $systemPath . "login.php?appID=$appID&redirect=$redirect");
-            }
-            die("0");
+        
+        if ($noredirect) {
+            setResult(0);
         } else {
-            if (!(isset($_GET["noredirect"]))) {
-                return 1;
+            if ($invert) {
+                setResult(0);
             } else {
-                die("1");
+                header("Location: " . $systemPath . "login.php?appID=$appID&redirect=$redirect");
             }
         }
     }
 
-    if (!(isset($invert)) && !(isset($_GET["invert"]))) {
-        if (!(isset($_GET["noredirect"]))) {
-            return $userID;
-        } else {
-            die($userID);
-        }
-    } else {
-        if (!(isset($_GET["noredirect"]))) {
-            header("Location: " . $redirect . "?appID=$appID");
-        }
-        die("0");
+    function setResult($result) {
+        global $print;
+        
+        if ($print) { echo $result; }
+        return $result;
     }
 ?>

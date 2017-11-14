@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     {nocache}
-			<title>Neues Passwort setzen - {$appName}</title>
+			<title>Set new password - {$appName}</title>
 		{/nocache}
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -138,7 +138,7 @@
 			<div class="login-actions">
 				
 				<button type="submit" class="button btn btn-primary btn-large">Save</button>
-				<a href="functions/doLogout.php?appID={$appID}&userID={$userID}" class="button btn btn-default btn-large" style="margin-right: 10px;">Logout</a>
+				<a href="functions/doLogout.php?appID={$appID}&userID={$userID}&redirect={$redirect}" class="button btn btn-default btn-large" style="margin-right: 10px;">Logout</a>
 				
 			</div> <!-- .actions -->
 			

@@ -57,7 +57,7 @@
               text: "Please click the confirmation link we've sent you by e-mail to activate your account."
             }).then(function() {
 			  			{/literal}
-								location.replace("{$redirect}"+"?appID="+ai);
+								location.replace("{$redirect}");
 							{literal}
 						});
           } else {

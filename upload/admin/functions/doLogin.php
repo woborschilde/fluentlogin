@@ -8,7 +8,7 @@
 	@link    http://www.woborschil.de/fluentlogin
 	*/
 	
-    require("../../lib/unsphp/Unscramble.php");
+    require(__DIR__ . "/../../lib/unsphp/Unscramble.php");
 
     $adminName = $_GET["adminName"];
     $adminPasswordField = sha1($_GET["adminPassword"]);

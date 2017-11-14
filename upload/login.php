@@ -12,18 +12,6 @@
 	require("lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
 	
-	if (isset($_GET["appID"])) {
-		$appID = $_GET["appID"];
-	} else {
-		die("Argument ''appID'' is required!");
-	}
-
-	if (isset($_GET["redirect"])) {
-		$redirect = $_GET["redirect"];
-	} else {
-		$redirect = "index.php";
-	}
-	
 	// Establish database connection
 	require("lib/unsphp/Unscramble.php");
     db_conn();
@@ -31,6 +19,12 @@
 	
 	db_san($_GET);
 	
+	// Load system settings
+	require_once(__DIR__ . "/admin/functions/loadSettings.php");
+ 
+	getVariable("appID", "die");
+	getVariable("redirect", "index.php");
+
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	if ($num_rows == 0) {
