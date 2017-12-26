@@ -36,6 +36,9 @@
 	$invert = 1;  // redirect to user panel if logged in - no infinite loop
 	require("functions/checkLogin.php");
 
+	// Get style (colors, etc.)
+	require("functions/getStyle.php");
+
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);

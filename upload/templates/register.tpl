@@ -85,7 +85,7 @@
 	
 	<div class="navbar navbar-fixed-top">
 	
-	<div class="navbar-inner">
+	<div class="navbar-inner" style="background: {nocache}{$colorHeaderBackground}{/nocache} !important;">
 		
 		<div class="container">
 			
@@ -187,9 +187,13 @@
 </div> <!-- /account-container -->
 
 <!-- Text Under Box -->
-<div class="login-extra" style="text-align: center;">
-	<a href="passwordLost.php?appID={$appID}">Lost password?</a> | <a href="login.php?appID={$appID}">Login</a>
-</div> <!-- /login-extra -->
+{nocache}
+	<div class="login-extra" style="text-align: center;">
+		<a style="color: {$colorHeaderBackground} !important;" href="passwordLost.php?appID={$appID}">Lost password?</a> | 
+		<a style="color: {$colorHeaderBackground} !important;" href="login.php?appID={$appID}">Login</a>
+	</div> <!-- /login-extra -->
+{/nocache}
+
 <hr />
 <div style="color: gray; text-align: center;">
 	Powered by <a href="http://www.woborschil.de/fluentlogin" target="_blank" style="color: inherit;"><b>fluentlogin</b></a>

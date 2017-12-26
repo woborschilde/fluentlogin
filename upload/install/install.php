@@ -53,6 +53,8 @@
 
 	db_ins("fl_appsettings", "settingName, settingDefault", "'license', ''", __FILE__, __LINE__);
 	db_ins("fl_appsettings", "settingName, settingDefault", "'registration', 'on'", __FILE__, __LINE__);
+	db_ins("fl_appsettings", "settingName, settingDefault", "'colorHeaderBackground', '#00ba8b'", __FILE__, __LINE__);
+	db_ins("fl_appsettings", "settingName, settingDefault", "'colorHeaderText', 'white'", __FILE__, __LINE__);
 
 	// Create API Key
 	

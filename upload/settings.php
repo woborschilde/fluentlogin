@@ -40,6 +40,9 @@
 
 	db_sel("userEmail", "fl_apps_users", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
 
+	// Get style (colors, etc.)
+	require("functions/getStyle.php");
+
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);

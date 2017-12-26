@@ -27,9 +27,6 @@
 
 	// Check admin login status
 	require("functions/checkLogin.php");
-	
-	// Load system settings
-	require("functions/loadSettings.php");
 
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 

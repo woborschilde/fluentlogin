@@ -76,7 +76,7 @@
 	
 	<div class="navbar navbar-fixed-top">
 	
-	<div class="navbar-inner">
+	<div class="navbar-inner" style="background: {nocache}{$colorHeaderBackground}{/nocache} !important;">
 		
 		<div class="container">
 			
@@ -86,14 +86,14 @@
 				<span class="icon-bar"></span>
 			</a>
 			
-			<a class="brand" href="index.php?appID={$appID}">
+			<a class="brand" style="color: {nocache}{$colorHeaderText}{/nocache} !important;" href="index.php?appID={$appID}">
 				{nocache}{$appName}{/nocache}
 			</a>		
 			
 			<div class="nav-collapse">
 				<ul class="nav pull-right">
 					<li class="">						
-						<a href="" class="" onclick="window.history.back();">
+						<a href="" class="" style="color: {nocache}{$colorHeaderText}{/nocache} !important;" onclick="window.history.back();">
 							<i class="icon-chevron-left"></i>
 							Back to previous page
 						</a>
@@ -164,9 +164,12 @@
 	
 </div> <!-- /account-container -->
 
-<div class="login-extra" style="text-align: center;">
-	<a href="passwordLost.php?appID={$appID}">Lost password?</a> | <a href="license.php?appID={$appID}">Register</a>
-</div> <!-- /login-extra -->
+{nocache}
+	<div class="login-extra" style="text-align: center;">
+		<a style="color: {$colorHeaderBackground} !important;" href="passwordLost.php?appID={$appID}">Lost password?</a> | 
+		<a style="color: {$colorHeaderBackground} !important;" href="license.php?appID={$appID}">Register</a>
+	</div> <!-- /login-extra -->
+{/nocache}
 
 <hr />
 <div style="color: gray; text-align: center;">

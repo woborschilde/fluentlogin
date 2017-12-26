@@ -26,7 +26,7 @@
 	
 	<div class="navbar navbar-fixed-top">
 	
-	<div class="navbar-inner">
+	<div class="navbar-inner" style="background: {nocache}{$colorHeaderBackground}{/nocache} !important;">
 		
 		<div class="container">
 			
@@ -76,7 +76,7 @@
 			</div> <!-- /login-fields -->
 
 			<div class="login-actions">
-				<a href="register.php?appID={$appID}" type="submit" class="button btn btn-primary btn-large">Accept</button>
+				<a href="register.php?appID={nocache}{$appID}{/nocache}" type="submit" class="button btn btn-primary btn-large">Accept</button>
 				<a href="" class="button btn btn-default btn-large" style="margin-right: 10px;" onclick="window.history.back();">Decline</a>
 			</div> <!-- .actions -->
 			

@@ -1096,26 +1096,18 @@ pyjPnMtKDbCTaNvQ+o3nH0zMuLDPp8JewW+WICwg4NBgQgAAAABJRU5ErkJggg==" height="16" pr
       /><rect x="0" y="0" clip-path="url(#clipPath57)" fill="none" width="107" rx="5" ry="5" height="23" stroke="gray"
     /></g
     ><g text-rendering="optimizeSpeed" font-size="14" shape-rendering="crispEdges" font-family="&apos;Open Sans&apos;" transform="translate(792,617)"
-    ><image x="9" y="4" clip-path="url(#clipPath57)" width="16" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADZElEQVR42l1TXWxU
-RRj9vpm5d3dvu0tZyqbQBoLaNoZSkmpMNClRl6eKMTHuCkjUB3jgwRh40gpsC4JE
-0xdfjDbRZ7c8NVhTSzXBmKBCWf6hjdYCpaTddunevf9zZ5zdWhKZ5ObOJN85c+Y7
-50P4b/X19TH18er+2OH2jBGv72Ga0VY988Ce9GxnJPfFzaEna3EFLtUfZa63uzNh
-kI+amjvShpGKcyF137PB9yq+axfN8qOZcTuoP91/avzqKgbzmTzNDmXD/t4X080b
-Nw4+8+zrW5DoNdpEohGklDA3NwXzD/8Bzi1YLl6dthxyIHfq13GlgtQU5HrTnZua
-G4Y7ut7b7DpmYBgJ2rH9FXTsMvi+C2uTG6BwaVT+cWE4pEzTzFJhxvFiu/pO/nKD
-HjqUiaUarM87n9vTLYEErmuyl7ozZPrvAoyOfIWFiVGslBdhx6vvkKnJ30lx4R7X
-o41J6d9bN54+eIbEsdCzoaVzZyS6VlQqixSR4Oz9O/LKxBh6rg1ChFC4rPaeLdc0
-NKFpFmkoQFIt2ZP7eHsbMeKJXYmGlrjnWsgDH0ulOfnz2He4tPQAQsGhVHoI61Ob
-IBIxFPEtGfIAfc8BJHV1GvhZwlisjWkxzfdtDHxXBr6HnPvKOk+B5yAaMSCz+whc
-nvgJbl4/j4RSybknAamygG5lUkCtWEhaa5jvO1AlKC/PQyLeCO/vH4AHs1Pw7dcf
-Ks8RRBjCiv8rCSBcOJO2VQo4D6rMqN4sK+UlSDU9BQc/+AZm79+GgdNvg2ObwJgm
-q1hKqMILiTK8QRzbOlsu3TVFyKUQQtrWMjY1t8rd+47DxT/PwpcD79YUMcqUbIKa
-FpVMi4IMLSsAPc9Mvm1kceGvc7F4y16FD3Q9im+8eRiLC3flb+e/x9b2F6BKTNSt
-Ko7VF4eMoeZVlkb6P7sy+ThI69bI4Wj91s1Pt3YFO17eSz3PQl2PKcEIqvPANF2O
-/TgYTlwa1XRanLHdSC1ImFFRHqpFuTtdFxODyfVdW1ikHtRtEHBXhqppqJaSDq7z
-COzlW9Mej/0/yquDcfzozm1MzH9CtORrQIw6NQaqVUq0DCUI25Lc/EGw1MljJ85d
-ezxMq+Ocz6uhymZrHp048nw7Ee5bgpCOqmFEhNcFiZ45+unFO0/W/gu2/dRo2XET
-xwAAAABJRU5ErkJggg==" height="16" preserveAspectRatio="none"
+    ><image x="9" y="4" clip-path="url(#clipPath57)" width="16" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACA0lEQVR42oVTTW/T
+QBB9u+uPWE2ckI8G5aOqyMEXWlroifRQcUp+KfkH4YSEOHBooUJCQuEGrUscHJyk
+UZy09i5rtxUmFe5II1lvZt7MvFkT3BiRLrrdbsN13dODg+fl2WzGdV2nUXC1WnHT
+NOnJySe3XC7v9/v987saBQmjlGq1Wp24ro/RaIYguIpxRdGwuakiigXBtZas+Yfg
+pttSLBZUEoxgWc0YGwzOoWk6GFsKxhhSCQhhpFQq4PJyjE6nE02J4bCHGJuuyHr+
+PQJKOTKZDTTqBQztd5IQ2GqaMIwNScqjjHQCzhm2tyh2nxpo1ocgVGB/r4LPX4ic
+hMkGIp1AkciznQB7uxNstxoSCVH97oDRIo6PBUK+NvH9FYBikUgPIGgbgrRRLF2h
+8IhAUTke1IBzgoWfw2SaQ9Z8IzXg8Lw8/GVOnpXFoqYSCBn/5TZh2xRj95vUgMnT
+tvDTaSAMv8YrpRLIGaDqj/H+wwTBdSUWUVVN1Js1OU0YN0jVIErI57MYOh4U7QmY
+0pLfUxQktl6cJBC3T1kQ2SaTyYSHh+3Qtn+Ii4sz0W6/lJgeRjH6944iuUL8YwRB
+QA3DyHueK1+swo6OXt1dRvW8sXzOWt73fZqsUZJslUplMhgM3vZ6r4uO4/D5fP4i
+wrPZ7MdqtUpt2/5tWdYkWfOQnd76f+0PkOPICKdlNgoAAAAASUVORK5CYII=" height="16" preserveAspectRatio="none"
       /><text text-rendering="geometricPrecision" x="29" xml:space="preserve" y="17" clip-path="url(#clipPath57)" stroke="none"
       >App colors</text
     ></g

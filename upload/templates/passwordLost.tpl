@@ -61,7 +61,7 @@
 	
 	<div class="navbar navbar-fixed-top">
 	
-	<div class="navbar-inner">
+	<div class="navbar-inner" style="background: {nocache}{$colorHeaderBackground}{/nocache} !important;">
 		
 		<div class="container">
 			
@@ -136,9 +136,13 @@
 </div> <!-- /account-container -->
 
 <!-- Text Under Box -->
+{nocache}
 <div class="login-extra" style="text-align: center;">
-	<a href="login.php?appID={$appID}">Login</a> | <a href="license.php?appID={$appID}">Register</a>
+	<a style="color: {$colorHeaderBackground} !important;" href="login.php?appID={$appID}">Login</a> | 
+	<a style="color: {$colorHeaderBackground} !important;" href="license.php?appID={$appID}">Register</a>
 </div> <!-- /login-extra -->
+{/nocache}
+
 <hr />
 <div style="color: gray; text-align: center;">
 	Powered by <b>fluentlogin</b>

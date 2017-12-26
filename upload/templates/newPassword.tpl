@@ -73,7 +73,7 @@
 	
 	<div class="navbar navbar-fixed-top">
 	
-	<div class="navbar-inner">
+	<div class="navbar-inner" style="background: {nocache}{$colorHeaderBackground}{/nocache} !important;">
 		
 		<div class="container">
 			

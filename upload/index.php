@@ -36,6 +36,9 @@
 		die("An app with ID $appID does not exist!");
 	}
 	
+	// Get style (colors, etc.)
+	require("functions/getStyle.php");
+
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);

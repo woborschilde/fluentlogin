@@ -73,6 +73,9 @@
 		$fieldNames[] = "";
 	}
 
+	// Get style (colors, etc.)
+	require("functions/getStyle.php");
+
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
@@ -82,6 +85,6 @@
 	$smarty->assign("keys", $keys);
 	$smarty->assign("fieldIDs", $fieldIDs);
 	$smarty->assign("fieldNames", $fieldNames);
-
+	
 	$smarty->display("templates/register.tpl");
 ?>
