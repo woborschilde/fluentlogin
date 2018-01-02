@@ -49,6 +49,10 @@
 		$userNames[] = "No users created yet.";
 	}
 
+	// Template hooks
+	require("functions/initHooks.php");
+	initHooks("users");
+
 	// Assign variables to smarty
 	$smarty->assign("keys", $keys);
 	$smarty->assign("appID", $appID);
@@ -56,6 +60,8 @@
 	$smarty->assign("adminName", $adminName);
 	$smarty->assign("userIDs", $userIDs);
 	$smarty->assign("userNames", $userNames);
+
+	$smarty->assign("plugins_hook_users_titlebuttons", $plugins_hook_users_titlebuttons);
 	
 	$smarty->display("templates/users.tpl");
 ?>

@@ -97,6 +97,9 @@
               {nocache}
                 <h3>{$appName} > Users</h3>
                 <span style="text-align: right;"><a href="userEdit.php?appID={$appID}" class="btn btn-info"><b>+</b>&nbsp;&nbsp;New user</a></span>
+                {foreach from=$plugins_hook_users_titlebuttons item=k}
+                  {include file='../../plugins/'|cat:$k|cat:'/admin/templates/hook_users_titlebuttons.tpl'}
+                {/foreach}
               {/nocache}
             </div>
             <!-- /widget-header -->
