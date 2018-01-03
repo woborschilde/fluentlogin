@@ -39,8 +39,6 @@
 	include("../plugins/$plugin/admin/$page.php");
 
 	// Assign variables to smarty
-	//$smarty->assign("appID", $appID);
-	//$smarty->assign("appName", $appName);
 	$smarty->assign("adminName", $adminName);
 	$smarty->assign("pluginName", $plugin);
 	$smarty->assign("pageName", $page);

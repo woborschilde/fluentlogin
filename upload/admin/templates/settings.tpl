@@ -19,7 +19,7 @@
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    
+
 <script>
   {literal}
     var queryString = "";
@@ -28,7 +28,7 @@
       var settings = document.getElementsByName("setting");
 
       settings.forEach(setSetting);
-      
+
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -72,8 +72,8 @@
           title: "Your API Key is",
           html: "<b>"+apikey+"</b>",
           type: "info"
-        })
-      })
+        });
+      });
     }
   {/literal}
 </script>
@@ -93,11 +93,11 @@
           </li>
         </ul>
       </div>
-      <!--/.nav-collapse --> 
+      <!--/.nav-collapse -->
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /navbar-inner --> 
+  <!-- /navbar-inner -->
 </div>
 <!-- /navbar -->
 <div class="subnavbar">
@@ -111,9 +111,9 @@
         <li><a href="https://intra.woborschil.net/docs/en/fluentlogin/start" target="_blank"><i class="icon-book"></i><span>Documentation</span> </a> </li>
       </ul>
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /subnavbar-inner --> 
+  <!-- /subnavbar-inner -->
 </div>
 <!-- /subnavbar -->
 <div class="main">
@@ -138,7 +138,7 @@
                             <label class="control-label" for="setting{$settingIDs[$k]}">{$settingNames[$k]}:</label>
                             <div class="controls">
                               <input type="text" class="span6" id="setting{$settingIDs[$k]}" name="setting" value="{$settingValues[$k]}">
-                            </div> <!-- /controls -->				
+                            </div> <!-- /controls -->
                           </div> <!-- /control-group -->
                         {/if}
                       {/foreach}
@@ -147,27 +147,27 @@
                         <label class="control-label">API Key:</label>
                         <div class="controls" style="margin-top: 3px;">
                           <a href='#' onclick='showApiKey();'><u>Show</u></a>
-                        </div> <!-- /controls -->				
+                        </div> <!-- /controls -->
                       </div> <!-- /control-group -->
 
                       <div class="form-actions" style="margin-bottom: 0px;">
-                        <button type="submit" class="btn btn-primary">Save</button> 
+                        <button type="submit" class="btn btn-primary">Save</button>
                         <a class="btn" onclick="window.history.back();">Cancel</a>
                       </div> <!-- /form-actions -->
                     </fieldset>
                   </form>
               </div>
             {/nocache}
-            <!-- /widget-content --> 
+            <!-- /widget-content -->
           </div>
         </div>
-        <!-- /span6 --> 
+        <!-- /span6 -->
       </div>
-      <!-- /row --> 
+      <!-- /row -->
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /main-inner --> 
+  <!-- /main-inner -->
 </div>
 <!-- /main -->
 <div class="footer">
@@ -175,21 +175,21 @@
     <div class="container">
       <div class="row">
         <div class="span12"> &copy; 2017 <a href="http://www.woborschil.de/fluentlogin" target="_blank"><b>fluentlogin Beta 1</b></a>, developed by <a href="http://www.woborschil.de" target="_blank"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="https://www.egrappler.com/templatevamp-twitter-bootstrap-admin-template-now-available/" target="_blank"><b>Bootstrap Responsive Admin Template</b></a>.</div>
-        <!-- /span12 --> 
+        <!-- /span12 -->
       </div>
-      <!-- /row --> 
+      <!-- /row -->
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /footer-inner --> 
+  <!-- /footer-inner -->
 </div>
-<!-- /footer --> 
+<!-- /footer -->
 <!-- Le javascript
-================================================== --> 
-<!-- Placed at the end of the document so the pages load faster --> 
-<script src="../js/jquery-1.7.2.min.js"></script> 
-<script src="../js/excanvas.min.js"></script> 
-<script src="../js/chart.min.js" type="text/javascript"></script> 
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/excanvas.min.js"></script>
+<script src="../js/chart.min.js" type="text/javascript"></script>
 <script src="../js/bootstrap.js"></script>
 <script language="javascript" type="text/javascript" src="../js/full-calendar/fullcalendar.min.js"></script>
 
@@ -199,7 +199,7 @@
 <!-- SHA-1 Plugin Js -->
 <script src="../js/sha1.min.js"></script>
 
-<script src="../js/base.js"></script> 
+<script src="../js/base.js"></script>
 
 </body>
 </html>
