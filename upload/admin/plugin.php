@@ -7,11 +7,11 @@
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	// Include Smarty Template Engine
 	require(__DIR__ . "/../lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
-	
+
 	/*
 	if (isset($_GET["appID"])) {
 		$appID = $_GET["appID"];
@@ -19,7 +19,7 @@
 		die("Argument ''appID'' is required!");
 	}
 	*/
-	
+
 	// Establish database connection
 	require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
     db_conn();
@@ -27,7 +27,7 @@
 
 	// Check admin login status
 	require("functions/checkLogin.php");
-	
+
 	db_san($_GET);
 
 	getVariable("plugin", "die");
@@ -41,9 +41,12 @@
 	// Assign variables to smarty
 	//$smarty->assign("appID", $appID);
 	//$smarty->assign("appName", $appName);
-	//$smarty->assign("adminName", $adminName);
+	$smarty->assign("adminName", $adminName);
+	$smarty->assign("pluginName", $plugin);
+	$smarty->assign("pageName", $page);
 
 	//$smarty->assign("plugins_hook_users_titlebuttons", $plugins_hook_users_titlebuttons);
-	
-	$smarty->display("../plugins/$plugin/admin/templates/$page.tpl");
+
+	//$smarty->display("../plugins/$plugin/admin/templates/$page.tpl");
+	$smarty->display("templates/plugin.tpl");
 ?>
