@@ -33,7 +33,9 @@
 	getVariable("plugin", "die");
 	getVariable("page", "die");
 
-	//db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
+	// Template hooks
+	require("functions/initHooks.php");
+	initHooks("apps");
 
 	// Plugin code
 	include("../plugins/$plugin/admin/$page.php");
@@ -43,8 +45,5 @@
 	$smarty->assign("pluginName", $plugin);
 	$smarty->assign("pageName", $page);
 
-	//$smarty->assign("plugins_hook_users_titlebuttons", $plugins_hook_users_titlebuttons);
-
-	//$smarty->display("../plugins/$plugin/admin/templates/$page.tpl");
 	$smarty->display("templates/plugin.tpl");
 ?>

@@ -30,9 +30,9 @@
         var r = "appRow"+i.toString();
         var k = document.getElementById("appID"+i.toString()).innerHTML;
         var m = document.getElementById("appName"+i.toString()).innerHTML;
-        
+
         i++;
-        
+
         swal({
           title: "Do you really want to delete \""+m+"\"?",
           text: "All users, user groups, fields and permissions will be removed! This process cannot be undone!",
@@ -66,11 +66,11 @@
           </li>
         </ul>
       </div>
-      <!--/.nav-collapse --> 
+      <!--/.nav-collapse -->
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /navbar-inner --> 
+  <!-- /navbar-inner -->
 </div>
 <!-- /navbar -->
 <div class="subnavbar">
@@ -84,9 +84,9 @@
         <li><a href="https://intra.woborschil.net/docs/en/fluentlogin/start" target="_blank"><i class="icon-book"></i><span>Documentation</span> </a> </li>
       </ul>
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /subnavbar-inner --> 
+  <!-- /subnavbar-inner -->
 </div>
 <!-- /subnavbar -->
 <div class="main">
@@ -107,7 +107,7 @@
                   <tr>
                     <th> ID </th>
                     <th> Name </th>
-                    <th class="td-actions" style="width: 18%;"> Action </th>
+                    <th class="td-actions" style="width: 28%; text-align: right;"> Action </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -118,13 +118,16 @@
                         <td id="appName{$i}">{$appNames[$i]}</td>
                         <td class="td-actions btn-group">
                           {if $appIDs[$i] != "-"}
-                            <a href="users.php?appID={$appIDs[$i]}" class="btn btn-small btn-info" style="margin-right: 0px;" data-balloon="Users" data-balloon-pos="up"><i class="btn-icon-only icon-user"> </i></a>
-                            <a href="groups.php?appID={$appIDs[$i]}" class="btn btn-small btn-warning" style="margin-right: 0px;" data-balloon="User groups" data-balloon-pos="up"><i class="btn-icon-only icon-asterisk"> </i></a>
-                            <a href="fields.php?appID={$appIDs[$i]}" class="btn btn-small btn-primary" style="margin-right: 0px;" data-balloon="Fields" data-balloon-pos="up"><i class="btn-icon-only icon-table"> </i></a>
-                            <a href="permissions.php?appID={$appIDs[$i]}" class="btn btn-small btn-danger" style="margin-right: 5px;" data-balloon="Permissions" data-balloon-pos="up"><i class="btn-icon-only icon-legal"> </i></a>
-                            <a href="appEdit.php?appID={$appIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;" data-balloon="Edit" data-balloon-pos="up"><i class="btn-icon-only icon-pencil"> </i></a>
-                            <a href="javascript:;" class="btn btn-small btn-danger" onclick="delApp({$i});" style="margin-right: 0px;" data-balloon="Delete" data-balloon-pos="up"><i class="btn-icon-only icon-remove"> </i></a>
-                            <a href="../index.php?appID={$appIDs[$i]}" target="_blank" class="btn btn-small btn-primary" style="margin-right: 0px;" data-balloon="App Page" data-balloon-pos="up"><i class="btn-icon-only icon-arrow-right"> </i></a>
+                            <div style="float: right;">
+                              <a href="users.php?appID={$appIDs[$i]}" class="btn btn-small btn-info" style="margin-right: 0px;" data-balloon="Users" data-balloon-pos="up"><i class="btn-icon-only icon-user"> </i></a>
+                              <a href="groups.php?appID={$appIDs[$i]}" class="btn btn-small btn-warning" style="margin-right: 0px;" data-balloon="User groups" data-balloon-pos="up"><i class="btn-icon-only icon-asterisk"> </i></a>
+                              <a href="fields.php?appID={$appIDs[$i]}" class="btn btn-small btn-primary" style="margin-right: 0px;" data-balloon="Fields" data-balloon-pos="up"><i class="btn-icon-only icon-table"> </i></a>
+                              <a href="permissions.php?appID={$appIDs[$i]}" class="btn btn-small btn-danger" style="margin-right: 0px;" data-balloon="Permissions" data-balloon-pos="up"><i class="btn-icon-only icon-legal"> </i></a>
+                              <a href="services.php?appID={$appIDs[$i]}" class="btn btn-small btn-violet" style="margin-right: 5px;" data-balloon="Services" data-balloon-pos="up"><i class="btn-icon-only icon-cog"> </i></a>
+                              <a href="appEdit.php?appID={$appIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;" data-balloon="Edit" data-balloon-pos="up"><i class="btn-icon-only icon-pencil"> </i></a>
+                              <a href="javascript:;" class="btn btn-small btn-danger" onclick="delApp({$i});" style="margin-right: 0px;" data-balloon="Delete" data-balloon-pos="up"><i class="btn-icon-only icon-remove"> </i></a>
+                              <a href="../index.php?appID={$appIDs[$i]}" target="_blank" class="btn btn-small btn-primary" style="margin-right: 0px;" data-balloon="App Page" data-balloon-pos="up"><i class="btn-icon-only icon-arrow-right"> </i></a>
+                            </div>
                           {/if}
                         </td>
                       </tr>
@@ -133,16 +136,16 @@
                 </tbody>
               </table>
             </div>
-            <!-- /widget-content --> 
+            <!-- /widget-content -->
           </div>
         </div>
-        <!-- /span6 --> 
+        <!-- /span6 -->
       </div>
-      <!-- /row --> 
+      <!-- /row -->
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /main-inner --> 
+  <!-- /main-inner -->
 </div>
 <!-- /main -->
 <div class="footer">
@@ -150,28 +153,28 @@
     <div class="container">
       <div class="row">
         <div class="span12"> &copy; 2017 <a href="http://www.woborschil.de/fluentlogin" target="_blank"><b>fluentlogin Beta 1</b></a>, developed by <a href="http://www.woborschil.de" target="_blank"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="https://www.egrappler.com/templatevamp-twitter-bootstrap-admin-template-now-available/" target="_blank"><b>Bootstrap Responsive Admin Template</b></a>.</div>
-        <!-- /span12 --> 
+        <!-- /span12 -->
       </div>
-      <!-- /row --> 
+      <!-- /row -->
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /footer-inner --> 
+  <!-- /footer-inner -->
 </div>
-<!-- /footer --> 
+<!-- /footer -->
 <!-- Le javascript
-================================================== --> 
-<!-- Placed at the end of the document so the pages load faster --> 
-<script src="../js/jquery-1.7.2.min.js"></script> 
-<script src="../js/excanvas.min.js"></script> 
-<script src="../js/chart.min.js" type="text/javascript"></script> 
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/excanvas.min.js"></script>
+<script src="../js/chart.min.js" type="text/javascript"></script>
 <script src="../js/bootstrap.js"></script>
 <script language="javascript" type="text/javascript" src="../js/full-calendar/fullcalendar.min.js"></script>
 
 <!-- SweetAlert Plugin Js -->
 <script src="../js/sweetalert2.min.js"></script>
 
-<script src="../js/base.js"></script> 
+<script src="../js/base.js"></script>
 
 </body>
 </html>

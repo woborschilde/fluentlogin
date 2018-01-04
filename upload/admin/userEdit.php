@@ -7,7 +7,7 @@
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	// Include Smarty Template Engine
 	require(__DIR__ . "/../lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
@@ -25,17 +25,17 @@
 		$userID = 0;
 		$actionName = "Add";
 	}
-	
+
 	// Establish database connection
 	require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
-	
+
 	db_san($_GET);
 
 	// Check admin login status
 	require("functions/checkLogin.php");
-	
+
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	if ($userID > 0) {
@@ -45,9 +45,9 @@
 		$userEmail = "";
 		$userPassword = "";
 	}
-	
+
 	$key0 = 0;
-	
+
 	// Get fields of app
 	$query0 = $conn->query("SELECT fieldID, fieldName FROM fl_apps_fields WHERE appID='$appID' ORDER BY fieldName ASC");
 	$num_rows0 = $query0->num_rows;
@@ -102,13 +102,17 @@
 		}
 		//
 	}
-	
+
 	if ($num_rows0 == 0) {
 		$keys[] = $key;
 		$groupIDs[] = "-";
 		$groupNames[] = "No user groups created yet.";
 		$groupValues[] = "";
 	}
+
+	// Template hooks
+	require("functions/initHooks.php");
+	initHooks("apps");
 
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
@@ -128,6 +132,6 @@
 	$smarty->assign("groupIDs", $groupIDs);
 	$smarty->assign("groupNames", $groupNames);
 	$smarty->assign("groupValues", $groupValues);
-	
+
 	$smarty->display("templates/userEdit.tpl");
 ?>

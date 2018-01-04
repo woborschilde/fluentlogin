@@ -7,7 +7,7 @@
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	// Include Smarty Template Engine
 	require(__DIR__ . "/../lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
@@ -24,7 +24,7 @@
 	require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
-	
+
 	db_san($_GET);
 
 	// Check admin login status
@@ -38,7 +38,7 @@
 	}
 
 	$key = 0;
-	
+
 	// Get settings of app
 	$query0 = $conn->query("SELECT settingID, settingName, settingDefault FROM fl_appsettings ORDER BY settingID ASC");
 	$num_rows0 = $query0->num_rows;
@@ -70,6 +70,10 @@
 		$settingValues[] = "";
 	}
 
+	// Template hooks
+	require("functions/initHooks.php");
+	initHooks("apps");
+
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("adminName", $adminName);
@@ -80,6 +84,6 @@
 	$smarty->assign("settingIDs", $settingIDs);
 	$smarty->assign("settingNames", $settingNames);
 	$smarty->assign("settingValues", $settingValues);
-	
+
 	$smarty->display("templates/appEdit.tpl");
 ?>

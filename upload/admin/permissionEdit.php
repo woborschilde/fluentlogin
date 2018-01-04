@@ -7,7 +7,7 @@
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	// Include Smarty Template Engine
 	require(__DIR__ . "/../lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
@@ -25,17 +25,17 @@
 		$permissionID = 0;
 		$actionName = "Add";
 	}
-	
+
 	// Establish database connection
 	require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
-	
+
 	db_san($_GET);
 
 	// Check admin login status
 	require("functions/checkLogin.php");
-	
+
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	if ($permissionID > 0) {
@@ -45,6 +45,10 @@
 		$permDescription = "";
 	}
 
+	// Template hooks
+	require("functions/initHooks.php");
+	initHooks("apps");
+
 	// Assign variables to smarty
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
@@ -53,6 +57,6 @@
 	$smarty->assign("actionName", $actionName);
 	$smarty->assign("permissionName", $permName);
 	$smarty->assign("permissionDescription", $permDescription);
-	
+
 	$smarty->display("templates/permissionEdit.tpl");
 ?>

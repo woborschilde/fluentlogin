@@ -1926,11 +1926,11 @@ background-repeat:no-repeat;
   line-height: 22px;
   padding: 0 6px;
 }
-.btn-primary, .btn-primary:hover, .btn-warning, .btn-warning:hover, .btn-danger, .btn-danger:hover, .btn-success, .btn-success:hover, .btn-info, .btn-info:hover, .btn-inverse, .btn-inverse:hover {
+.btn-primary, .btn-primary:hover, .btn-warning, .btn-warning:hover, .btn-danger, .btn-danger:hover, .btn-success, .btn-success:hover, .btn-info, .btn-info:hover, .btn-violet, .btn-violet:hover, .btn-inverse, .btn-inverse:hover {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	color: #ffffff;
 }
-.btn-primary.active, .btn-warning.active, .btn-danger.active, .btn-success.active, .btn-info.active, .btn-inverse.active {
+.btn-primary.active, .btn-warning.active, .btn-danger.active, .btn-success.active, .btn-info.active, .btn-violet.active, .btn-inverse.active {
 	color: rgba(255, 255, 255, 0.75);
 }
 .btn-primary {
@@ -2037,6 +2037,27 @@ background-repeat:no-repeat;
 }
 .btn-info:active, .btn-info.active {
 	background-color: #2888a9 \9;
+}
+.btn-violet {
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(78, 178, 213, 0)), color-stop(100%, rgba(7, 23, 29, 0.1)));
+  background-image: -webkit-linear-gradient(rgba(78, 178, 213, 0), rgba(7, 23, 29, 0.1));
+  background-image: -moz-linear-gradient(rgba(78, 178, 213, 0), rgba(7, 23, 29, 0.1));
+  background-image: -o-linear-gradient(rgba(78, 178, 213, 0), rgba(7, 23, 29, 0.1));
+  background-image: linear-gradient(rgba(78, 178, 213, 0), rgba(7, 23, 29, 0.1));
+  background-color: #7b43a0;
+  border-color: #69368b #69368b #4f2769;
+  border-color: rgba(0, 0, 0, 0.05) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.15);
+  color: white;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+  *background-color: #69368b;
+}
+.btn-violet:hover, .btn-violet:active, .btn-violet.active, .btn-violet.disabled, .btn-violet[disabled] {
+	background-color: #69368b;
+  color: white;
+  *background-color: #7b43a0;
+}
+.btn-violet:active, .btn-violet.active {
+	background-color: #7b43a0 \9;
 }
 .btn-inverse {
 	 background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(85, 85, 85, 0)), color-stop(100%, rgba(0, 0, 0, 0.1)));
@@ -2219,7 +2240,7 @@ button.btn.btn-mini, input[type="submit"].btn.btn-mini {
 	border-right: 5px solid transparent;
 	border-top: 5px solid #000000;
 }
-.btn-primary .caret, .btn-warning .caret, .btn-danger .caret, .btn-info .caret, .btn-success .caret, .btn-inverse .caret {
+.btn-primary .caret, .btn-warning .caret, .btn-danger .caret, .btn-info .caret, .btn-violet .caret, .btn-success .caret, .btn-inverse .caret {
 	border-top-color: #ffffff;
 	border-bottom-color: #ffffff;
 	opacity: 0.75;

@@ -21,7 +21,7 @@
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    
+
 <script>
   {literal}
     var queryString = "";
@@ -29,14 +29,14 @@
     function editAdmin(adi) {
       var an = document.getElementById("adminNameField".toString()).value;
       var ap = sha1(document.getElementById("adminPasswordField".toString()).value);
-      
+
       var sos = {/literal}{nocache}"{$sos}"{/nocache}{literal};
 
       //var adminFields = document.getElementsByName("field");
       //var adminGroups = document.getElementsByName("group");
 
       //adminGroups.forEach(assign);
-      
+
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -89,11 +89,11 @@
           {/nocache}
         </ul>
       </div>
-      <!--/.nav-collapse --> 
+      <!--/.nav-collapse -->
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /navbar-inner --> 
+  <!-- /navbar-inner -->
 </div>
 <!-- /navbar -->
 <div class="subnavbar">
@@ -107,9 +107,9 @@
         <li><a href="https://intra.woborschil.net/docs/en/fluentlogin/start" target="_blank"><i class="icon-book"></i><span>Documentation</span> </a> </li>
       </ul>
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /subnavbar-inner --> 
+  <!-- /subnavbar-inner -->
 </div>
 <!-- /subnavbar -->
 <div class="main">
@@ -141,14 +141,14 @@
                         <label class="control-label" for="adminNameField">Admin name:</label>
                         <div class="controls">
                           <input type="text" class="span6" id="adminNameField" value="{$adminNameField}">
-                        </div> <!-- /controls -->				
+                        </div> <!-- /controls -->
                       </div> <!-- /control-group -->
 
                       <div class="control-group">
                         <label class="control-label" for="adminPasswordField">Password:</label>
                         <div class="controls">
                           <input type="password" class="span6" id="adminPasswordField" value="" {if $sos}placeholder="Please specify a new password for admin 1." required{else}placeholder="Leave empty to stay unchanged"{/if}>
-                        </div> <!-- /controls -->				
+                        </div> <!-- /controls -->
                       </div> <!-- /control-group -->
 
                       <!-- <div class="panel panel-warning" style="margin-left: 2%; width: 60%;">
@@ -163,7 +163,7 @@
                           {/foreach}
                         </div>
                       </div> -->
-                      
+
                       {if $selfWarning == 1 && !$sosok}
                         <div class="alert alert-warning" style="margin-left: 2%; width: 60%;">
                           <b>Warning!</b> You are about to edit your own administrative account. You may lose access to the fluentlogin Administration Panel when making mistakes.
@@ -175,23 +175,23 @@
                       {/if}
 
                       <div class="form-actions" style="margin-bottom: 0px;">
-                        <button type="submit" class="btn btn-primary">Save</button> 
+                        <button type="submit" class="btn btn-primary">Save</button>
                         <a class="btn" onclick="window.history.back();">Cancel</a>
                       </div> <!-- /form-actions -->
                     </fieldset>
                   </form>
               </div>
             {/nocache}
-            <!-- /widget-content --> 
+            <!-- /widget-content -->
           </div>
         </div>
-        <!-- /span6 --> 
+        <!-- /span6 -->
       </div>
-      <!-- /row --> 
+      <!-- /row -->
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /main-inner --> 
+  <!-- /main-inner -->
 </div>
 <!-- /main -->
 <div class="footer">
@@ -199,21 +199,21 @@
     <div class="container">
       <div class="row">
         <div class="span12"> &copy; 2017 <a href="http://www.woborschil.de/fluentlogin" target="_blank"><b>fluentlogin Beta 1</b></a>, developed by <a href="http://www.woborschil.de" target="_blank"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="https://www.egrappler.com/templatevamp-twitter-bootstrap-admin-template-now-available/" target="_blank"><b>Bootstrap Responsive Admin Template</b></a>.</div>
-        <!-- /span12 --> 
+        <!-- /span12 -->
       </div>
-      <!-- /row --> 
+      <!-- /row -->
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /footer-inner --> 
+  <!-- /footer-inner -->
 </div>
-<!-- /footer --> 
+<!-- /footer -->
 <!-- Le javascript
-================================================== --> 
-<!-- Placed at the end of the document so the pages load faster --> 
-<script src="../js/jquery-1.7.2.min.js"></script> 
-<script src="../js/excanvas.min.js"></script> 
-<script src="../js/chart.min.js" type="text/javascript"></script> 
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/excanvas.min.js"></script>
+<script src="../js/chart.min.js" type="text/javascript"></script>
 <script src="../js/bootstrap.js"></script>
 <script language="javascript" type="text/javascript" src="../js/full-calendar/fullcalendar.min.js"></script>
 
@@ -223,7 +223,7 @@
 <!-- SHA-1 Plugin Js -->
 <script src="../js/sha1.min.js"></script>
 
-<script src="../js/base.js"></script> 
+<script src="../js/base.js"></script>
 
 </body>
 </html>
