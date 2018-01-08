@@ -7,6 +7,7 @@
     <li {if $ata == "groups"}{$ifcase}{/if}><a href="groups.php?appID={$appID}" style="cursor: pointer;">Groups</a></li>
     <li {if $ata == "fields"}{$ifcase}{/if}><a href="fields.php?appID={$appID}" style="cursor: pointer;">Fields</a></li>
     <li {if $ata == "permissions"}{$ifcase}{/if}><a href="permissions.php?appID={$appID}" style="cursor: pointer;">Permissions</a></li>
+    <li {if $ata == "services"}{$ifcase}{/if}><a href="services.php?appID={$appID}" style="cursor: pointer;">Services</a></li>
     {foreach from=$plugins_hook_apps_tabs item=k}
       {include file='../../../plugins/'|cat:$k|cat:'/admin/templates/hook_apps_tabs.tpl'}
     {/foreach}

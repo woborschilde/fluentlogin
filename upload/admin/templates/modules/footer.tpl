@@ -24,6 +24,9 @@
 <!-- SweetAlert Plugin Js -->
 <script src="../js/sweetalert2.min.js"></script>
 
+<!-- SHA-1 Plugin Js -->
+<script src="../js/sha1.min.js"></script>
+
 <script src="../js/base.js"></script>
 
 </body>

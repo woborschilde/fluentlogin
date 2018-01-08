@@ -7,14 +7,14 @@
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
-	
+
     // Load system settings
 	require_once(__DIR__ . "/../admin/functions/loadSettings.php");
 
@@ -34,6 +34,6 @@
     $expiryTime = time() - 1; // 1 second ago
     setcookie("fl$appID", $sessionID, $expiryTime, "/");
 
-    header("Location: " . $redirect . "?appID=$appID");
+    header("Location: " . $systemPath . $redirect . "?appID=$appID");
     die();
 ?>

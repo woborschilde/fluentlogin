@@ -7,12 +7,12 @@
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
-    
+
     db_san($_GET);
 
     // Check user login status
@@ -73,7 +73,7 @@
             $fieldID = substr($key, 5);
             db_sel("fieldName", "fl_apps_fields", "appID='$appID' && fieldID='$fieldID'", __FILE__, __LINE__);
             db_sel("NULL", "fl_apps_fields_values", "appID='$appID' && userID='$userID' && fieldID='$fieldID' && fieldValue COLLATE latin1_general_cs = '$value'", __FILE__, __LINE__);
-            
+
             if ($num_rows == 0) {
                 die("6: '$fieldName' does not match with this account.");
             }
@@ -92,7 +92,11 @@
     } else {
         $expiryTime = time() + 43200; // 12 hours
     }
-    
+
+    // Init service providers for login to external services
+    require("initServiceProviders.php");
+    initServiceProviders("doLogin");
+
     db_ins("fl_apps_sessions", "sessionID, appID, userID, expiryTime", "'$sessionID', '$appID', '$userID', '$expiryTime'", __FILE__, __LINE__);
     setcookie("fl$appID", $sessionID, $expiryTime, "/");
     //setcookie("fl$appID", $sessionID, $expiryTime, "/" . basename(__DIR__) . "/");

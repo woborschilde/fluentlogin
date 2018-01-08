@@ -7,7 +7,7 @@
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require(__DIR__ . "/../../lib/unsphp/Unscramble.php");
 
     if (isset($_COOKIE["fla"])) {
@@ -20,7 +20,7 @@
     db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
-    
+
     // Load system settings
 	require("loadSettings.php");
 
