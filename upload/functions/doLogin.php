@@ -28,6 +28,12 @@
         } else {
             $userPassword = sha1(sha1($_GET["userPassword"]));
         }
+
+        if (isset($_GET["b64"])) {
+            $cleartextPassword = base64_decode($_GET["b64"]);  // for plugin use
+        } else {
+            $cleartextPassword = "";
+        }
     } else {
         getVariable("userID", "die");
         getVariable("loginToken", "die");

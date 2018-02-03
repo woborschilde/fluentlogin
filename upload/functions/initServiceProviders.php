@@ -10,21 +10,25 @@
 
 	$serviceDatabase = "";
 	$serviceTablePrefix = "";
+	$serviceCookiePrefix = "";
 
 	// Init hooks function
 	function initServiceProviders($action) {
 		global $conn;
 		global $appID;
 		global $userName;  // for use in require()
+		global $cleartextPassword;  // for use in require()
 		global $expiryTime;
 		global $serviceDatabase;
 		global $serviceTablePrefix;
+		global $serviceCookiePrefix;
 
-		$query = $conn->query("SELECT * FROM fl_apps_services WHERE appID = '$appID'");
-		while ($row = $query->fetch_assoc()) {
-			$serviceType = $row["serviceType"];
-			$serviceDatabase = $row["serviceDatabase"];
-			$serviceTablePrefix = $row["serviceTablePrefix"];
+		$query0 = $conn->query("SELECT * FROM fl_apps_services WHERE appID = '$appID'");
+		while ($row0 = $query0->fetch_assoc()) {
+			$serviceType = $row0["serviceType"];
+			$serviceDatabase = $row0["serviceDatabase"];
+			$serviceTablePrefix = $row0["serviceTablePrefix"];
+			$serviceCookiePrefix = $row0["serviceCookiePrefix"];
 
 			require(__DIR__ . "/../plugins/service.$serviceType/functions/$action.php");
 		}

@@ -7,21 +7,21 @@
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	// Include Smarty Template Engine
 	require("lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
-	
+
 	// Establish database connection
 	require("lib/unsphp/Unscramble.php");
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
-	
+
 	db_san($_GET);
-	
+
 	// Load system settings
 	require_once(__DIR__ . "/admin/functions/loadSettings.php");
- 
+
 	getVariable("appID", "die");
 	getVariable("redirect", "index.php");
 
@@ -49,7 +49,7 @@
 		$fieldIDs[] = $fieldID;
 		$fieldNames[] = $fieldName;
 	}
-	
+
 	if ($num_rows == 0) {
 		$keys[] = $key;
 		$fieldIDs[] = "";
@@ -67,6 +67,6 @@
     $smarty->assign("keys", $keys);
 	$smarty->assign("fieldIDs", $fieldIDs);
 	$smarty->assign("fieldNames", $fieldNames);
-	
+
 	$smarty->display("templates/login.tpl");
 ?>

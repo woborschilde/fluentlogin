@@ -45,12 +45,13 @@
 		$serviceType = "";
 		$serviceDatabase = "";
 		$serviceTablePrefix = "";
+		$serviceCookiePrefix = "";
 	}
 
 	$key = 0;
 
 	// Get service types
-	$query = $conn->query("SELECT * FROM fl_apps_servicetypes ORDER BY typeFullName ASC");
+	$query = $conn->query("SELECT * FROM fl_servicetypes ORDER BY typeFullName ASC");
 	while ($row = $query->fetch_assoc()) {
 		$typeID = $row["id"];
 		$typeName = $row["typeName"];
@@ -80,6 +81,7 @@
 	$smarty->assign("serviceType", $serviceType);
 	$smarty->assign("serviceDatabase", $serviceDatabase);
 	$smarty->assign("serviceTablePrefix", $serviceTablePrefix);
+	$smarty->assign("serviceCookiePrefix", $serviceCookiePrefix);
 
 	$smarty->assign("keys", $keys);
 	$smarty->assign("typeIDs", $typeIDs);

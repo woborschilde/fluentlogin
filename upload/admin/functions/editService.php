@@ -24,11 +24,12 @@
     getVariable("serviceType", "die");
     getVariable("serviceDatabase", "die");
     getVariable("serviceTablePrefix", "die");
+    getVariable("serviceCookiePrefix", "die");
 
     if ($serviceID != "0") {
-        db_upd("fl_apps_services", "serviceName='$serviceName', serviceType='$serviceType', serviceDatabase='$serviceDatabase', serviceTablePrefix='$serviceTablePrefix'", "appID='$appID' && id='$serviceID'", __FILE__, __LINE__);
+        db_upd("fl_apps_services", "serviceName='$serviceName', serviceType='$serviceType', serviceDatabase='$serviceDatabase', serviceTablePrefix='$serviceTablePrefix', serviceCookiePrefix='$serviceCookiePrefix'", "appID='$appID' && id='$serviceID'", __FILE__, __LINE__);
     } else {
-        db_ins("fl_apps_services", "appID, serviceName, serviceType, serviceDatabase, serviceTablePrefix", "'$appID', '$serviceName', '$serviceType', '$serviceDatabase', '$serviceTablePrefix'", __FILE__, __LINE__);
+        db_ins("fl_apps_services", "appID, serviceName, serviceType, serviceDatabase, serviceTablePrefix, serviceCookiePrefix", "'$appID', '$serviceName', '$serviceType', '$serviceDatabase', '$serviceTablePrefix', '$serviceCookiePrefix'", __FILE__, __LINE__);
     }
 
     echo "1";

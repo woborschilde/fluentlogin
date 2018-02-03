@@ -9,6 +9,7 @@
       var st = document.getElementById("serviceType".toString()).value;
       var sd = document.getElementById("serviceDatabase".toString()).value;
       var sp = document.getElementById("serviceTablePrefix".toString()).value;
+      var sc = document.getElementById("serviceCookiePrefix".toString()).value;
 
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
@@ -31,7 +32,7 @@
           }
         }
       }
-      xmlhttp.open("GET","functions/editService.php?appID="+ai+"&serviceID="+si+"&serviceName="+sn+"&serviceType="+st+"&serviceDatabase="+sd+"&serviceTablePrefix="+sp,true);
+      xmlhttp.open("GET","functions/editService.php?appID="+ai+"&serviceID="+si+"&serviceName="+sn+"&serviceType="+st+"&serviceDatabase="+sd+"&serviceTablePrefix="+sp+"&serviceCookiePrefix="+sc,true);
       xmlhttp.send();
     }
   {/literal}
@@ -82,6 +83,13 @@
                         <label class="control-label" for="serviceTablePrefix">Service database table prefix (if any):</label>
                         <div class="controls">
                           <input type="text" class="span6" id="serviceTablePrefix" value="{$serviceTablePrefix}">
+                        </div> <!-- /controls -->
+                      </div> <!-- /control-group -->
+
+                      <div class="control-group">
+                        <label class="control-label" for="serviceCookiePrefix">Service cookie prefix (if any):</label>
+                        <div class="controls">
+                          <input type="text" class="span6" id="serviceCookiePrefix" value="{$serviceCookiePrefix}">
                         </div> <!-- /controls -->
                       </div> <!-- /control-group -->
 

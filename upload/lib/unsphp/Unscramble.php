@@ -16,7 +16,7 @@
     nor placed in Git repositories.
     This file must contain the following variables:
       $db_host, $db_username, $db_password, $db_database
-    
+
     */ $db_loginpath = __DIR__ . "/../../config.php"; /*
 
   =================================================================================
@@ -203,9 +203,21 @@
         foreach ($get as $key => $value) {
             if ($nofilter) { $filter = $key; }  // empty filter should return true (and not false) in the next line
 
-            if (((strpos($value, "'") !== false) || (strpos($value, '"') !== false)) && (strpos($key, $filter) === 0)) {  // only search in filtered cookies
-                die("Please remove any apostrophes or quotation marks from your request and try again.");
+            if (is_array($value)) {  // otherwise problems with cookie arrays like "forum_mybb[...]"
+                foreach ($value as $key1 => $value1) {
+                    db_chk_san($key1, $value1, $filter);
+                }
+
+                break;
             }
+
+            db_chk_san($key, $value, $filter);
+        }
+    }
+
+    function db_chk_san($key, $value, $filter) {
+        if (((strpos($value, "'") !== false) || (strpos($value, '"') !== false)) && (strpos($key, $filter) === 0)) {  // only search in filtered cookies
+            die("Please remove any apostrophes or quotation marks from your request and try again.");
         }
     }
 

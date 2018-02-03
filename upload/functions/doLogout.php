@@ -27,6 +27,10 @@
 		die("You can't log out because you aren't logged in!");
 	}
 
+    // Init service providers for logout from external services
+    require("initServiceProviders.php");
+    initServiceProviders("doLogout");
+
     // delete current session from database
     db_del("fl_apps_sessions", "sessionID='$sessionID'", __FILE__, __LINE__);
 

@@ -33,12 +33,12 @@
           </li>
         </ul>
       </div>
-      <!--/.nav-collapse --> 
+      <!--/.nav-collapse -->
     </div>
     {/nocache}
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /navbar-inner --> 
+  <!-- /navbar-inner -->
 </div>
 <!-- /navbar -->
 <br />
@@ -58,22 +58,22 @@
                 <h1>Hello, {$userName}!</h1>
               {/nocache}
               <div class="shortcuts">
-                <a href="settings.php?appID={$appID}" class="shortcut"><i class="shortcut-icon icon-cog"></i><span class="shortcut-label">My settings</span></a>
-                <a href="functions/doLogout.php?appID={$appID}" class="shortcut"><i class="shortcut-icon icon-signout"></i><span class="shortcut-label">Log out</span></a>
+                <a href="settings.php?appID={$appID}" class="shortcut"><i class="shortcut-icon icon-cog" style="color: #1565c0;"></i><span class="shortcut-label">My settings</span></a>
+                <a href="functions/doLogout.php?appID={$appID}" class="shortcut"><i class="shortcut-icon icon-signout" style="color: #b71c1c;"></i><span class="shortcut-label">Log out</span></a>
               </div>
-              <!-- /shortcuts --> 
+              <!-- /shortcuts -->
             </div>
-            <!-- /widget-content --> 
+            <!-- /widget-content -->
           </div>
           <!-- /widget -->
         </div>
-        <!-- /span6 --> 
+        <!-- /span6 -->
       </div>
-      <!-- /row --> 
+      <!-- /row -->
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /main-inner --> 
+  <!-- /main-inner -->
 </div>
 <!-- /main -->
 <div class="footer">
@@ -81,25 +81,25 @@
     <div class="container">
       <div class="row">
         <div class="span12"> &copy; 2017 <a href="http://www.woborschil.de/fluentlogin" target="_blank"><b>fluentlogin</b></a>, developed by <a href="http://www.woborschil.de" target="_blank"><b>woborschil.de</b></a>. Template: &copy; 2013 <a href="https://www.egrappler.com/templatevamp-twitter-bootstrap-admin-template-now-available/" target="_blank"><b>Bootstrap Responsive Admin Template</b></a>.</div>
-        <!-- /span12 --> 
+        <!-- /span12 -->
       </div>
-      <!-- /row --> 
+      <!-- /row -->
     </div>
-    <!-- /container --> 
+    <!-- /container -->
   </div>
-  <!-- /footer-inner --> 
+  <!-- /footer-inner -->
 </div>
-<!-- /footer --> 
+<!-- /footer -->
 <!-- Le javascript
-================================================== --> 
-<!-- Placed at the end of the document so the pages load faster --> 
-<script src="js/jquery-1.7.2.min.js"></script> 
-<script src="js/excanvas.min.js"></script> 
-<script src="js/chart.min.js" type="text/javascript"></script> 
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/excanvas.min.js"></script>
+<script src="js/chart.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.js"></script>
 <script language="javascript" type="text/javascript" src="js/full-calendar/fullcalendar.min.js"></script>
- 
-<script src="js/base.js"></script> 
+
+<script src="js/base.js"></script>
 
 </body>
 </html>
