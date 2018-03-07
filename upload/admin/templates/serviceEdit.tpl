@@ -1,5 +1,11 @@
 {nocache}
-{include file='templates/modules/header.tpl' title=''|cat:$actionName|cat:' service' ami='apps'}
+{if $serviceType}
+  {assign var='ba' value='onload="switchServiceType(\''|cat:$serviceType|cat:'\');"'}
+{else}
+  {assign var='ba' value=''}
+{/if}
+
+{include file='templates/modules/header.tpl' title=''|cat:$actionName|cat:' service' ami='apps' bodyargs=$ba}
 {/nocache}
 
 <script>
@@ -35,6 +41,17 @@
       xmlhttp.open("GET","functions/editService.php?appID="+ai+"&serviceID="+si+"&serviceName="+sn+"&serviceType="+st+"&serviceDatabase="+sd+"&serviceTablePrefix="+sp+"&serviceCookiePrefix="+sc,true);
       xmlhttp.send();
     }
+
+    function switchServiceType(tn) {
+      xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("serviceTypeFields").innerHTML = this.responseText;
+        }
+      }
+      xmlhttp.open("GET","functions/getServiceTypeFields.php?typeName="+tn,true);
+      xmlhttp.send();
+    }
   {/literal}
 </script>
 
@@ -53,7 +70,7 @@
               <div class="widget-content">
                 <br />
                   <form id="serviceEdit" class="form-horizontal" style="margin-bottom: 0px;" onsubmit="editService({$appID}, {$serviceID}); return false;">
-                    <serviceset>
+                    <fieldset>
                       <div class="control-group">
                         <label class="control-label" for="serviceName">Service name:</label>
                         <div class="controls">
@@ -64,7 +81,8 @@
                       <div class="control-group">
                         <label class="control-label" for="serviceType">Service type:</label>
                         <div class="controls">
-                          <select class="span6" id="serviceType">
+                          <select class="span6" id="serviceType" onchange="switchServiceType(this.value);">
+                            <option value="pleaseselect" selected disabled>Please select...</option>   <!-- "selected" can be overwritten by next lines -->
                             {foreach from=$keys item=i}
                               <option value="{$typeNames[$i]}" {if $serviceType == "{$typeNames[$i]}"}selected{/if}>{$typeFullNames[$i]}</option>
                             {/foreach}
@@ -72,32 +90,37 @@
                         </div> <!-- /controls -->
                       </div> <!-- /control-group -->
 
+                      <div id="serviceTypeFields">
+                        <!-- to be filled by JavaScript -->
+                      </div>
+
+                      <!-- deprecated
                       <div class="control-group">
                         <label class="control-label" for="serviceDatabase">Service database:</label>
                         <div class="controls">
                           <input type="text" class="span6" id="serviceDatabase" value="{$serviceDatabase}" required>
-                        </div> <!-- /controls -->
-                      </div> <!-- /control-group -->
+                        </div>
+                      </div>
 
                       <div class="control-group">
                         <label class="control-label" for="serviceTablePrefix">Service database table prefix (if any):</label>
                         <div class="controls">
                           <input type="text" class="span6" id="serviceTablePrefix" value="{$serviceTablePrefix}">
-                        </div> <!-- /controls -->
-                      </div> <!-- /control-group -->
+                        </div>
+                      </div>
 
                       <div class="control-group">
                         <label class="control-label" for="serviceCookiePrefix">Service cookie prefix (if any):</label>
                         <div class="controls">
                           <input type="text" class="span6" id="serviceCookiePrefix" value="{$serviceCookiePrefix}">
-                        </div> <!-- /controls -->
-                      </div> <!-- /control-group -->
+                        </div>
+                      </div> -->
 
                       <div class="form-actions" style="margin-bottom: 0px;">
                         <button type="submit" class="btn btn-primary">Save</button>
                         <a class="btn" onclick="window.history.back();">Cancel</a>
                       </div> <!-- /form-actions -->
-                    </serviceset>
+                    </fieldset>
                   </form>
               </div>
             {/nocache}
