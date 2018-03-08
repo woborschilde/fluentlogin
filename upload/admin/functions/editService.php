@@ -22,14 +22,41 @@
     getVariable("serviceID", "die");
     getVariable("serviceName", "die");
     getVariable("serviceType", "die");
-    getVariable("serviceDatabase", "die");
-    getVariable("serviceTablePrefix", "die");
-    getVariable("serviceCookiePrefix", "die");
 
     if ($serviceID != "0") {
-        db_upd("fl_apps_services", "serviceName='$serviceName', serviceType='$serviceType', serviceDatabase='$serviceDatabase', serviceTablePrefix='$serviceTablePrefix', serviceCookiePrefix='$serviceCookiePrefix'", "appID='$appID' && id='$serviceID'", __FILE__, __LINE__);
+        db_upd("fl_apps_services", "serviceName='$serviceName', serviceType='$serviceType'", "appID='$appID' && serviceID='$serviceID'", __FILE__, __LINE__);
     } else {
-        db_ins("fl_apps_services", "appID, serviceName, serviceType, serviceDatabase, serviceTablePrefix, serviceCookiePrefix", "'$appID', '$serviceName', '$serviceType', '$serviceDatabase', '$serviceTablePrefix', '$serviceCookiePrefix'", __FILE__, __LINE__);
+        db_get_ai($db_database, "fl_apps_services", __FILE__, __LINE__); $serviceID = $ai;
+        db_ins("fl_apps_services", "appID, serviceName, serviceType", "'$appID', '$serviceName', '$serviceType'", __FILE__, __LINE__);
+    }
+
+    // delete ununsed service type field values (values of other service types if type was changed)
+    $query0 = $conn->query("SELECT valueID, stfieldID FROM fl_apps_services_values WHERE appID='$appID' && serviceID='$serviceID' ORDER BY valueID ASC");
+    while ($row0 = $query0->fetch_assoc()) {
+        $valueID = $row0["valueID"];
+        $stfieldID = $row0["stfieldID"];
+
+        db_sel("typeID", "fl_servicetypes_fields", "stfieldID='$stfieldID'", __FILE__, __LINE__);
+        db_sel("typeName", "fl_servicetypes", "typeID='$typeID'", __FILE__, __LINE__);
+
+        if ($typeName != $serviceType) {
+            db_del("fl_apps_services_values", "valueID='$valueID'", __FILE__, __LINE__);
+        }
+    }
+
+    // set service type field values
+    foreach ($_GET as $key => $value) {
+        if (strpos($key, "stf_") !== false) {
+            $stfieldName = substr($key, 4);
+            db_sel("stfieldID", "fl_servicetypes_fields", "stfieldName='$stfieldName'", __FILE__, __LINE__);
+            db_sel("NULL", "fl_apps_services_values", "appID='$appID' && serviceID='$serviceID' && stfieldID='$stfieldID'", __FILE__, __LINE__);
+
+            if ($num_rows > 0) {
+                db_upd("fl_apps_services_values", "stfieldValue='$value'", "appID='$appID' && serviceID='$serviceID' && stfieldID='$stfieldID'", __FILE__, __LINE__);
+            } else {
+                db_ins("fl_apps_services_values", "appID, serviceID, stfieldID, stfieldValue", "'$appID', '$serviceID', '$stfieldID', '$value'", __FILE__, __LINE__);
+            }
+        }
     }
 
     echo "1";

@@ -5,15 +5,17 @@
     @author  woborschil.de
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-//die("mit");
+
     global $userName;
     global $cleartextPassword;
     global $expiryTime;
+    global $serviceCookieHash;
+    global $serviceCookieSecret;
 
     // Set up new session
 
-    $dokucookie = "DWd6fcb57a725757b22fe830cccebe05e6";
-    $secret = "df6fe2b4dba70deb44972b59c1c3a3b8ba9443093783fca097f2206f825f4c6060f16176a157af1f0dc47a8b61aa6aabff69a1b02479fb49064bc4eaa1ef5516";  // salt
+    $dokucookie = $serviceCookieHash;
+    $secret = $serviceCookieSecret;  // salt
     $sticky = false;
 
     if ($expiryTime > (time() + 40000)) {

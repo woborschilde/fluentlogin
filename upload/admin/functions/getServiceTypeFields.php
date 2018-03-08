@@ -18,21 +18,27 @@
 
 	db_san($_GET);
 
+    getVariable("appID", "die");
+    getVariable("serviceID", "die");
     getVariable("typeName", "die");
 
-    db_sel("id", "fl_servicetypes", "typeName='$typeName'", __FILE__, __LINE__);
+    db_sel("typeID", "fl_servicetypes", "typeName='$typeName'", __FILE__, __LINE__);
 
-	$query = $conn->query("SELECT fieldName, fieldLabel FROM fl_servicetypes_fields WHERE typeID='$id' ORDER BY id ASC");
-	while ($row = $query->fetch_assoc()) {
-		$fieldName = $row["fieldName"];
-		$fieldLabel = $row["fieldLabel"];
+	$query0 = $conn->query("SELECT stfieldID, stfieldName, stfieldLabel FROM fl_servicetypes_fields WHERE typeID='$typeID' ORDER BY stfieldID ASC");
+	while ($row0 = $query0->fetch_assoc()) {
+        $stfieldID = $row0["stfieldID"];
+		$stfieldName = $row0["stfieldName"];
+		$stfieldLabel = $row0["stfieldLabel"];
+
+        unset($stfieldValue);
+        db_sel("stfieldValue", "fl_apps_services_values", "appID='$appID' && serviceID='$serviceID' && stfieldID='$stfieldID'", __FILE__, __LINE__);
+        if (!(isset($stfieldValue))) { $stfieldValue = ""; }
 
         echo "<div class='control-group'>
-        <label class='control-label' for='$fieldName'>$fieldLabel:</label>
+        <label class='control-label' for='$stfieldName'>$stfieldLabel:</label>
         <div class='controls'>
-            <input type='text' class='span6' id='fieldName' value='to be filled by oem' required>
+            <input type='text' class='span6' name='stfield' id='$stfieldName' value='$stfieldValue'>
         </div>
       </div>";
 	}
-
 ?>

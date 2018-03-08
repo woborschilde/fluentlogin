@@ -123,20 +123,21 @@
 
 				<div class="field">
 					<label for="username">Username</label>
-					<input type="text" id="username" name="username" value="" placeholder="Username" class="login username-field" />
+					<input type="text" id="username" name="username" value="" placeholder="Username" class="login username-field" tabindex="1" />
 				</div> <!-- /field -->
 
 				<div class="field">
 					<label for="password">Password</label>
-					<input type="password" id="password" name="password" value="" placeholder="Password" class="login password-field"/>
+					<input type="password" id="password" name="password" value="" placeholder="Password" class="login password-field" tabindex="2" />
 				</div> <!-- /password -->
 
 				{nocache}
+					{counter start=2 print=false}   <!-- https://www.smarty.net/docsv2/en/language.function.counter -->
 				  {foreach from=$keys item=k}
 					  {if $fieldIDs[$k] != ""}
 						<div class="field">
 							<label for="field{$fieldIDs[$k]}">{$fieldNames[$k]}</label>
-							<input type="text" id="field{$fieldIDs[$k]}" name="field" value="" placeholder="{$fieldNames[$k]}" class="login username-field" required />
+							<input type="text" id="field{$fieldIDs[$k]}" name="field" value="" placeholder="{$fieldNames[$k]}" class="login username-field" tabindex="{counter}" required />
 						</div> <!-- /field -->
 					  {/if}
 				  {/foreach}
@@ -151,11 +152,11 @@
 			<div class="login-actions">
 
 				<span class="login-checkbox">
-					<input id="remember" name="remember" type="checkbox" class="field login-checkbox" value="First Choice" tabindex="4" />
+					<input id="remember" name="remember" type="checkbox" class="field login-checkbox" value="First Choice" tabindex="{nocache}{counter}{/nocache}" />
 					<label class="choice" for="remember">Stay logged in</label>
 				</span>
 
-				<button type="submit" class="button btn btn-success btn-large">Log in</button>
+				<button type="submit" class="button btn btn-success btn-large" tabindex="{nocache}{counter}{/nocache}">Log in</button>
 
 			</div> <!-- .actions -->
 

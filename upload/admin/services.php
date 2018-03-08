@@ -35,7 +35,7 @@
 	// Get services of app
 	$query = $conn->query("SELECT * FROM fl_apps_services WHERE appID='$appID' ORDER BY appID ASC");
 	while ($row = $query->fetch_assoc()) {
-		$serviceID = $row["id"];
+		$serviceID = $row["serviceID"];
 		$serviceName = $row["serviceName"];
 
 		$keys[] = $key; $key++;

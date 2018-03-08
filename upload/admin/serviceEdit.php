@@ -39,21 +39,18 @@
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
 	if ($serviceID > 0) {
-		db_sel("*", "fl_apps_services", "appID='$appID' && id='$serviceID'", __FILE__, __LINE__);
+		db_sel("*", "fl_apps_services", "appID='$appID' && serviceID='$serviceID'", __FILE__, __LINE__);
 	} else {
 		$serviceName = "";
 		$serviceType = "";
-		$serviceDatabase = "";
-		$serviceTablePrefix = "";
-		$serviceCookiePrefix = "";
 	}
 
 	$key = 0;
 
-	// Get service types
+	// Get service type
 	$query = $conn->query("SELECT * FROM fl_servicetypes ORDER BY typeFullName ASC");
 	while ($row = $query->fetch_assoc()) {
-		$typeID = $row["id"];
+		$typeID = $row["typeID"];
 		$typeName = $row["typeName"];
 		$typeFullName= $row["typeFullName"];
 
@@ -79,9 +76,6 @@
 	$smarty->assign("actionName", $actionName);
 	$smarty->assign("serviceName", $serviceName);
 	$smarty->assign("serviceType", $serviceType);
-	$smarty->assign("serviceDatabase", $serviceDatabase);
-	$smarty->assign("serviceTablePrefix", $serviceTablePrefix);
-	$smarty->assign("serviceCookiePrefix", $serviceCookiePrefix);
 
 	$smarty->assign("keys", $keys);
 	$smarty->assign("typeIDs", $typeIDs);

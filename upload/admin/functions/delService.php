@@ -20,5 +20,6 @@
 
 	getVariable("serviceID", "die");
 
-    db_del("fl_apps_services", "id='$serviceID'", __FILE__, __LINE__);
+	db_del("fl_apps_services", "serviceID='$serviceID'", __FILE__, __LINE__);
+	db_del("fl_apps_services_values", "serviceID='$serviceID'", __FILE__, __LINE__);
 ?>

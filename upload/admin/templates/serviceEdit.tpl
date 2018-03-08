@@ -1,6 +1,6 @@
 {nocache}
 {if $serviceType}
-  {assign var='ba' value='onload="switchServiceType(\''|cat:$serviceType|cat:'\');"'}
+  {assign var='ba' value='onload="switchServiceType(\''|cat:$appID|cat:'\', \''|cat:$serviceID|cat:'\', \''|cat:$serviceType|cat:'\');"'}
 {else}
   {assign var='ba' value=''}
 {/if}
@@ -10,12 +10,15 @@
 
 <script>
   {literal}
+    var queryString = "";
+
     function editService(ai, si) {
       var sn = document.getElementById("serviceName".toString()).value;
       var st = document.getElementById("serviceType".toString()).value;
-      var sd = document.getElementById("serviceDatabase".toString()).value;
-      var sp = document.getElementById("serviceTablePrefix".toString()).value;
-      var sc = document.getElementById("serviceCookiePrefix".toString()).value;
+
+      var serviceTypeFields = document.getElementsByName("stfield");
+
+      serviceTypeFields.forEach(setField);
 
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
@@ -38,18 +41,22 @@
           }
         }
       }
-      xmlhttp.open("GET","functions/editService.php?appID="+ai+"&serviceID="+si+"&serviceName="+sn+"&serviceType="+st+"&serviceDatabase="+sd+"&serviceTablePrefix="+sp+"&serviceCookiePrefix="+sc,true);
+      xmlhttp.open("GET","functions/editService.php?appID="+ai+"&serviceID="+si+"&serviceName="+sn+"&serviceType="+st+queryString,true);
       xmlhttp.send();
     }
 
-    function switchServiceType(tn) {
+    function setField(item, index) {
+      queryString += "&stf_"+item.id+"="+item.value;
+    }
+
+    function switchServiceType(ai, si, tn) {
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           document.getElementById("serviceTypeFields").innerHTML = this.responseText;
         }
       }
-      xmlhttp.open("GET","functions/getServiceTypeFields.php?typeName="+tn,true);
+      xmlhttp.open("GET","functions/getServiceTypeFields.php?appID="+ai+"&serviceID="+si+"&typeName="+tn,true);
       xmlhttp.send();
     }
   {/literal}
@@ -81,7 +88,7 @@
                       <div class="control-group">
                         <label class="control-label" for="serviceType">Service type:</label>
                         <div class="controls">
-                          <select class="span6" id="serviceType" onchange="switchServiceType(this.value);">
+                          <select class="span6" id="serviceType" onchange="switchServiceType({$appID}, {$serviceID}, this.value);">
                             <option value="pleaseselect" selected disabled>Please select...</option>   <!-- "selected" can be overwritten by next lines -->
                             {foreach from=$keys item=i}
                               <option value="{$typeNames[$i]}" {if $serviceType == "{$typeNames[$i]}"}selected{/if}>{$typeFullNames[$i]}</option>
@@ -93,28 +100,6 @@
                       <div id="serviceTypeFields">
                         <!-- to be filled by JavaScript -->
                       </div>
-
-                      <!-- deprecated
-                      <div class="control-group">
-                        <label class="control-label" for="serviceDatabase">Service database:</label>
-                        <div class="controls">
-                          <input type="text" class="span6" id="serviceDatabase" value="{$serviceDatabase}" required>
-                        </div>
-                      </div>
-
-                      <div class="control-group">
-                        <label class="control-label" for="serviceTablePrefix">Service database table prefix (if any):</label>
-                        <div class="controls">
-                          <input type="text" class="span6" id="serviceTablePrefix" value="{$serviceTablePrefix}">
-                        </div>
-                      </div>
-
-                      <div class="control-group">
-                        <label class="control-label" for="serviceCookiePrefix">Service cookie prefix (if any):</label>
-                        <div class="controls">
-                          <input type="text" class="span6" id="serviceCookiePrefix" value="{$serviceCookiePrefix}">
-                        </div>
-                      </div> -->
 
                       <div class="form-actions" style="margin-bottom: 0px;">
                         <button type="submit" class="btn btn-primary">Save</button>

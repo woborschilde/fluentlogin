@@ -6,11 +6,11 @@
 	@link    http://www.woborschil.de/fluentlogin
 	*/
 
+    global $userName;
+    global $expiryTime;
     global $serviceDatabase;
     global $serviceTablePrefix;
     global $serviceCookiePrefix;
-    global $userName;
-    global $expiryTime;
 
     $stp = $serviceTablePrefix;
     $scp = $serviceCookiePrefix;
