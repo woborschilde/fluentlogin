@@ -87,6 +87,7 @@
   <!-- /main-inner -->
 </div>
 <!-- /main -->
+
 {nocache}
   {include file='templates/modules/footer.tpl'}
 {/nocache}

@@ -7,7 +7,7 @@
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require(__DIR__ . "/../../lib/unsphp/Unscramble.php");
 
 	if ($_GET["appID"] != "0") {
@@ -23,15 +23,15 @@
 
 	// Check admin login status
 	require("checkLogin.php");
-	
+
     // get appID for new app
     if (!(isset($appID))) {
         db_get_ai($db_database, "fl_apps", __FILE__, __LINE__); $appID = $ai;
     }
-    
+
     // check if appName already exists but ignore when existing app unchanged
     db_sel("NULL", "fl_apps", "appID<>'$appID' && appName='$appName'", __FILE__, __LINE__);
-    
+
     if ($num_rows > 0) {
         die("An app with this name already exists!");
     }
@@ -48,7 +48,7 @@
         if (strpos($key, "setting") !== false) {
             $settingID = substr($key, 7);
             db_sel("NULL", "fl_appsettings_values", "appID='$appID' && settingID='$settingID'", __FILE__, __LINE__);
-            
+
             if ($num_rows > 0) {
                 db_upd("fl_appsettings_values", "settingValue='$value'", "appID='$appID' && settingID='$settingID'", __FILE__, __LINE__);
             } else {
@@ -57,5 +57,5 @@
         }
     }
 
-    echo "1";
+    echo $appID;
 ?>

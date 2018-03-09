@@ -16,14 +16,15 @@
       xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          if (this.responseText == "1") {
+          if (this.responseText.length < 10) {
+            var rt = this.responseText;
             swal({
               type: "success",
               title: "Saved",
               text: "Your changes have been saved successfully."
             });
             setTimeout(function(){
-              location.replace("apps.php");
+              location.replace("appEdit.php?appID="+rt);
             }, 1000);
           } else {
             swal({
@@ -97,6 +98,7 @@
   <!-- /main-inner -->
 </div>
 <!-- /main -->
+
 {nocache}
   {include file='templates/modules/footer.tpl'}
 {/nocache}

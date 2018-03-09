@@ -69,7 +69,7 @@
 			$pluginID = $row["pluginID"];
 			$hookName = $row["hookName"];
 
-			db_sel("pluginName", "fl_plugins", "id = '$pluginID'", __FILE__, __LINE__);
+			db_sel("pluginName", "fl_plugins", "pluginID='$pluginID'", __FILE__, __LINE__);
 			global $pluginName;
 
 			global ${"plugins_hook_" . $hookName};

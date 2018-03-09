@@ -7,11 +7,11 @@
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	db_san($_COOKIE, "fl");
 
     // Load system settings
-	require("loadSettings.php");
+	require_once("loadSettings.php");
 
     // Get session by cookie
     if (isset($_COOKIE["fla"])) {
@@ -30,7 +30,7 @@
     } else {
         not_logged_in:
         db_sel("adminPassword", "fl_admins", "adminID='1'", __FILE__, __LINE__);
-        
+
         /* if (!(isset($invert)) && ($sos == "")) {
             header("Location: " . $systemPath . "admin/login.php");
             die("0");
@@ -59,7 +59,7 @@
             return 1;
         }
     }
-    
+
     // if user is logged in (above-metioned else case always ends before this point)
     if (!(isset($invert))) {
         return 1;
