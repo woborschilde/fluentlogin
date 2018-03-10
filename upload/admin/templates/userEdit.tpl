@@ -33,7 +33,7 @@
             swal({
               type: "error",
               title: "Couldn't save user",
-              text: this.responseText
+              html: this.responseText
             });
           }
         }
@@ -73,14 +73,14 @@
                       <div class="control-group">
                         <label class="control-label" for="userName">Username:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="userName" value="{$userName}">
+                          <input type="text" class="span6" id="userName" value="{$userName}" required>
                         </div> <!-- /controls -->
                       </div> <!-- /control-group -->
 
                       <div class="control-group">
                         <label class="control-label" for="userEmail">E-mail:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="userEmail" value="{$userEmail}">
+                          <input type="text" class="span6" id="userEmail" value="{$userEmail}" required>
                         </div> <!-- /controls -->
                       </div> <!-- /control-group -->
 

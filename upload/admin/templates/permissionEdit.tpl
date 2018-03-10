@@ -54,7 +54,7 @@
                       <div class="control-group">
                         <label class="control-label" for="permissionName">Permission name:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="permissionName" value="{$permissionName}">
+                          <input type="text" class="span6" id="permissionName" value="{$permissionName}" required>
                         </div> <!-- /controls -->
                       </div> <!-- /control-group -->
 

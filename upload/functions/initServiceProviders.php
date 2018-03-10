@@ -9,19 +9,27 @@
 	*/
 
 	$serviceID = "";
+	$readonly = false;
 
 	// Init hooks function
-	function initServiceProviders($action) {
+	function initServiceProviders($action, $ro = "false") {
 		global $conn;
 		global $appID;
 		global $userName;  // next ones all for use in require()
+		global $userEmail;
+		global $userPassword;
 		global $cleartextPassword;
 		global $expiryTime;
 		global $serviceID;
+		global $serviceName;
+		global $readonly;
+
+		$readonly = $ro;
 
 		$query0 = $conn->query("SELECT * FROM fl_apps_services WHERE appID='$appID'");
 		while ($row0 = $query0->fetch_assoc()) {
 			$serviceID = $row0["serviceID"];
+			$serviceName = $row0["serviceName"];
 			$serviceType = $row0["serviceType"];
 
 			// create named service type field variables for use in plugin files (resulting variables have to be scoped in this context first)
@@ -41,7 +49,8 @@
 				${$stfieldName} = $stfieldValue;
 			}
 
-			require(__DIR__ . "/../plugins/service.$serviceType/functions/$action.php");
+			require_once(__DIR__ . "/../plugins/service.$serviceType/functions/$action.php");
+			call_user_func($serviceType . "_" . $action);  // run function
 		}
 	}
 ?>

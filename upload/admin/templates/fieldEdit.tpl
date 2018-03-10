@@ -59,7 +59,7 @@
                       <div class="control-group">
                         <label class="control-label" for="fieldName">Field name:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="fieldName" value="{$fieldName}">
+                          <input type="text" class="span6" id="fieldName" value="{$fieldName}" required>
                         </div> <!-- /controls -->
                       </div> <!-- /control-group -->
 

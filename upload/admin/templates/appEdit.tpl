@@ -63,7 +63,7 @@
                       <div class="control-group">
                         <label class="control-label" for="appName">App Name:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="appName" value="{$appName}">
+                          <input type="text" class="span6" id="appName" value="{$appName}" required>
                         </div> <!-- /controls -->
                       </div> <!-- /control-group -->
 

@@ -66,7 +66,7 @@
                       <div class="control-group">
                         <label class="control-label" for="groupName">Group name:</label>
                         <div class="controls">
-                          <input type="text" class="span6" id="groupName" value="{$groupName}">
+                          <input type="text" class="span6" id="groupName" value="{$groupName}" required>
                         </div> <!-- /controls -->
                       </div> <!-- /control-group -->
 
