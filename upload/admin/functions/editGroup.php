@@ -3,15 +3,15 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require(__DIR__ . "/../../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
-    
+
 	if ($_GET["groupID"] != "0") {
 		$groupID = $_GET["groupID"];
 	}
@@ -26,7 +26,7 @@
 
 	// Check admin login status
 	require("checkLogin.php");
-	
+
     if (isset($groupID)) {
         db_upd("fl_apps_groups", "groupName='$groupName', groupDescription='$groupDescription'", "groupID='$groupID'", __FILE__, __LINE__);
         db_upd("fl_apps_perms_values", "permValue='0'", "appID='$appID' && groupID='$groupID'", __FILE__, __LINE__);  // reset permission values (to 0)

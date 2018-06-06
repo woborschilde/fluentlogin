@@ -3,15 +3,15 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require(__DIR__ . "/../../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
-    
+
 	if ($_GET["permissionID"] != "0") {
 		$permissionID = $_GET["permissionID"];
 	}
@@ -26,16 +26,16 @@
 
 	// Check admin login status
 	require("checkLogin.php");
-	
+
     if (isset($permissionID)) {
         db_upd("fl_apps_permissions", "permName='$permissionName', permDescription='$permissionDescription'", "permID='$permissionID'", __FILE__, __LINE__);
     } else {
         // deprecated:
         //db_get_ai($db_database, "fl_apps_permissions", __FILE__, __LINE__);
         //$permissionID = $ai;
-        
+
         db_ins("fl_apps_permissions", "appID, permName, permDescription", "'$appID', '$permissionName', '$permissionDescription'", __FILE__, __LINE__);
-        
+
         // deprecated:
         //$conn->query("ALTER TABLE fl_apps_groups ADD perm$appID" . "_$permissionID tinyint(1) NOT NULL DEFAULT '0'");
     }

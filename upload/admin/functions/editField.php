@@ -3,15 +3,15 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require(__DIR__ . "/../../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
-    
+
 	if ($_GET["fieldID"] != "0") {
 		$fieldID = $_GET["fieldID"];
 	}
@@ -28,7 +28,7 @@
 
 	// Check admin login status
 	require("checkLogin.php");
-	
+
     if (isset($fieldID)) {
         db_upd("fl_apps_fields", "fieldName='$fieldName', fieldDescription='$fieldDescription', showOnLogin='$showOnLogin', showOnRegister='$showOnRegister'", "appID='$appID' && fieldID='$fieldID'", __FILE__, __LINE__);
     } else {

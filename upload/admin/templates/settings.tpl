@@ -45,7 +45,7 @@
 
       swal({
         title: "Show API Key?",
-        html: "With the API Key, you can access parts of the fluentlogin database by URL call. Please keep this key secret as everybody can authenticate at the API with it!<br /><a href='https://intra.woborschil.net/docs/en/fluentlogin/api' target='_blank'>Learn more about the API</a><br /><br />Show your key now?",
+        html: "With the API Key, you can access parts of the fluentlogin database by URL call. Please keep this key secret as everybody can authenticate at the API with it!<br /><a href='https://intra.woborschil.net/guide/en/fluentlogin/api' target='_blank'>Learn more about the API</a><br /><br />Show your key now?",
         type: "question",
         showCancelButton: true,
         confirmButtonText: "Yes"

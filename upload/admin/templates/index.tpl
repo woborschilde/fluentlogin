@@ -41,7 +41,7 @@
                 <a href="admins.php" class="shortcut" style="width: 14%;"><i class="shortcut-icon icon-legal"></i><span class="shortcut-label">Administrators</span></a>
                 <a href="plugins.php" class="shortcut" style="width: 14%;"><i class="shortcut-icon icon-leaf"></i><span class="shortcut-label">Plugin Manager</span></a>
                 <a href="settings.php" class="shortcut" style="width: 14%;"><i class="shortcut-icon icon-cog"></i><span class="shortcut-label">System settings</span></a>
-                <a href="https://intra.woborschil.net/docs/en/fluentlogin/start" target="_blank" class="shortcut" style="width: 14%;"><i class="shortcut-icon icon-book"></i><span class="shortcut-label">Documentation</span></a>
+                <a href="https://intra.woborschil.net/guide/en/fluentlogin/start" target="_blank" class="shortcut" style="width: 14%;"><i class="shortcut-icon icon-book"></i><span class="shortcut-label">Documentation</span></a>
               </div>
               <!-- /shortcuts -->
             </div>

@@ -3,7 +3,7 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/

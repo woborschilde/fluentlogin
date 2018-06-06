@@ -3,15 +3,15 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	// Include Smarty Template Engine
 	require(__DIR__ . "/../lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
-	
+
 	// Establish database connection
 	require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
     db_conn();
@@ -19,9 +19,9 @@
 
 	// Check admin login status
 	require("functions/checkLogin.php");
-	
+
 	$key = 0;
-	
+
 	// Get admins of app
 	$query = $conn->query("SELECT * FROM fl_admins ORDER BY adminID ASC");
 	while ($row = $query->fetch_assoc()) {
@@ -45,6 +45,6 @@
 	$smarty->assign("keys", $keys);
 	$smarty->assign("adminIDs", $adminIDs);
 	$smarty->assign("adminNames", $adminNames);
-	
+
 	$smarty->display("templates/admins.tpl");
 ?>

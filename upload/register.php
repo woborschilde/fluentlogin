@@ -3,15 +3,15 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	// Include Smarty Template Engine
 	require("lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
-	
+
 	if (isset($_GET["appID"])) {
 		$appID = $_GET["appID"];
 	} else {
@@ -23,14 +23,14 @@
 	} else {
 		$redirect = "index.php?appID=$appID";
 	}
-	
+
 	// Establish database connection
 	require("lib/unsphp/Unscramble.php");
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
-	
+
 	db_san($_GET);
-	
+
 	// Check user login status
 	$embed = 1;
 	$invert = 1;  // redirect to user panel if logged in - no infinite loop
@@ -66,7 +66,7 @@
 		$fieldIDs[] = $fieldID;
 		$fieldNames[] = $fieldName;
 	}
-	
+
 	if ($num_rows == 0) {
 		$keys[] = $key;
 		$fieldIDs[] = "";
@@ -81,10 +81,10 @@
 	$smarty->assign("appName", $appName);
 	$smarty->assign("redirect", $redirect);
 	$smarty->assign("registrationEnabled", $registrationEnabled);
-	
+
 	$smarty->assign("keys", $keys);
 	$smarty->assign("fieldIDs", $fieldIDs);
 	$smarty->assign("fieldNames", $fieldNames);
-	
+
 	$smarty->display("templates/register.tpl");
 ?>

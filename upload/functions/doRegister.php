@@ -3,28 +3,28 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     $userName = $_GET["userName"];
     $userEmail = $_GET["userEmail"];
-    
+
     if (!(isset($_GET["nohash"]))) {
         $userPassword = sha1($_GET["userPassword"]);
     } else {
         $userPassword = sha1(sha1($_GET["userPassword"]));
     }
-    
+
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
-	
+
     // Check user login status
     $embed = 1;
 	$invert = 1;  // redirect to user panel if logged in - no infinite loop
@@ -63,7 +63,7 @@
             db_ins("fl_apps_fields_values", "appID, fieldID, userID, fieldValue", "'$appID', '$fieldID', '$userID', '$value'", __FILE__, __LINE__);
         }
     }
-    
+
     $registrationDate = time();
     $confirmationCode = mt_rand(100000,999999);
 
@@ -81,7 +81,7 @@ If you haven't registered an account, just ignore this message.
 Sincerely,
 The fluentlogin system
 [THIS IS AN AUTO GENERATED MESSAGE, IN CASE OF QUESTIONS: support@woborschil.de]";
-    
+
     mail($userEmail, "E-mail confirmation", $msg, "From: $appName <noreply@intra.woborschil.net>");
 
     echo "1";

@@ -3,11 +3,11 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	// Include Smarty Template Engine
 	require("lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
@@ -28,7 +28,7 @@
 	require("lib/unsphp/Unscramble.php");
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
-	
+
 	db_san($_GET);
 
 	// Check user login status
@@ -47,10 +47,10 @@
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
 	$smarty->assign("redirect_after_save", $redirect_after_save);
-	
+
 	$smarty->assign("userID", $userID);
 	$smarty->assign("userName", $userName);
 	$smarty->assign("userEmail", $userEmail);
-	
+
 	$smarty->display("templates/settings.tpl");
 ?>

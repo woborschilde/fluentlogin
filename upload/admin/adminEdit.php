@@ -3,15 +3,15 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	// Include Smarty Template Engine
 	require(__DIR__ . "/../lib/smarty/app/fluentlogin/smartyInclude.php");
 	$smarty = new Smarty_FluentLogin;
-	
+
 	if (isset($_GET["adminID"])) {
 		$adminIDField = $_GET["adminID"];
 		$actionName = "($adminIDField) Edit";
@@ -19,12 +19,12 @@
 		$adminIDField = 0;
 		$actionName = "Add";
 	}
-	
+
 	// Establish database connection
 	require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
-	
+
 	db_san($_GET);
 
 	// Check admin login status
@@ -76,7 +76,7 @@
 		}
 		//
 	}
-	
+
 	if ($num_rows0 == 0) {
 		$keys[] = $key;
 		$appIDs[] = "-";
@@ -99,6 +99,6 @@
 	// $smarty->assign("groupIDs", $groupIDs);
 	// $smarty->assign("groupNames", $groupNames);
 	// $smarty->assign("groupValues", $groupValues);
-	
+
 	$smarty->display("templates/adminEdit.tpl");
 ?>

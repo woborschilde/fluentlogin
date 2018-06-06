@@ -55,7 +55,7 @@
         <li {if $ami == "admins"}class="active"{/if}><a href="admins.php"><i class="icon-legal"></i><span>Administrators</span> </a></li>
         <li {if $ami == "plugins"}class="active"{/if}><a href="plugins.php"><i class="icon-leaf"></i><span>Plugin Manager</span> </a></li>
         <li {if $ami == "system"}class="active"{/if}><a href="settings.php"><i class="icon-cog"></i><span>System settings</span> </a></li>
-        <li><a href="https://intra.woborschil.net/docs/en/fluentlogin/start" target="_blank"><i class="icon-book"></i><span>Documentation</span> </a> </li>
+        <li><a href="https://intra.woborschil.net/guide/en/fluentlogin/start" target="_blank"><i class="icon-book"></i><span>Documentation</span> </a> </li>
       </ul>
     </div>
     <!-- /container -->

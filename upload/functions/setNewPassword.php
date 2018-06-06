@@ -3,17 +3,17 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 
 	$appID = $_GET["appID"];
     $userID = $_GET["userID"];
     $userPassword = sha1($_GET["userPassword"]);
-    
+
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
 
@@ -36,7 +36,7 @@
     if ($num_rows > 0) {
         die("Please choose a new password.");
     }
-    
+
     db_upd("fl_apps_users", "userPassword='$userPassword', loginToken='0', forceNewPassword='0'", "appID='$appID' && userID='$userID'", __FILE__, __LINE__);
 
     echo "1";

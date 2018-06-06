@@ -3,20 +3,20 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require(__DIR__ . "/../../lib/unsphp/Unscramble.php");
-    
+
 	if ($_GET["adminIDField"] != "0") {
 		$adminIDField = $_GET["adminIDField"];
 	}
 
     $adminNameField = $_GET["adminNameField"];
     $adminPasswordField = sha1($_GET["adminPasswordField"]);
-    
+
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
 
@@ -29,9 +29,9 @@
 		$sos = "";
 	}
 	require("checkLogin.php");
-    
+
     $emptySha1 = "10a34637ad661d98ba3344717656fcc76209c2f8";  // results when double-hashing an empty string
-    
+
     if (isset($adminIDField)) {
         if ($adminPasswordField != $emptySha1) {
             db_upd("fl_admins", "adminName='$adminNameField', adminPassword='$adminPasswordField'", "adminID='$adminIDField'", __FILE__, __LINE__);

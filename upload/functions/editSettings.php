@@ -3,11 +3,11 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 
     $appID = $_GET["appID"];
@@ -20,12 +20,12 @@
         $userPassword = sha1(sha1($_GET["userPassword"]));
         $newPassword = sha1(sha1($_GET["newPassword"]));
     }
-    
+
     db_conn();
     db_switch($db_database, __FILE__, __LINE__);
 
 	db_san($_GET);
-	
+
     // Check user login status
 	$embed = 1;
 	$redirect = "settings.php";
@@ -46,7 +46,7 @@
         if ($num_rows == 0) {
             die("Entered current password is wrong.");
         }
-        
+
         if ($newPassword == $emptySha1) {
             die("You can't remove your password.");
         }

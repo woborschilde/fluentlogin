@@ -3,18 +3,18 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     if (!(isset($embed))) {
         // Establish database connection
         require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
         db_conn();
         db_switch($db_database, __FILE__, __LINE__);
     }
-    
+
 	db_san($_GET);
 	db_san($_COOKIE, "fl");
 
@@ -26,13 +26,13 @@
     getVariable("noredirect", false);
     getVariable("invert", false);
     getVariable("print", false);
-    
+
     db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 
     if ($num_rows == 0) {
         die("An app with ID $appID does not exist!");
     }
-    
+
     // Get session by cookie
     if (isset($_COOKIE["fl" . $appID])) {
         $sessionByCookie = $_COOKIE["fl" . $appID];
@@ -67,7 +67,7 @@
         }
     } else {
         not_logged_in:
-        
+
         if ($noredirect) {
             setResult(0);
         } else {
@@ -81,7 +81,7 @@
 
     function setResult($result) {
         global $print;
-        
+
         if ($print) { echo $result; }
         return $result;
     }

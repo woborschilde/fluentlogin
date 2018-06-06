@@ -3,11 +3,11 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	echo "<h1>fluentlogin Setup</h1>
 	<hr />";
 
@@ -15,13 +15,13 @@
 		die("Please complete setup in the intended order. Start with index.php.");
 	}
 
-	$docslink = "https://intra.woborschil.net/docs/en/fluentlogin/configuration#troubleshooting";
+	$docslink = "https://intra.woborschil.net/guide/en/fluentlogin/configuration#troubleshooting";
 
 	// Install database tables
 
 	require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 	db_conn();
-	
+
 	$query = $conn->query("CREATE DATABASE IF NOT EXISTS $db_database");
 	if ($conn->error) {
 		die("Something went wrong on database creation (Please refer to <a href='$docslink' target='_blank'>documentation</a> with error code 05):<br />" . $conn->error);
@@ -57,7 +57,7 @@
 	db_ins("fl_appsettings", "settingName, settingDefault", "'colorHeaderText', 'white'", __FILE__, __LINE__);
 
 	// Create API Key
-	
+
 	$keyID = mt_rand(10000, 99999);
 
 	db_ins("fl_apikeys", "keyID", "'$keyID'", __FILE__, __LINE__);

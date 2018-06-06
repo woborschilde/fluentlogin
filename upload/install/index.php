@@ -3,15 +3,15 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
 	echo "<h1>Welcome to fluentlogin Setup!</h1>
 	<hr />";
 
-	$docslink = "https://intra.woborschil.net/docs/en/fluentlogin/installation#troubleshooting";
+	$docslink = "https://intra.woborschil.net/guide/en/fluentlogin/installation#troubleshooting";
 
 	// Check PHP version
 
@@ -46,7 +46,7 @@
 
 	require_once(__DIR__ . "/../lib/unsphp/Unscramble.php");
 	require($db_loginpath);
-	
+
 	if (($db_host == "") || ($db_username == "") || ($db_password == "") || ($db_database == "")) {
 		die("One of the settings stored in your config.php is not set!<br />
 		Please enter your database host (commonly localhost), username and password as well as<br />

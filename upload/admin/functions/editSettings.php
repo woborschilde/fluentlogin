@@ -3,11 +3,11 @@
 	/* fluentlogin User Management System
 	Licensed under GNU GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright (C) 2017 woborschil.de
+	Copyright (C) 2018 woborschil.de
 
 	@link    http://www.woborschil.de/fluentlogin
 	*/
-	
+
     require(__DIR__ . "/../../lib/unsphp/Unscramble.php");
 
     db_conn();
@@ -23,7 +23,7 @@
         if (strpos($key, "setting") !== false) {
             $settingID = substr($key, 7);
             db_sel("NULL", "fl_settings", "settingID='$settingID'", __FILE__, __LINE__);
-            
+
             if ($num_rows > 0) {
                 db_upd("fl_settings", "settingValue='$value'", "settingID='$settingID'", __FILE__, __LINE__);
             } else {
