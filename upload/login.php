@@ -56,6 +56,45 @@
 		$fieldNames[] = "";
 	}
 
+	$jskey = 0;
+	$num_rows_total = 0;
+
+    // Get service provider optional JavaScript code
+	$query = $conn->query("SELECT serviceType FROM fl_apps_services WHERE appID='$appID'");
+	$num_rows = $query->num_rows;
+	while ($row = $query->fetch_assoc()) {
+		$typeName = $row["serviceType"];
+
+		$query1 = $conn->query("SELECT typeID FROM fl_servicetypes WHERE typeName='$typeName'");
+		while ($row1 = $query1->fetch_assoc()) {
+			$typeID = $row1["typeID"];
+		}
+
+		$query1 = $conn->query("SELECT stjsActionName FROM fl_servicetypes_js WHERE typeID='$typeID' && stjsActionName='doLogin'");
+		$num_rows1 = $query1->num_rows;
+		while ($row1 = $query1->fetch_assoc()) {
+			$actionName = $row1["stjsActionName"];
+
+			$jskeys[] = $jskey; $jskey++;
+			$jsTypeNames[] = $typeName;
+			$jsActionNames[] = $actionName;
+			$jsActionContent[] = file_get_contents("plugins/service.$typeName/js/$actionName.tpl");
+
+			$num_rows_total++;
+		}
+	}
+
+	if ($num_rows == 0 || $num_rows_total == 0) {
+		$jskeys[] = $jskey;
+		$jsTypeNames[] = "";
+		$jsActionNames[] = "";
+		$jsActionContent[] = "";
+	}
+
+	// Get service provider fields
+	require("functions/initServiceProviders.php");
+    initServiceProviders("doLogin", true, true);
+
 	// Get style (colors, etc.)
 	require("functions/getStyle.php");
 
@@ -67,6 +106,11 @@
     $smarty->assign("keys", $keys);
 	$smarty->assign("fieldIDs", $fieldIDs);
 	$smarty->assign("fieldNames", $fieldNames);
+
+	$smarty->assign("jskeys", $jskeys);
+	$smarty->assign("jsTypeNames", $jsTypeNames);
+	$smarty->assign("jsActionNames", $jsActionNames);
+	$smarty->assign("jsActionContent", $jsActionContent);
 
 	$smarty->display("templates/login.tpl");
 ?>

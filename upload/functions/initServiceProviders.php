@@ -9,10 +9,9 @@
 	*/
 
 	$serviceID = "";
-	$readonly = false;
 
 	// Init hooks function
-	function initServiceProviders($action, $ro = "false") {
+	function initServiceProviders($action, $ro = false, $as = false) {  // ro: readonly, as: assignSmarty
 		global $conn;
 		global $appID;
 		global $userName;  // next ones all for use in require()
@@ -22,9 +21,10 @@
 		global $expiryTime;
 		global $serviceID;
 		global $serviceName;
-		global $readonly;
 
-		$readonly = $ro;
+		if ($as) {
+			global $smarty;
+		}
 
 		$query0 = $conn->query("SELECT * FROM fl_apps_services WHERE appID='$appID'");
 		while ($row0 = $query0->fetch_assoc()) {
@@ -47,10 +47,14 @@
 				// establish named service type field variable (like "serviceTablePrefix" -> "forum_")
 				global ${$stfieldName};
 				${$stfieldName} = $stfieldValue;
+
+				if ($as) {
+					$smarty->assign($stfieldName, $stfieldValue);
+				}
 			}
 
 			require_once(__DIR__ . "/../plugins/service.$serviceType/functions/$action.php");
-			call_user_func($serviceType . "_" . $action);  // run function
+			if (!($ro)) { call_user_func($serviceType . "_" . $action); }  // run function
 		}
 	}
 ?>

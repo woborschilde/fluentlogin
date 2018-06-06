@@ -6,9 +6,13 @@
 	@link    http://www.woborschil.de/fluentlogin
     */
 
-    $dokucookie = "DWd6fcb57a725757b22fe830cccebe05e6";
+    function dokuwiki_doLogout() {
+        global $serviceCookieHash;
 
-    // Delete old session cookie
+        $dokucookie = $serviceCookieHash;
 
-    setcookie($dokucookie, "", time() - 1, "/");
+        // Delete old session cookie
+
+        setcookie($dokucookie, "", time() - 1, "/");
+    }
 ?>

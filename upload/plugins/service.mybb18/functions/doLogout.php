@@ -6,15 +6,17 @@
 	@link    http://www.woborschil.de/fluentlogin
     */
 
-    global $serviceCookiePrefix;
+    function mybb18_doLogout() {
+        global $serviceCookiePrefix;
 
-    $scp = $serviceCookiePrefix;
+        $scp = $serviceCookiePrefix;
 
-    // Delete old session cookies
+        // Delete old session cookies
 
-    foreach ($_COOKIE as $key => $value) {
-        if ($key == $scp . "sid" || $key == $scp . "mybbuser") {
-            setcookie($key, $value, time() - 1, "/", "." . $_SERVER["HTTP_HOST"]);
+        foreach ($_COOKIE as $key => $value) {
+            if ($key == $scp . "sid" || $key == $scp . "mybbuser") {
+                setcookie($key, $value, time() - 1, "/", "." . $_SERVER["HTTP_HOST"]);
+            }
         }
     }
 ?>

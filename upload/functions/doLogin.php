@@ -43,7 +43,7 @@
     getVariable("noredirect", false);
 
     if (!(isset($_GET["loginToken"]))) {
-        db_sel("userID", "fl_apps_users", "appID='$appID' && userName COLLATE latin1_general_cs = '$userName' && userPassword COLLATE latin1_general_cs = '$userPassword'", __FILE__, __LINE__);
+        db_sel("userID, userEmail", "fl_apps_users", "appID='$appID' && userName COLLATE latin1_general_cs = '$userName' && userPassword COLLATE latin1_general_cs = '$userPassword'", __FILE__, __LINE__);
 
         if ($num_rows == 0) {
             die("2: Username or password are wrong.");
@@ -107,5 +107,5 @@
     setcookie("fl$appID", $sessionID, $expiryTime, "/");
     //setcookie("fl$appID", $sessionID, $expiryTime, "/" . basename(__DIR__) . "/");
 
-    echo "1";
+    echo $userEmail;
 ?>

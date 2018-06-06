@@ -6,36 +6,38 @@
 	@link    http://www.woborschil.de/fluentlogin
 	*/
 
-    global $userName;
-    global $cleartextPassword;
-    global $expiryTime;
-    global $serviceCookieHash;
-    global $serviceCookieSecret;
+    function dokuwiki_doLogin() {
+        global $userName;
+        global $cleartextPassword;
+        global $expiryTime;
+        global $serviceCookieHash;
+        global $serviceCookieSecret;
 
-    // Set up new session
+        // Set up new session
 
-    $dokucookie = $serviceCookieHash;
-    $secret = $serviceCookieSecret;  // salt
-    $sticky = false;
+        $dokucookie = $serviceCookieHash;
+        $secret = $serviceCookieSecret;  // salt
+        $sticky = false;
 
-    if ($expiryTime > (time() + 40000)) {
-        $sticky = true;
+        if ($expiryTime > (time() + 40000)) {
+            $sticky = true;
+        }
+
+        require_once(__DIR__ . "/../../../lib/phpseclib/Crypt_Base.php");
+        require_once(__DIR__ . "/../../../lib/phpseclib/Crypt_Hash.php");
+        require_once(__DIR__ . "/../../../lib/phpseclib/Crypt_Rijndael.php");
+        require_once(__DIR__ . "/../../../lib/phpseclib/Crypt_AES.php");
+
+        $iv     = auth_randombytes(16);
+        $cipher = new Crypt_AES();
+        $cipher->setPassword($secret);
+
+        $passcrypt = $cipher->encrypt($iv.$cleartextPassword);
+
+        $cookie = base64_encode($userName).'|'.((int) $sticky).'|'.base64_encode($passcrypt);
+
+        setcookie($dokucookie, $cookie, $expiryTime, "/");
     }
-
-    require(__DIR__ . "/../../../lib/phpseclib/Crypt_Base.php");
-    require(__DIR__ . "/../../../lib/phpseclib/Crypt_Hash.php");
-    require(__DIR__ . "/../../../lib/phpseclib/Crypt_Rijndael.php");
-    require(__DIR__ . "/../../../lib/phpseclib/Crypt_AES.php");
-
-    $iv     = auth_randombytes(16);
-    $cipher = new Crypt_AES();
-    $cipher->setPassword($secret);
-
-    $passcrypt = $cipher->encrypt($iv.$cleartextPassword);
-
-    $cookie = base64_encode($userName).'|'.((int) $sticky).'|'.base64_encode($passcrypt);
-
-    setcookie($dokucookie, $cookie, $expiryTime, "/");
 
 
     // Additional functions ahead:
