@@ -1,6 +1,6 @@
 {literal}
     var http = new XMLHttpRequest();
-    var url = "{/literal}{$seafileLoginUrl}{literal}";
+    var url = "{/literal}{$seafileUrl}/accounts/login/{literal}";
     var params = "login=" + ue + "&password=" + atob(ub) + "&csrfmiddlewaretoken="+readCookie("csrftoken");
     http.open("POST", url, true);
 

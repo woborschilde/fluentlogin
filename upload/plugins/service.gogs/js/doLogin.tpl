@@ -1,6 +1,6 @@
 {literal}
     var http = new XMLHttpRequest();
-    var url = "{/literal}{$gogsLoginUrl}/user/login{literal}";
+    var url = "{/literal}{$gogsUrl}/user/login{literal}";
     var params = "user_name=" + un + "&password=" + atob(ub);
     http.open("POST", url, true);
 

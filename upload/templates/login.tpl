@@ -2,91 +2,90 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    {nocache}
-			<title>Login - {$appName}</title>
-		{/nocache}
+	<meta charset="utf-8">
+	{nocache}
+		<title>Login - {$appName}</title>
+	{/nocache}
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
 
-<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
 
-<link href="css/font-awesome.css" rel="stylesheet">
+	<link href="css/font-awesome.css" rel="stylesheet">
 
-<link href="css/style.css" rel="stylesheet" type="text/css">
-<link href="css/pages/signin.css" rel="stylesheet" type="text/css">
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+	<link href="css/pages/signin.css" rel="stylesheet" type="text/css">
 
-<!-- Sweetalert Css -->
-<link href="css/sweetalert2.css" rel="stylesheet" />
+	<!-- Sweetalert Css -->
+	<link href="css/sweetalert2.css" rel="stylesheet" />
 
-<script>
-	{nocache}
-		{literal}
-			var queryString = ""; var un = ""; var up = ""; var ub = ""; var ue = "";
+	<script>
+		{nocache}
+			{literal}
+				var queryString = ""; var un = ""; var up = ""; var ub = ""; var ue = "";
 
-			function login(ai) {
-				un = document.getElementById("username".toString()).value;
-				up = sha1(document.getElementById("password".toString()).value);  // "1-way" hash
-				ub = btoa(document.getElementById("password".toString()).value);  // base-64 "2-way" cipher, some plugins need to decrypt this
+				function login(ai) {
+					un = document.getElementById("username".toString()).value;
+					up = sha1(document.getElementById("password".toString()).value);  // "1-way" hash
+					ub = btoa(document.getElementById("password".toString()).value);  // base-64 "2-way" cipher, some plugins need to decrypt this
 
-				var userFields = document.getElementsByName("field");
-				userFields.forEach(setField);
+					var userFields = document.getElementsByName("field");
+					userFields.forEach(setField);
 
-				var re = document.getElementById("remember".toString()).checked;
+					var re = document.getElementById("remember".toString()).checked;
 
-				swal.showLoading();
-				xmlhttp = new XMLHttpRequest();
-				xmlhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {
-						swal.hideLoading();
-						if (this.responseText.includes("@")) {
-							ue = this.responseText;  // needed for some services which use email for auth instead of username
-							doJsServiceLogins();
+					swal.showLoading();
+					xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+							swal.hideLoading();
+							if (this.responseText.includes("@")) {
+								ue = this.responseText;  // needed for some services which use email for auth instead of username
+								doJsServiceLogins();
 
-							swal({
-								type: "success",
-								title: "Logged in",
-								text: "You are now logged in."
-							});
-							setTimeout(function(){
-								{/literal}
-									location.replace("{$redirect}"+"?appID="+ai);
-								{literal}
-							}, 1000);
-						} else {
-							swal({
-								type: "error",
-								title: "Login failed",
-								html: this.responseText
-							});
+								swal({
+									type: "success",
+									title: "Logged in",
+									text: "You are now logged in."
+								});
+								setTimeout(function(){
+									{/literal}
+										location.replace("{$redirect}"+"?appID="+ai);
+									{literal}
+								}, 1000);
+							} else {
+								swal({
+									type: "error",
+									title: "Login failed",
+									html: this.responseText
+								});
+							}
 						}
 					}
+					xmlhttp.open("GET","functions/doLogin.php?appID="+ai+"&userName="+un+"&userPassword="+up+queryString+"&remember="+re+"&b64="+ub,true);
+					xmlhttp.send();
 				}
-				xmlhttp.open("GET","functions/doLogin.php?appID="+ai+"&userName="+un+"&userPassword="+up+queryString+"&remember="+re+"&b64="+ub,true);
-				xmlhttp.send();
-			}
 
-			function setField(item, index) {
-				queryString += "&"+item.id+"="+item.value;
-			}
+				function setField(item, index) {
+					queryString += "&"+item.id+"="+item.value;
+				}
 
-			function doJsServiceLogins() {
-				{/literal}
-					{foreach from=$jskeys item=k}
-						{if $jsTypeNames[$k] != ""}
-							{include file='../plugins/service.'|cat:$jsTypeNames[$k]|cat:'/js/'|cat:$jsActionNames[$k]|cat:'.tpl'}
-						{/if}
-					{/foreach}
-				{literal}
-			}
+				function doJsServiceLogins() {
+					{/literal}
+						{foreach from=$jskeys item=k}
+							{if $jsTypeNames[$k] != ""}
+								{include file='../plugins/service.'|cat:$jsTypeNames[$k]|cat:'/js/'|cat:$jsActionNames[$k]|cat:'.tpl'}
+							{/if}
+						{/foreach}
+					{literal}
+				}
 
-			function readCookie(n){n+='=';for(var a=document.cookie.split(/;\s*/),i=a.length-1;i>=0;i--)if(!a[i].indexOf(n))return a[i].replace(n,'');}
-		{/literal}
-	{/nocache}
-</script>
-
+				function readCookie(n){n+='=';for(var a=document.cookie.split(/;\s*/),i=a.length-1;i>=0;i--)if(!a[i].indexOf(n))return a[i].replace(n,'');}
+			{/literal}
+		{/nocache}
+	</script>
 </head>
 
 <body>

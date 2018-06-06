@@ -26,7 +26,7 @@
             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {$userName}<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="settings.php?appID={$appID}">My settings</a></li>
-                <li><a href="functions/doLogout.php?appID={$appID}">Log out</a></li>
+                <li><a href="logout.php?appID={$appID}">Log out</a></li>
               </ul>
             </li>
           </ul>

@@ -18,7 +18,7 @@
                 <h1>Hello, {$userName}!</h1>
                 <div class="shortcuts">
                   <a href="settings.php?appID={$appID}" class="shortcut"><i class="shortcut-icon icon-cog" style="color: #1565c0;"></i><span class="shortcut-label">My settings</span></a>
-                  <a href="functions/doLogout.php?appID={$appID}" class="shortcut"><i class="shortcut-icon icon-signout" style="color: #b71c1c;"></i><span class="shortcut-label">Log out</span></a>
+                  <a href="logout.php?appID={$appID}" class="shortcut"><i class="shortcut-icon icon-signout" style="color: #b71c1c;"></i><span class="shortcut-label">Log out</span></a>
                 </div>
               {/nocache}
               <!-- /shortcuts -->

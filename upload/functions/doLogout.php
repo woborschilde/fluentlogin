@@ -38,6 +38,7 @@
     $expiryTime = time() - 1; // 1 second ago
     setcookie("fl$appID", $sessionID, $expiryTime, "/");
 
-    header("Location: " . $systemPath . $redirect . "?appID=$appID");
-    die();
+    //header("Location: " . $systemPath . $redirect . "?appID=$appID");
+
+    echo "1";
 ?>
