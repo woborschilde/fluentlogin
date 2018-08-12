@@ -23,6 +23,7 @@
 	require_once(__DIR__ . "/admin/functions/loadSettings.php");
 
 	getVariable("appID", "die");
+	getVariable("redirect", "index.php");
 
 	db_sel("appName", "fl_apps", "appID='$appID'", __FILE__, __LINE__);
 

@@ -40,7 +40,7 @@
 								});
 								setTimeout(function(){
 									{/literal}
-										location.replace("login.php"+"?appID="+ai);
+										location.replace("{$redirect}"+"?appID="+ai);
 									{literal}
 								}, 1000);
 							} else {

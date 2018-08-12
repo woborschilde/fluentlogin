@@ -1,8 +1,9 @@
 {nocache}
-  {include file='templates/modules/header.tpl' title='Dashboard' ami='dashboard'}
+  {assign var='ba' value='onload="checkForUpdates();"'}
+  {include file='templates/modules/header.tpl' title='Dashboard' ami='dashboard' bodyargs=$ba}
 {/nocache}
 
-<script>
+<script onload="checkForUpdates();">
   function checkForUpdates() {
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
