@@ -32,34 +32,42 @@
 
 	$key = 0;
 
-	// Get permissions of app
-	$query = $conn->query("SELECT * FROM fl_apps_permissions WHERE appID='$appID' ORDER BY appID ASC");
+	// Get features of app
+	$query = $conn->query("SELECT * FROM fl_apps_features WHERE appID='$appID' ORDER BY featureID ASC");
 	while ($row = $query->fetch_assoc()) {
-		$permissionID = $row["permID"];
-		$permissionName = $row["permName"];
+		$featureID = $row["featureID"];
+		$featureName = $row["text"];
+		$featureIcon = $row["icon"];
+		$featureIconColor = $row["iconColor"];
 
 		$keys[] = $key; $key++;
-		$permissionIDs[] = $permissionID;
-		$permissionNames[] = $permissionName;
+		$featureIDs[] = $featureID;
+		$featureNames[] = $featureName;
+		$featureIcons[] = $featureIcon;
+		$featureIconColors[] = $featureIconColor;
 	}
 
 	if ($query->num_rows == 0) {
 		$keys[] = $key;
-		$permissionIDs[] = "-";
-		$permissionNames[] = "No permissions created yet.";
+		$featureIDs[] = "-";
+		$featureNames[] = "No features created yet.";
+		$featureIcons[] = "";
+		$featureIconColors[] = "";
 	}
 
 	// Template hooks
 	require("functions/initHooks.php");
-	initHooks("permissions");
+	initHooks("features");
 
 	// Assign variables to smarty
 	$smarty->assign("keys", $keys);
 	$smarty->assign("appID", $appID);
 	$smarty->assign("appName", $appName);
 	$smarty->assign("adminName", $adminName);
-	$smarty->assign("permissionIDs", $permissionIDs);
-	$smarty->assign("permissionNames", $permissionNames);
+	$smarty->assign("featureIDs", $featureIDs);
+	$smarty->assign("featureNames", $featureNames);
+	$smarty->assign("featureIcons", $featureIcons);
+	$smarty->assign("featureIconColors", $featureIconColors);
 
-	$smarty->display("templates/permissions.tpl");
+	$smarty->display("templates/features.tpl");
 ?>

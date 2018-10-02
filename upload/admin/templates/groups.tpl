@@ -59,7 +59,7 @@
                     {foreach from=$keys item=i}
                       <tr id="groupRow{$i}">
                         <td id="groupID{$i}">{$groupIDs[$i]}</td>
-                        <td id="groupName{$i}" ondblclick="renameApp({$i});">{$groupNames[$i]}</td>
+                        <td id="groupName{$i}">{$groupNames[$i]}</td>
                         <td class="td-actions btn-group">
                           {if $groupIDs[$i] != "-"}
                             <a href="groupEdit.php?appID={$appID}&groupID={$groupIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;"><i class="btn-icon-only icon-pencil"> </i></a>

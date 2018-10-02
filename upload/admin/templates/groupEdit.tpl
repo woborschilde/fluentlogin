@@ -56,7 +56,7 @@
           <div class="widget widget-table action-table">
             {nocache}
               {include file='templates/modules/apptabs.tpl' ata='groups'}
-              <div class="widget-header"> <i class="icon-asterisk"></i>
+              <div class="widget-header"> <i class="icon-group"></i>
                 <h3>{$actionName} user group</h3>
               </div>
               <div class="widget-content">

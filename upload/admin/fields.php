@@ -32,7 +32,7 @@
 
 	$key = 0;
 
-	// Get accounts of user
+	// Get fields of app
 	$query = $conn->query("SELECT * FROM fl_apps_fields WHERE appID='$appID' ORDER BY appID ASC");
 	while ($row = $query->fetch_assoc()) {
 		$fieldID = $row["fieldID"];

@@ -18,6 +18,7 @@
 			case "groups":
 			case "fields":
 			case "permissions":
+			case "features":
 				global $plugins_hook_apps_tabs;
 
 				queryDatabase("apps");
@@ -55,6 +56,14 @@
 				queryDatabase("permissions");
 
 				$smarty->assign("plugins_hook_permissions_titlebuttons", $plugins_hook_permissions_titlebuttons);
+
+				break;
+			case "features":
+				global $plugins_hook_features_titlebuttons;
+
+				queryDatabase("features");
+
+				$smarty->assign("plugins_hook_features_titlebuttons", $plugins_hook_features_titlebuttons);
 
 				break;
 			default:

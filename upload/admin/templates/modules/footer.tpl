@@ -19,6 +19,7 @@
 <script src="../js/excanvas.min.js"></script>
 <script src="../js/chart.min.js" type="text/javascript"></script>
 <script src="../js/bootstrap.js"></script>
+<script src="../js/jscolor.min.js"></script>
 <script language="javascript" type="text/javascript" src="../js/full-calendar/fullcalendar.min.js"></script>
 
 <!-- SweetAlert Plugin Js -->

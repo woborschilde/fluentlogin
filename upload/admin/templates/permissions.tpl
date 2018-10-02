@@ -59,7 +59,7 @@
                     {foreach from=$keys item=i}
                       <tr id="permissionRow{$i}">
                         <td id="permissionID{$i}">{$permissionIDs[$i]}</td>
-                        <td id="permissionName{$i}" ondblclick="renameApp({$i});">{$permissionNames[$i]}</td>
+                        <td id="permissionName{$i}">{$permissionNames[$i]}</td>
                         <td class="td-actions btn-group">
                           {if $permissionIDs[$i] != "-"}
                             <a href="permissionEdit.php?appID={$appID}&permissionID={$permissionIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;"><i class="btn-icon-only icon-pencil"> </i></a>

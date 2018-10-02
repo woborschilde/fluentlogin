@@ -32,7 +32,7 @@
 
 	$key = 0;
 
-	// Get accounts of user
+	// Get groups of app
 	$query = $conn->query("SELECT * FROM fl_apps_groups WHERE appID='$appID' ORDER BY appID ASC");
 	while ($row = $query->fetch_assoc()) {
 		$groupID = $row["groupID"];

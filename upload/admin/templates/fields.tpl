@@ -59,7 +59,7 @@
                     {foreach from=$keys item=i}
                       <tr id="fieldRow{$i}">
                         <td id="fieldID{$i}">{$fieldIDs[$i]}</td>
-                        <td id="fieldName{$i}" ondblclick="renameApp({$i});">{$fieldNames[$i]}</td>
+                        <td id="fieldName{$i}">{$fieldNames[$i]}</td>
                         <td class="td-actions btn-group">
                           {if $fieldIDs[$i] != "-"}
                             <a href="fieldEdit.php?appID={$appID}&fieldID={$fieldIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;"><i class="btn-icon-only icon-pencil"> </i></a>

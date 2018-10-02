@@ -23,6 +23,8 @@ Bootstrap Admin Template by EGrappler.com
 
 	background: #f9f6f1;
 
+	border: 1px solid;
+	border-color: #cfcfcf;
 	border-radius: 5px;
 }
 
@@ -52,7 +54,7 @@ Bootstrap Admin Template by EGrappler.com
 .shortcuts .shortcut-label {
 	display: block;
 
-	font-weight: 400;
+	font-weight: 500;
 	color: #545454;
 }
 
@@ -193,7 +195,7 @@ Bootstrap Admin Template by EGrappler.com
 	}
 
 	.action-table .td-actions .btn:last-child {
-		margin-rigth: 0;
+		margin-right: 0;
 	}
 
 
