@@ -11,7 +11,7 @@
 	$serviceID = "";
 
 	// Init hooks function
-	function initServiceProviders($action, $ro = false, $as = false) {  // ro: readonly, as: assignSmarty
+	function initServiceProviders($action, $ro = false, $as = false, $jso = false) {  // ro: readonly, as: assignSmarty, jso: JavaScript only / no PHP files
 		global $conn;
 		global $appID;
 		global $userName;  // next ones all for use in require()
@@ -53,8 +53,14 @@
 				}
 			}
 
-			require_once(__DIR__ . "/../plugins/service.$serviceType/functions/$action.php");
-			if (!($ro)) { call_user_func($serviceType . "_" . $action); }  // run function
+			if ($as) {
+				$smarty->assign("serviceName", $serviceName);
+			}
+
+			if (!($jso)) {
+				require_once(__DIR__ . "/../plugins/service.$serviceType/functions/$action.php");
+				if (!($ro)) { call_user_func($serviceType . "_" . $action); }  // run function
+			}
 		}
 	}
 ?>

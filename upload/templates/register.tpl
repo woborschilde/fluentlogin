@@ -22,60 +22,80 @@
 <link href="css/sweetalert2.css" rel="stylesheet" />
 
 <script>
-  {literal}
-    var queryString = "";
+	{nocache}
+		{literal}
+			var queryString = ""; var an = ""; var un = ""; var ue = ""; var up = ""; var uc = ""; var ub = "";
 
-    function register(ai) {
-			var an = document.getElementById("appName".toString()).value;
-      var un = document.getElementById("username".toString()).value;
-	  	var ue = document.getElementById("email".toString()).value;
-      var up = sha1(document.getElementById("password".toString()).value);
-	  	var uc = sha1(document.getElementById("confirm_password".toString()).value);
+			function register(ai) {
+				an = document.getElementById("appName".toString()).value;
+				un = document.getElementById("username".toString()).value;
+				ue = document.getElementById("email".toString()).value;
+				up = sha1(document.getElementById("password".toString()).value);  // "1-way" hash
+				uc = sha1(document.getElementById("confirm_password".toString()).value);  // double hash
+				ub = btoa(document.getElementById("password".toString()).value);      // base-64 "2-way" cipher, some plugins need to decrypt this
 
-      var userFields = document.getElementsByName("field");
-      userFields.forEach(setField);
+				var userFields = document.getElementsByName("field");
+				userFields.forEach(setField);
 
-			if (up != uc) {
-				swal({
-					type: "error",
-					title: "Registration failed",
-					text: "The entered passwords do not match."
-				});
-				return;
+				if (up != uc) {
+					swal({
+						type: "error",
+						title: "Registration failed",
+						text: "The entered passwords do not match."
+					});
+					return;
+				}
+
+				swal.showLoading();
+				xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						swal.hideLoading();
+
+						if (this.responseText == "1") {
+							swal({
+								type: "success",
+								title: "Welcome to "+an+"!",
+								text: "Please click the confirmation link we've sent you by e-mail to activate your account."
+							}).then(function() {
+								document.getElementById("login-fields").style.display = "none";
+								document.getElementById("login-actions").style.display = "none";
+								document.getElementById("login-finish").style.display = "block";
+								document.getElementById("login-finish-button").style.display = "block";
+
+								doJsServiceRegisters();
+							});
+						} else {
+							swal({
+								type: "error",
+								title: "Registration failed",
+								html: this.responseText
+							});
+						}
+					}
+				}
+				xmlhttp.open("GET","functions/doRegister.php?appID="+ai+"&userName="+un+"&userEmail="+ue+"&userPassword="+up+queryString, true);
+				xmlhttp.send();
 			}
 
-			swal.showLoading();
-      xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-					swal.hideLoading();
-          if (this.responseText == "1") {
-            swal({
-              type: "success",
-              title: "Welcome to "+an+"!",
-              text: "Please click the confirmation link we've sent you by e-mail to activate your account."
-            }).then(function() {
-			  			{/literal}
-								location.replace("{$redirect}");
-							{literal}
-						});
-          } else {
-            swal({
-              type: "error",
-              title: "Registration failed",
-              html: this.responseText
-            });
-          }
-        }
-      }
-      xmlhttp.open("GET","functions/doRegister.php?appID="+ai+"&userName="+un+"&userEmail="+ue+"&userPassword="+up+queryString, true);
-      xmlhttp.send();
-    }
+			function setField(item, index) {
+				queryString += "&"+item.id+"="+item.value;
+			}
 
-    function setField(item, index) {
-      queryString += "&"+item.id+"="+item.value;
-    }
-  {/literal}
+			function doJsServiceRegisters() {
+				{/literal}
+					{foreach from=$jskeys item=k}
+						{if $jsTypeNames[$k] != ""}
+							{include file='../plugins/service.'|cat:$jsTypeNames[$k]|cat:'/js/'|cat:$jsActionNames[$k]|cat:'.tpl' sn=$jsServiceNames[$k]}
+						{/if}
+					{/foreach}
+				{literal}
+			}
+
+			function readCookie(n){n+='=';for(var a=document.cookie.split(/;\s*/),i=a.length-1;i>=0;i--)if(!a[i].indexOf(n))return a[i].replace(n,'');}
+
+		{/literal}
+	{/nocache}
 </script>
 
 </head>
@@ -128,7 +148,7 @@
 
 			{nocache}
 				{if $registrationEnabled == "1"}
-					<div class="login-fields">
+					<div id="login-fields" class="login-fields">
 
 						<p>Please fill in the following fields:</p>
 
@@ -167,11 +187,18 @@
 
 					</div> <!-- /login-fields -->
 
-					<div class="login-actions">
-
-						<button tyoe="submit" class="button btn btn-primary btn-large">Register</button>
-
+					<div id="login-actions" class="login-actions">
+						<button type="submit" class="button btn btn-primary btn-large">Register</button>
 					</div> <!-- .actions -->
+
+					<div id="login-finish" style="display: none;">
+						<b>Registration complete</b><br />
+						Please click the confirmation link we've sent you<br />by e-mail to activate your account, then continue.<br />
+					</div> <!-- #login-finish -->
+
+					<div id="login-finish-button" style="display: none;">
+						<button type="button" class="button btn btn-primary btn-large" style="width: 100%;" onclick="location.replace('{$redirect}');">Go to Login 🠊</button>
+					</div> <!-- #login-finish-button -->
 				{else}
 					<div class="alert alert-danger">
 						Registration is currently disabled.
