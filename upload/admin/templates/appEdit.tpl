@@ -40,7 +40,7 @@
     }
 
     function setSetting(item, index) {
-      queryString += "&"+item.id+"="+item.value;
+      queryString += "&"+item.id+"="+encodeURIComponent(item.value);
     }
   {/literal}
 </script>

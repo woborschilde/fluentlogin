@@ -66,7 +66,7 @@
                               <a href="services.php?appID={$appIDs[$i]}" class="btn btn-small btn-violet" style="margin-right: 5px;" data-balloon="Services" data-balloon-pos="up"><i class="btn-icon-only icon-link"> </i></a>
                               <a href="appEdit.php?appID={$appIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;" data-balloon="Edit" data-balloon-pos="up"><i class="btn-icon-only icon-pencil"> </i></a>
                               <a href="javascript:;" class="btn btn-small btn-danger" onclick="delApp({$i});" style="margin-right: 0px;" data-balloon="Delete" data-balloon-pos="up"><i class="btn-icon-only icon-remove"> </i></a>
-                              <a href="../index.php?appID={$appIDs[$i]}" target="_blank" class="btn btn-small btn-primary" style="margin-right: 0px;" data-balloon="App Page" data-balloon-pos="up"><i class="btn-icon-only icon-arrow-right"> </i></a>
+                              <a href="../index.php?appID={$appIDs[$i]}" target="_blank" class="btn btn-small btn-primary" style="margin-right: 0px;" data-balloon="Go to" data-balloon-pos="up"><i class="btn-icon-only icon-arrow-right"> </i></a>
                             </div>
                           {/if}
                         </td>

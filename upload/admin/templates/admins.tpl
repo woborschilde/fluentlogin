@@ -13,7 +13,7 @@
 
         swal({
           title: "Really delete admin \""+m+"\"?",
-          text: "All links will be removed.",
+          text: "He/She will lose access to this fluentlogin Administration.\nHis/Her login logs will be removed.",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: '#d33',
@@ -21,7 +21,7 @@
           cancelButtonText: 'Cancel',
         }).then(function () {
           xmlhttp = new XMLHttpRequest();
-          xmlhttp.open("GET","functions/delAdmin.php?appID="+a+"&adminID="+k,true);
+          xmlhttp.open("GET","functions/delAdmin.php?adminToDeleteID="+k,true);
           xmlhttp.send();
           document.getElementById(r).remove();
         });
@@ -60,7 +60,11 @@
                           {if $adminNames[$i] != "No admins created yet."}
                             <a href="adminEdit.php?adminID={$adminIDs[$i]}" class="btn btn-small btn-success" style="margin-right: 0px;"><i class="btn-icon-only icon-pencil"> </i></a>
                             {if $adminIDs[$i] != $adminID}
-                              <a href="javascript:;" class="btn btn-small btn-danger" onclick="delAdmin({$i});"><i class="btn-icon-only icon-remove"> </i></a>
+                              {if $adminIDs[$i] != "1"}
+                                <a href="javascript:;" class="btn btn-small btn-danger" onclick="delAdmin({$i});"><i class="btn-icon-only icon-remove"> </i></a>
+                              {else}
+                              <a href="javascript:;" class="btn btn-small btn-danger disabled" data-balloon="Admin #1 can't be deleted!" data-balloon-pos="left"><i class="btn-icon-only icon-remove"> </i></a>
+                              {/if}
                             {else}
                               <a href="javascript:;" class="btn btn-small btn-danger disabled" data-balloon="You can't delete yourself!" data-balloon-pos="left"><i class="btn-icon-only icon-remove"> </i></a>
                             {/if}
